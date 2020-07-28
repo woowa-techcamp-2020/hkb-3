@@ -1,10 +1,14 @@
 import express from 'express';
+import userRepo from '../repository/userRepository';
 
 const router = express.Router();
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
+router.get('/users', async (req, res, next) => {
+  const result = await userRepo.getAllUsers();
+  console.log('hello', result);
+  res.json({ status: 'ok', message: '유저받아라', data: result });
 });
-const a = 1;
+
+
 export default router;
