@@ -11,7 +11,8 @@
     "sourceMap": true,
     "strict": true,
     "target": "es6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
   },
   "include": [
     "src/**/*.ts"

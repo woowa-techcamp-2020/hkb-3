@@ -1,0 +1,34 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "hkb",
+        "description": "",
+        "version": "1.0"
+    },
+    "produces": ["application/json"],
+    "paths": {
+        "/users": {
+            "get": {
+                "x-swagger-router-controller": "users",
+                "operationId": "impossible",
+                "tags": ["/users"],
+                "description": "",
+                "parameters": [],
+                "responses": {"data": "hello"}
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+          "identificationNumber": {
+            "type": "integer",
+            "description": "User identification number",
+            "example": "1234"
+          },
+          "username": {
+            "type": "integer",
+            "example": "1234"
+          }
+      }
+    }
+}
