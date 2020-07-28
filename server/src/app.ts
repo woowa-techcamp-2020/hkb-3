@@ -10,6 +10,7 @@ import session from 'express-session';
 import passportLocal from 'passport-local';
 import sessionFileStore from 'session-file-store';
 import usersRouter from './routes/users';
+import loginRouter from './routes/login';
 
 const app = express();
 
@@ -35,13 +36,13 @@ const swaggerDefinition = {
   host: 'localhost:3000', // Host (optional)
   basePath: '/', // Base path (optional)
 };
-  
+const routerDir = './src/routes';  
 // Options for the swagger docs
 const options = {
   // Import swaggerDefinitions
   swaggerDefinition,
   // Path to the API docs
-  apis: ['./src/routes/users.*'],
+  apis: [`${routerDir}/users.*`, `${routerDir}/login.*`],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -72,9 +73,9 @@ app.use(session({
   saveUninitialized: false,
   store: new FileStore(), 
 })); // 세션 활성화
-app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 passport.serializeUser((user: IUser, done: any) => {
   done(null, user.id);
@@ -102,24 +103,18 @@ passport.use(new LocalStrategy(
   }),
 ));
 
-app.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true,
-  }));
 
-
-app.get('/logout', (req: any, res: Response) => {
-  req.logout();
-  req.session.save(() => {
-    res.redirect('/login');
-  });
-});
+app.use('/auth', loginRouter);
 
 const isAuthenticated = (req:any, res: Response, next: NextFunction) => {
+  console.log('request');
   if (req.user) return next();
-  res.redirect('/login');
+  const loginUrl = '/auth/login';
+  if(req.originalUrl !== loginUrl) {
+    res.redirect(loginUrl); 
+  } else { 
+    return next(); 
+  }
 };
 
 
