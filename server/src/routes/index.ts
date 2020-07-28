@@ -3,7 +3,7 @@ import userRouter from './users';
 
 const router = express.Router();
 
-router.use('/api', userRouter);
+router.use('/', userRouter);
 /* GET home page. */
 router.get('/', (req, res, next) => {
   res.render('index', { title: 'Express' });
