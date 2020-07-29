@@ -90,6 +90,9 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
+#ignore vscode
+.vscode
+
 # next.js build output
 .next
 
