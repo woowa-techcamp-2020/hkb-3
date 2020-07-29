@@ -6,13 +6,19 @@
   </a>
 </p>
 
-> 가계부를 만들어봅시다.
+> 가계부를 만들기 프로젝트 
 
 ## Install
 
+먼저 '/client' 에서 패키지 설치
 ```sh
-npm build
+npm install
 ```
+
+'/server' 에서 패키지 설치
+```sh
+npm install
+'''
 
 ## Usage
 
