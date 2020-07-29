@@ -47,7 +47,9 @@ npm test
 
 👤 **이찬호, 양명우**
 
-* Github: [@0407chan, myungwoo-Y](https://github.com/0407chan, myungwoo-Y)
+* Github: [@0407chan](https://github.com/0407chan)
+* Github: [@myungwoo-Y](https://github.com/myungwoo-Y)
+
 
 ## Show your support
 
