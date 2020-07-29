@@ -9,8 +9,11 @@ sessions
 /tmp
 /out-tsc
 
-#remove view
+#remove generated view
 /server/src/views/*
+
+#remove generated public
+/server/src/public/*
 
 # Runtime data
 pids
