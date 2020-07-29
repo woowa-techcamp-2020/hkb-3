@@ -11,7 +11,7 @@ module.exports = {
     main: "./src/app.js",
   },
   output: {
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, "../server/src/public/javascripts"),
     filename: "bundle.js",
   },
   module: {
@@ -47,7 +47,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./index.html", // entry
-      filename: "../dist/index.html", // output(main.js 기준)
+      filename: "../../views/index.html", // output(main.js 기준)
     }),
     // new CleanWebpackPlugin(),
   ],

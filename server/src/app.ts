@@ -9,6 +9,7 @@ import passport from 'passport';
 import session from 'express-session';
 import passportLocal from 'passport-local';
 import sessionFileStore from 'session-file-store';
+import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import loginRouter from './routes/login';
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 require('dotenv').config();
 
+app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 
@@ -108,13 +110,16 @@ app.use('/auth', loginRouter);
 
 const isAuthenticated = (req:any, res: Response, next: NextFunction) => {
   console.log('request');
-  if (req.user) return next();
-  const loginUrl = '/auth/login';
-  if(req.originalUrl !== loginUrl) {
-    res.redirect(loginUrl); 
-  } else { 
-    return next(); 
+  if (req.user) {
+    return next();
   }
+
+  const loginUrl = '/auth/login';
+
+  if(req.originalUrl !== loginUrl) {
+    res.redirect(loginUrl);
+  } 
+  return next();
 };
 
 
