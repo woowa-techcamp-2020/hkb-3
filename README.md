@@ -10,35 +10,35 @@
 
 ## Install
 
-client 폴더와 server 폴더에서 패키지 설치
+In server & client folder
 ```sh
 npm install
 ```
 
 ## build-front
 
-client폴더 에서 wepack build
+In client folder
 ```sh
 npx webpack
 ```
 
 ## Usage
 
-server 폴더에서 실행
+In server folder
 ```sh
 npm start
 ```
 
 ## build-server
 
-server폴더 실행
+In server folder
 ```sh
 npm build
 ```
 
 ## Run tests
 
-server 폴더에서 실행
+In server folder
 ```sh
 npm test
 ```
