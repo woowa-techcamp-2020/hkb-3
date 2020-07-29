@@ -1,12 +1,12 @@
 import express from 'express';
-import userRouter from './users';
+import userRouter from './user';
+import loginRouter from './login';
 
 const router = express.Router();
 
-router.use('/', userRouter);
+router.use('/api', userRouter);
+router.use('/auth', loginRouter);
+
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Express' });
-});
 
 export default router;

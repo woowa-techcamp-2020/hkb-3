@@ -9,21 +9,24 @@ import passport from 'passport';
 import session from 'express-session';
 import passportLocal from 'passport-local';
 import sessionFileStore from 'session-file-store';
+import cors from 'cors';
 import indexRouter from './routes/index';
-import usersRouter from './routes/users';
-import loginRouter from './routes/login';
+// import loginRouter from './routes/login';
+
 
 const app = express();
-
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+
 require('dotenv').config();
 
+const scriptRequestUrl = '/public';
+app.use(scriptRequestUrl, express.static(`${__dirname}${scriptRequestUrl}`));
+// app.use('/auth', loginRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 
 /** ************************************
@@ -106,7 +109,7 @@ passport.use(new LocalStrategy(
 ));
 
 
-app.use('/auth', loginRouter);
+
 
 const isAuthenticated = (req:any, res: Response, next: NextFunction) => {
   console.log('request');
@@ -128,9 +131,9 @@ const isAuthenticated = (req:any, res: Response, next: NextFunction) => {
  *************************************** */
 const viewsDir = path.join(__dirname, 'views');
 app.set('views', viewsDir);
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-app.get('*', isAuthenticated, (req: Request, res: Response) => {
+
+
+app.get('*', /* isAuthenticated, */ (req: Request, res: Response) => {
   res.sendFile('index.html', { root: viewsDir });
 });
 
