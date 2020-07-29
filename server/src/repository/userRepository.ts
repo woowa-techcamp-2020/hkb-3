@@ -3,24 +3,22 @@ import pool from '../config/database';
 import userDTO from '../model/userDTO';
 
 async function getAllUsers() {
-  const res = await pool.query('select * from mydb.user');
-  console.log('결과', res[0]);
-  return res[0];
+  const result = await pool.query('select * from mydb.user');
+  return result[0];
 }
 
 async function getUserById(id:Number) {
-  const res = await pool.query(`select * from mydb.user where id=${id}`);
-  console.log('결과', res);
+  const result = await pool.query(`select * from mydb.user where id=${id}`);
+  return result[0];
 }
 
 async function deleteUser(id:Number) {
-  const res = await pool.query(`delete from user where id= ${id}`);
-  console.log('result', res);
+  const result = await pool.query(`delete from user where id= ${id}`);
+  return result;
 }
 async function createUser(user:userDTO) {
-  const res = await pool.query(`delete from user where id= ${user.getId()}`);
-  
-  console.log('result', res);
+  const result = await pool.query(`create from user where id= ${user.getId()}`);
+  return result;
 }
 
 export default {

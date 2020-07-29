@@ -4,6 +4,10 @@ module.exports = {
     // Airbnb style guide 적용
     'airbnb-base',
   ],
+  env: {
+    browser: true,
+    node: true,
+  },
   rules: {
     'no-console': 'off',
     indent: ['error', 2],

@@ -3,7 +3,6 @@ import passport from 'passport';
 
 const router = express.Router();
 
-
 /**
  * @swagger
  * definitions:
@@ -19,8 +18,6 @@ const router = express.Router();
  *         type: string
  *         description: user password
  */
-
-
 
 /**
  * @swagger
@@ -48,8 +45,6 @@ router.post('/login',
     failureRedirect: '/auth/login',
     failureFlash: true,
   }));
-
-
 
 /**
  * @swagger
