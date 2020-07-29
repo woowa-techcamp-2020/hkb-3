@@ -10,15 +10,10 @@
 
 ## Install
 
-먼저 '/client' 에서 패키지 설치
+'/client'와 '/server' 에서 패키지 설치
 ```sh
 npm install
 ```
-
-'/server' 에서 패키지 설치
-```sh
-npm install
-'''
 
 ## Usage
 
