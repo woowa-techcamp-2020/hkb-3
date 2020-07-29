@@ -1,54 +1,57 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const {
-//   CleanWebpackPlugin,
-// } = require("./client/node_modules/clean-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: "development",
-  devtool: "cheap-eval-source-map",
-  entry: {
-    main: "./src/app.js",
-  },
+  mode: 'development',
+  entry: './src/app.js',
   output: {
-    path: path.resolve(__dirname, "../server/src/public/javascripts"),
-    filename: "bundle.js",
+    path: path.resolve(__dirname, '../server/src/public/javascripts'),
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: 'babel-loader',
+        exclude: /node_modules/,
+      },
+      // {
+      //   test: /\.(sa|sc|c)ss$/,
+      //   use: [
+      //     /* devMode ? 'style-loader' : */
+      //     MiniCssExtractPlugin.loader,
+      //     'css-loader',
+      //     'sass-loader',
+      //   ],
+      // },
+      {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
-        test: /\.png$/,
+        test: /\.(png|jpe?g|gif|svg|ico)$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'url-loader',
             options: {
-              name: "[name].[ext]?[hash]",
-              publicPath: "../image",
+              useRelativePath: true,
+              limit: 10000,
             },
           },
         ],
       },
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-          },
-        },
-      },
     ],
   },
+
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./index.html", // entry
-      filename: "../../views/index.html", // output(main.js 기준)
+      template: 'index.html', // entry
+      filename: '../../views/index.html', // output(main.js 기준)
     }),
-    // new CleanWebpackPlugin(),
+    // new MiniCssExtractPlugin({
+    //   filename: "[name].css",
+    //   chunkFilename: "[id].css"
+    // })
   ],
 };
