@@ -108,3 +108,8 @@ server/src/public/scripts
 
 # build views
 server/src/views/index.html
+
+sql
+.mwb
+.bak
+
