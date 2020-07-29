@@ -1,6 +1,5 @@
 import './styles/container.scss';
 import './styles/main.scss';
-import './styles/router.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
 
