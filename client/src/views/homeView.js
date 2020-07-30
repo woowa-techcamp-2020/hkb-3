@@ -5,7 +5,8 @@ class HomeView {
     this.data = data;
   }
 
-  render = () => {
+  render = (state) => {
+    console.log('home', state);
     elements.contentWrap.innerHTML = '<h1>HomeView</h1>';
   }
 }
