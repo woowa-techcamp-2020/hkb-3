@@ -1,5 +1,6 @@
 import './styles/container.scss';
 import './styles/main.scss';
+import './styles/calendar.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
 import { popStateHandler, elements } from './common';

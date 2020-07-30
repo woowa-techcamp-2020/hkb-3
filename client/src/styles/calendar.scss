@@ -1,0 +1,20 @@
+.calendar{
+  border: #C8C8C8 solid 1px;
+  .day-of-week,
+  .date-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 5px;
+  }
+
+  .day-of-week{
+    border: 3px;
+  }
+
+  .date-grid{
+    height: 100px;
+  }
+
+}
+
+
