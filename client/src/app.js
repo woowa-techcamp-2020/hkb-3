@@ -3,7 +3,7 @@ import './styles/main.scss';
 import './styles/calendar.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
-import { popStateHandler, elements } from './common';
+import { renderByUrl, elements, renderByModel } from './common';
 
 
 
@@ -49,3 +49,27 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 document.querySelector('.main-router-wrap')
   .addEventListener('click', (e) => elements.routerModel.onLink(e));
+(async () => {
+  // init data 가져오면 각 모델에 데이터 추가 
+  elements.initModel.addAllSubscribe(
+    elements.homeModel,
+    elements.calendarModel,
+    elements.stastisticsModel,
+  );
+
+  // 라우팅시 화면 표시하도록 추가
+  elements.routerModel.addSubscribe(renderByUrl);
+  
+  // 모델에 update 시 이를 바로 화면에 표시하도록 추가
+  elements.homeModel.addSubscribe(renderByModel);
+  elements.calendarModel.addSubscribe(renderByModel);
+  elements.stastisticsModel.addSubscribe(renderByModel);
+
+  // init data 가져오기
+  await elements.initModel.fetchInitData();
+  
+  window.addEventListener('popstate', renderByUrl);
+  document.querySelector('.main-router-wrap')
+    .addEventListener('click', (e) => elements.routerModel.onLink(e));
+})();
+
