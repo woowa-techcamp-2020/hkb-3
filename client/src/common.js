@@ -1,8 +1,6 @@
-
-import HomeView from './views/homeView';
+import HomeView from './views/Home/homeView';
 import CalendarView from './views/Calendar/calendarView';
-import StatisticsView from './views/statisticsView';
-import PaymentModel from './models/paymentListModel';
+import StatisticsView from './views/Statistics/statisticsView';
 import RouterModel from './models/routerModel';
 import InitModel from './models/initModel';
 import CalendarModel from './models/calendarModel';
@@ -44,6 +42,7 @@ export function getState(path) {
   case paths.statistics:
     return elements.stastisticsModel;
   default:
+    
     break;
   }
 }

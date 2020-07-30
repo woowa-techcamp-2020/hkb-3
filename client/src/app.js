@@ -1,6 +1,7 @@
 import './styles/container.scss';
 import './styles/main.scss';
 import './styles/calendar.scss';
+import './styles/home.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
 import { renderByUrl, elements, renderByModel } from './common';
@@ -34,21 +35,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   // const result = await Api.Transaction().createTransaction(trans);
   // console.log('createTransaction result=', result);
   // console.log('currUser=', currUser);
-  elements.paymentModel.getInitialData();
-  elements.paymentModel.addSubscribe(elements.homeView);
-  console.log('whats happening', elements.paymentModel); 
 });
 
-
-(function onRouter() {
-  window.addEventListener('popstate', popStateHandler);
-  elements.routerModel.addSubscribe(popStateHandler);
-  elements.paymentModel.addSubscribe(elements.homeView);
-  popStateHandler({});
-}());
-
-document.querySelector('.main-router-wrap')
-  .addEventListener('click', (e) => elements.routerModel.onLink(e));
 (async () => {
   // init data 가져오면 각 모델에 데이터 추가 
   elements.initModel.addAllSubscribe(
@@ -72,4 +60,3 @@ document.querySelector('.main-router-wrap')
   document.querySelector('.main-router-wrap')
     .addEventListener('click', (e) => elements.routerModel.onLink(e));
 })();
-
