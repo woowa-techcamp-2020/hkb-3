@@ -40,12 +40,12 @@ body{
         font-size: xx-large;
         padding: 0;
 
-        a:link { color: red; text-decoration: none;}
+        a:link { color: black; text-decoration: none;}
         a:visited { color: black; text-decoration: none;}
     };
 
     .content{
-        padding: 0 30px;
+        padding: 0 60px;
         width: 120px;
     }
 
@@ -57,7 +57,7 @@ body{
     ul {
         background-color: #E0E0E0;
         border-radius: 20px;
-        width: 380px;
+        width: 600px;
         margin-left: auto;
         margin-right: auto;
         list-style: none;

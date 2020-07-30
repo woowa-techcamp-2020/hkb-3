@@ -12,7 +12,10 @@ class Observable {
   }
 
   notify(data) {
-    this.observers.forEach((observer) => observer(data));
+    console.log(this);
+    this.observers.forEach((observer) => (
+      observer.update ? observer.update(data) : observer(data)
+    ));
   }
 }
 
