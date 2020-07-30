@@ -1,5 +1,6 @@
 import express from 'express';
 import userService from '../service/userService';
+import userRepo from '../repository/userRepository';
 
 const router = express.Router();
 
@@ -49,15 +50,14 @@ router.get('/', (req, res, next) => {
 /* GET users listing. */
 router.get('/user', async (req, res, next) => {
   const result = await userService.getAllUsers();
-  console.log('userRouter \n', result);
   res.json(result);
 });
 
 /* GET users listing. */
 router.get('/user/:id', async (req, res, next) => {
-  const result = await userService.getUserById(Number(req.params.id));
-  // console.log('userRouter \n', result);
+  const result = await userRepo.getUserById(Number(req.params.id));
   res.json(result);
 });
+
 
 export default router;
