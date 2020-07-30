@@ -44,3 +44,5 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 document.querySelector('.main-router-wrap')
   .addEventListener('click', (e) => elements.routerModel.onLink(e));
+
+elements.routerModel.fetchInitData();

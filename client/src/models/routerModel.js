@@ -1,10 +1,18 @@
 import Observable from './observable';
 import { getState, getCurrentPath } from '../common';
+import Api from '../api';
 
 class RouterModel extends Observable {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
+  }
+
+  async fetchInitData() {
+    console.log('fetch start');
+    const res = await Api.Transaction().getTransactionByUserId(1);
+    this.data = res.data;
+    console.log(this.data);
   }
 
   async onLink(e) {
@@ -18,7 +26,7 @@ class RouterModel extends Observable {
 
 
     history.pushState(state, '', path);  
-    super.notify({ state });
+    super.notify({ state, data: this.data });
   }
 }
 
