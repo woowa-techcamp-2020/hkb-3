@@ -1,15 +1,13 @@
 import HomeView from './views/homeView';
-import CalendarView from './views/calendarView';
-// eslint-disable-next-line import/no-cycle
-import RouterModel from './models/routerModel';
+import CalendarView from './views/Calendar/calendarView';
 import StatisticsView from './views/statisticsView';
+import RouterModel from './models/routerModel';
 
 export const elements = {
   routerModel: new RouterModel(),
   calendarView: new CalendarView(),
   homeView: new HomeView(),
   statisticsView: new StatisticsView(),
-  contentWrap: document.querySelector('.content-wrap'),
 };
 
 export async function getState(path) {
