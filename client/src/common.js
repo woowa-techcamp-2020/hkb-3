@@ -1,3 +1,4 @@
+
 import HomeView from './views/homeView';
 import CalendarView from './views/Calendar/calendarView';
 import StatisticsView from './views/statisticsView';
@@ -27,12 +28,6 @@ export function getCurrentPath(e, listNode) {
   return path;
 }
 
-export function popStateHandler({ state }) {
-  const targetView = getPath();
-      
-  viewMap[targetView](state?.content);
-}
-
 const viewMap = {
   '/': function() {
     elements.homeView.render();
@@ -45,6 +40,11 @@ const viewMap = {
   },
   
 };
+
+export function popStateHandler({ state }) {
+  const targetView = getPath();
+  viewMap[targetView](state?.content);
+}
 
 function getPath() {
   return location.pathname;

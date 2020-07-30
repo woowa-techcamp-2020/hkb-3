@@ -12,7 +12,6 @@ async function createUser(user) {
 }
   
 async function getAllUsers() {
-  console.log('heello!!????');
   const fetchResult = await fetch('/api/user', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -20,13 +19,12 @@ async function getAllUsers() {
     const result = await response.json();
     return result;
   });
-  console.log('api', fetchResult);
 
   return fetchResult;
 }
   
 async function getUserById(id) {
-  const fetchResult = await fetch(`/api/user/${id.id}`, {
+  const fetchResult = await fetch(`/api/user/${id}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   }).then(async (response) => {
@@ -51,7 +49,7 @@ async function updateUser(user) {
 }
 
 async function deleteUser(id) {
-  const fetchResult = await fetch(`/api/users/${id.id}`, {
+  const fetchResult = await fetch(`/api/user/${id.id}`, {
     method: 'DELETE',
   }).then(async (response) => {
     const result = await response.json();
