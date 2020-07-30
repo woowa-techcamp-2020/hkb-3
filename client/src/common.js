@@ -4,12 +4,15 @@ import CalendarView from './views/calendarView';
 // eslint-disable-next-line import/no-cycle
 import RouterModel from './models/routerModel';
 import StatisticsView from './views/statisticsView';
+import PaymentModel from './models/paymentListModel';
 
 export const elements = {
   routerModel: new RouterModel(),
+  paymentModel: new PaymentModel(),
   calendarView: new CalendarView(),
   homeView: new HomeView(),
   statisticsView: new StatisticsView(),
+  
   contentWrap: document.querySelector('.content-wrap'),
 };
 
@@ -32,6 +35,7 @@ export function getCurrentPath(e, listNode) {
 
 const viewMap = {
   '/': function() {
+    // elements.paymentModel.getInitialData();
     elements.homeView.render();
   },
   '/calendar': function(data) {
