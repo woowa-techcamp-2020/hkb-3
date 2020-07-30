@@ -1,7 +1,7 @@
 
 import HomeView from './views/homeView';
 import CalendarView from './views/Calendar/calendarView';
-import StatisticsView from './views/statisticsView';
+import StatisticsView from './views/Statistics/statisticsView';
 import RouterModel from './models/routerModel';
 import InitModel from './models/initModel';
 import CalendarModel from './models/calendarModel';
