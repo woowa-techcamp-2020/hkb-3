@@ -9,6 +9,7 @@ export const elements = {
   calendarView: new CalendarView(),
   homeView: new HomeView(),
   statisticsView: new StatisticsView(),
+  contentWrap: document.querySelector('.content-wrap'),
 };
 
 export async function getState(path) {
