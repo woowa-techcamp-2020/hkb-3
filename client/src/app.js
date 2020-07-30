@@ -1,5 +1,6 @@
 import './styles/container.scss';
 import './styles/main.scss';
+import './styles/calendar.scss';
 import 'core-js/modules/es.array.flat';
 import moment from 'moment';
 import Api from './api/index.js';
