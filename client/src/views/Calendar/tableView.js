@@ -7,9 +7,9 @@ class TableView {
 
   buildContents = () => {
     let tableContents = '';
-    for(let i = 0; i < this.rowCounts; i++) {
+    for(let i = 0; i < this.rowCounts; i += 1) {
       tableContents += '<div class="date-grid">';
-      for(let j = 0; j < this.colCounts; j++) {
+      for(let j = 0; j < this.colCounts; j += 1) {
         tableContents += '<div>1</div>';
       }
       tableContents += '</div>';
