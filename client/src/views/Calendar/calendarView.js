@@ -7,7 +7,8 @@ class CalendarView {
     this.tableView = new TableView();
   }
   
-  render() {
+  render(state) {
+    console.log('calendar', state);
     this.tableView.render();
   }
 }

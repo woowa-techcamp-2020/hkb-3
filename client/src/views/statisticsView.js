@@ -5,7 +5,8 @@ class StatisticsView {
     this.data = data;
   }
   
-    render = () => {
+    render = (state) => {
+      console.log('statistics', state);
       elements.contentWrap.innerHTML = '<h1>Statistics</h1>';
     }
 }
