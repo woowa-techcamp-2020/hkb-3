@@ -1,4 +1,4 @@
-import CategoryView from './ category';
+import CategoryView from './ categoryView';
 
 class StatisticsView {
   constructor() {
@@ -30,12 +30,15 @@ class StatisticsView {
           </div>
         </div>
       </div>
+      <div class="statistics-wrap">
+      </div>
     `;
     return content;
   }
   
-  render = (state) => {
+  render(state) {
     this.wrap.innerHTML = this.buildSelection(); 
+    this.categoryView.render(state);
   }
 }
   

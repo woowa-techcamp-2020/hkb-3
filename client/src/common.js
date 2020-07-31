@@ -75,3 +75,5 @@ export function renderByModel(model) {
   if(getPath() === paths[model.name]) { renderByUrl(model); }
 }
 
+export const isPayment = (obj) => obj.state === '지출';
+
