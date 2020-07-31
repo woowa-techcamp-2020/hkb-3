@@ -1,5 +1,4 @@
-
-import HomeView from './views/homeView';
+import HomeView from './views/Home/homeView';
 import CalendarView from './views/Calendar/calendarView';
 import StatisticsView from './views/Statistics/statisticsView';
 import RouterModel from './models/routerModel';
@@ -17,6 +16,7 @@ export const elements = {
   calendarView: new CalendarView(),
   homeView: new HomeView(),
   statisticsView: new StatisticsView(),
+  
   contentWrap: document.querySelector('.content-wrap'),
 };
 
@@ -42,6 +42,7 @@ export function getState(path) {
   case paths.statistics:
     return elements.stastisticsModel;
   default:
+    
     break;
   }
 }
