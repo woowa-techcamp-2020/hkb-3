@@ -28,7 +28,7 @@ class CategoryView {
       content += `
         <div class="content-wrap">
           <div>
-            ${payment.contents}
+            ${payment.category_name}
           </div>
           <div>
             ${payment.percentage}%
@@ -52,11 +52,11 @@ class CategoryView {
     const obj = {};
     let totalAmount = 0;
     state.forEach((list) => {
-      if(obj[list.contents] && isPayment(list)) {
-        obj[list.contents].amount += list.amount;
+      if(obj[list.category_name] && isPayment(list)) {
+        obj[list.category_name].amount += list.amount;
         totalAmount += list.amount;
       }else if(!obj[list.id] && isPayment(list)) {
-        obj[list.contents] = { amount: list.amount };
+        obj[list.category_name] = { amount: list.amount };
         totalAmount += list.amount;
       }
     });
@@ -68,7 +68,7 @@ class CategoryView {
       const { amount } = obj[key];
       const percentage = parseInt(((amount / totalAmount) * 100));
       totalPercentage += percentage;
-      this.data.push({ amount, contents: key, percentage });
+      this.data.push({ amount, category_name: key, percentage });
     });
     this.data.sort((a, b) => b.amount - a.amount);
     this.data[0].percentage += maxPercentage - totalPercentage;
