@@ -1,10 +1,12 @@
 import './styles/container.scss';
 import './styles/main.scss';
 import './styles/calendar.scss';
+import './styles/home.scss';
 import 'core-js/modules/es.array.flat';
-import moment from 'moment';
 import Api from './api/index.js';
 import { renderByUrl, elements, renderByModel } from './common';
+
+
 
 window.addEventListener('DOMContentLoaded', async () => {
   // 유저 목록 가져오기 테스트 코드
@@ -35,7 +37,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   // console.log('currUser=', currUser);
 });
 
-
 (async () => {
   // init data 가져오면 각 모델에 데이터 추가 
   elements.initModel.addAllSubscribe(
@@ -59,4 +60,3 @@ window.addEventListener('DOMContentLoaded', async () => {
   document.querySelector('.main-router-wrap')
     .addEventListener('click', (e) => elements.routerModel.onLink(e));
 })();
-
