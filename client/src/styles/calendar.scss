@@ -1,0 +1,35 @@
+.calendar{
+  border: #C8C8C8 solid 1px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 20px rgba(99, 99, 99, 0.25);
+  .day-of-week,
+  .date-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+
+  .day-of-week{
+    border: 3px;
+    div{
+      border: #F5F5F5 solid 1px;
+      padding: 5px;
+    }
+  }
+
+  .sunday{
+    color: red;
+  }
+
+  .date-grid{
+    height: 100px;
+    .day-wrap{
+      border: #F5F5F5 solid 1px;
+      padding: 5px;
+      .other-date{
+        color: 	#C8C8C8
+      }
+    }
+  }
+}
+
+

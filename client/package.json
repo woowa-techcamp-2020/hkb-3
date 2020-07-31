@@ -1,0 +1,35 @@
+{
+  "name": "front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx webpack -d --mode development -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.0.0",
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "html-webpack-plugin": "^4.3.0",
+    "sass-loader": "^9.0.2",
+    "style-loader": "^1.2.1"
+  },
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "moment": "^2.27.0",
+    "sass": "^1.26.10",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12"
+  }
+}

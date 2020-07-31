@@ -1,0 +1,100 @@
+.select-wrap{
+    display: grid;
+    grid-template-columns: repeat(2, auto) 1fr; 
+    grid-gap: 30px;
+
+    .month-pay{
+        text-align: right;
+        > div{
+            width: auto;
+            display: inline-block;
+        }
+    }
+
+    input[type="radio"]{
+        display: none;
+    }
+
+    label{
+        span{
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            border: 2px solid skyblue;
+            float: left;
+            margin-right: 5px;
+        }
+
+        span:after{
+            content: "";
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            background: skyblue;
+            margin-top: 7px;
+            margin-left: 7px;
+            display: block;
+            position: relative;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: 300ms ease-in-out 0s;
+        }
+    }
+
+    input[type="radio"]:checked ~ span:after{
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.statistics-wrap{
+    margin-top: 20px;
+    text-align: center;
+    .category-wrap{
+        .bar-wrap{
+            .content-wrap{
+                // border: #F5F5F5 solid 1px;
+                display: grid;
+                grid-template-columns: auto auto 4fr auto; 
+                text-align: left;
+                div{
+                    padding: 5px;
+                }
+            }
+        }
+        
+        .pi-wrap{
+            margin: 30px 0;
+            svg {
+                width: 200px;
+                border-radius: 50%;
+                background: #3f51b5; 
+                transform: rotate(-90deg);
+              }
+              svg text {
+                transform: rotate(90deg);
+                font-size:5px;
+              }
+               
+              circle {
+                fill: none;
+                stroke-width: 32;
+                r: 16;
+                cx: 16;
+                cy: 16;
+              }
+               
+              circle.first {
+                stroke: #00bcd4;
+               
+              }
+               le.second {
+                stroke: #ffeb3b;
+              }
+                
+              circle.third {
+                stroke: purple;
+              }
+        }
+        
+    }
+}
