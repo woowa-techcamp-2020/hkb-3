@@ -3,6 +3,7 @@ import { isPayment } from '../../common';
 class CategoryView {
   setWrap() {
     this.wrap = document.querySelector('.statistics-wrap');
+    this.colors = ['#33cccc', '#00ccff', '#0099ff', '#0066ff', '#3366ff', '#0000ff', '#000099', '#003399', '#3366cc', '#336699'];
   }
 
   buildPi = () => {
@@ -24,7 +25,8 @@ class CategoryView {
 
   buildBar = () => {
     let content = '<div class="bar-wrap">';
-    this.data.forEach((payment) => {
+    const numberOfColors = this.colors.length;
+    this.data.forEach((payment, i) => {
       content += `
         <div class="content-wrap">
           <div>
@@ -35,7 +37,7 @@ class CategoryView {
           </div>
           <div>
             <svg width="100%" height="30">
-              <rect width="${payment.percentage}%" height="100%" fill="blue" />
+              <rect width="${payment.percentage}%" height="100%" fill=${this.colors[i % numberOfColors]} />
             </svg>
           </div>
           <div class="amount">
