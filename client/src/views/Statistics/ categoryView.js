@@ -30,15 +30,15 @@ class CategoryView {
           <div>
             ${payment.category_name}
           </div>
-          <div>
+          <div class="percentage">
             ${payment.percentage}%
           </div>
           <div>
-            <svg width="100%" height="50">
-              <rect width="${payment.percentage}%" height="30" fill="blue" />
+            <svg width="100%" height="30">
+              <rect width="${payment.percentage}%" height="100%" fill="blue" />
             </svg>
           </div>
-          <div>
+          <div class="amount">
             ${payment.amount}원
           </div>
         </div>

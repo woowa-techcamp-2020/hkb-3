@@ -51,13 +51,31 @@
     text-align: center;
     .category-wrap{
         .bar-wrap{
+            border-top: 2px solid #D3D3D3;
+            border-bottom: 1px solid #D3D3D3;
+
             .content-wrap{
                 // border: #F5F5F5 solid 1px;
                 display: grid;
-                grid-template-columns: auto auto 4fr auto; 
+                grid-template-columns: 1fr 1fr 9fr 2fr;
                 text-align: left;
+                grid-row-gap: 0; 
+                margin: 0;
+                border-bottom: 1px solid #D3D3D3;
+
                 div{
-                    padding: 5px;
+                    padding: 10px;
+                    vertical-align: middle;
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .percentage{
+                    color: rgba(63,187,165,1);
+                    vertical-align: middle;
+
+                }
+                .amount{
+                    text-align: right;
                 }
             }
         }
