@@ -19,20 +19,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   const payList = await Api.Transaction().getTransactionByUserId(userId);
   console.log('payList=', payList);
   
-  // 거래내역 추가하기 테스트 코드
-  // const trans = {
-  //   // id: 7,
-  //   contents: '맥도날드',
-  //   category_id: 3,
-  //   user_id: 3,
-  //   payment_id: 1,
-  //   date: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
-  //   amount: 6500,
-  //   state: '지출',
-  //   created_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
-  //   updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
-  // };
-  // const result = await Api.Transaction().createTransaction(trans);
   // console.log('createTransaction result=', result);
   // console.log('currUser=', currUser);
 });

@@ -7,14 +7,16 @@ import CalendarModel from './models/calendarModel';
 import HomeModel from './models/homeModel';
 import StatisticsModel from './models/statisticsModel';
 
+const initModeltemp = new InitModel();
+
 export const elements = {
   routerModel: new RouterModel(),
-  initModel: new InitModel(),
+  initModel: initModeltemp,
   calendarModel: new CalendarModel(),
   homeModel: new HomeModel(),
   stastisticsModel: new StatisticsModel(),
   calendarView: new CalendarView(),
-  homeView: new HomeView(),
+  homeView: new HomeView(initModeltemp),
   statisticsView: new StatisticsView(),
   
   contentWrap: document.querySelector('.content-wrap'),
