@@ -1,6 +1,7 @@
 import './styles/container.scss';
 import './styles/main.scss';
 import './styles/calendar.scss';
+import './styles/statistics.scss';
 import './styles/home.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
