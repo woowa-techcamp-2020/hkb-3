@@ -80,3 +80,11 @@ export function renderByModel(model) {
 
 export const isPayment = (obj) => obj.state === '지출';
 
+export const $ = (str) => {
+  const element = document.querySelector(str);
+  return {
+    click(handler) {
+      element.addEventListener('click', handler);
+    },
+  };
+};

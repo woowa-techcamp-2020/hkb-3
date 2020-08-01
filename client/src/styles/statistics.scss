@@ -51,6 +51,7 @@
     text-align: center;
     .category-wrap{
         .bar-wrap{
+            margin-top: 50px;
             border-top: 2px solid #D3D3D3;
             border-bottom: 1px solid #D3D3D3;
 
@@ -69,7 +70,7 @@
                     height: 30px;
                     line-height: 30px;
                 }
-                .percentage{
+                .percent{
                     color: rgba(63,187,165,1);
                     vertical-align: middle;
 
@@ -87,31 +88,32 @@
                 border-radius: 50%;
                 background: #3f51b5; 
                 transform: rotate(-90deg);
-              }
-              svg text {
+            }
+            svg text {
                 transform: rotate(90deg);
                 font-size:5px;
-              }
+            }
                
-              circle {
+            circle {
                 fill: none;
                 stroke-width: 32;
                 r: 16;
                 cx: 16;
                 cy: 16;
-              }
-               
-              circle.first {
+            }
+            
+            circle.first {
                 stroke: #00bcd4;
-               
-              }
-               le.second {
+            
+            }
+            circle.second {
                 stroke: #ffeb3b;
-              }
-                
-              circle.third {
+            }
+            
+            circle.third {
                 stroke: purple;
-              }
+            }
+
         }
         
     }
