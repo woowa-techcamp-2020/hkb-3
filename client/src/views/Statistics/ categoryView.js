@@ -4,12 +4,18 @@ import View from '../view';
 class CategoryView extends View {
   constructor(...args) {
     super(args);
+    this.circleRound = 565.49;
+    this.radius = 90;
   }
 
   setWrap() {
     this.wrap = document.querySelector('.statistics-wrap');
     this.colors = ['#33cccc', '#00ccff', '#0099ff', '#0066ff', '#3366ff', '#0000ff', '#000099', '#003399', '#3366cc', '#336699'];
     this.handlers = [];
+  }
+
+  getDistByRound(percent) {
+    return this.circleRound * (percent / 100);
   }
 
   makePercentSumList() {
@@ -30,12 +36,21 @@ class CategoryView extends View {
     return percentSumList;
   }
 
+  /**
+        <text x="5" y="-11" fill="#fff">65%</text>
+        <text x="15" y="-26" fill="#fff">5%</text>
+        <text x="18" y="-17" fill="#fff">35%</text>
+   */
   buildCircle() {
     const percentSumList = this.makePercentSumList();
     let content = '';
     percentSumList.forEach((info, i) => {
       content += `
-        <circle class="pie" stroke-dasharray="${info.percentSum} 100" stroke="${this.colors[i]}"></circle>
+        <circle 
+          class="pie" 
+          stroke-dasharray="${this.getDistByRound(info.percentSum)} ${this.circleRound}" 
+          stroke="${this.colors[i]}">
+        </circle>
       `;
     });
     // super.addHandler(() => $('.first').click(() => console.log(1)));
@@ -47,9 +62,11 @@ class CategoryView extends View {
   buildPi = () => {
     const content = `
     <div class="pi-wrap">
-      <svg viewBox="0 0 32 32">
-        ${this.buildCircle()}
-      </svg>
+        <svg class="svg-wrap">
+          <svg class="circle-wrap" >
+          ${this.buildCircle()}
+          </svg>
+        </svg>
     </div>
     `;
     return content;
