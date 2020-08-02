@@ -1,4 +1,4 @@
-import CategoryView from './ categoryView';
+import CategoryView from './CategoryView';
 
 class StatisticsView {
   constructor() {

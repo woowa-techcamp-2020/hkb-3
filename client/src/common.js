@@ -1,6 +1,6 @@
 import HomeView from './views/Home/homeView';
 import CalendarView from './views/Calendar/calendarView';
-import StatisticsView from './views/Statistics/statisticsView';
+import StatisticsView from './views/Statistics';
 import RouterModel from './models/routerModel';
 import InitModel from './models/initModel';
 import CalendarModel from './models/calendarModel';
@@ -85,6 +85,9 @@ export const $ = (str) => {
   return {
     click(handler) {
       element.addEventListener('click', handler);
+    },
+    getNode() {
+      return element;
     },
   };
 };

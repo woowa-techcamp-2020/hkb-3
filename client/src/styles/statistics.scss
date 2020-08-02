@@ -51,7 +51,7 @@
     text-align: center;
     .category-wrap{
         .bar-wrap{
-            margin-top: 50px;
+            margin-bottom: 50px;
             border-top: 2px solid #D3D3D3;
             border-bottom: 1px solid #D3D3D3;
 
@@ -84,12 +84,20 @@
         .pi-wrap{
 
             .svg-wrap{
-                height: 450px;
-                width: 450px;
+                height: 600px;
+                width: 600px;
+                polyline {
+                    fill: none;
+                    stroke: #C0C0C0;
+                }
+                text{
+                    .percent{
+                        fill: rgba(63,187,165,1);
+                    }
+                }
                 .circle-wrap{
                     border-radius: 50%;
                     background: #3f51b5; 
-                    transform: rotate(-90deg);
     
                     circle {
                         fill: none;
@@ -101,10 +109,6 @@
     
                     .pie:hover{
                         stroke: tomato;
-                    }
-                    text {
-                        transform: rotate(90deg);
-                        font-size:5px;
                     }
                 }
             }

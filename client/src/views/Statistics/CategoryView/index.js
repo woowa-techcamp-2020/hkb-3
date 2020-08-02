@@ -1,75 +1,15 @@
-import { isPayment, $ } from '../../common';
-import View from '../view';
+import { isPayment, $ } from '../../../common';
+import View from '../../view';
+import PieView from './pieVIew';
 
 class CategoryView extends View {
   constructor(...args) {
     super(args);
-    this.circleRound = 565.49;
-    this.radius = 90;
   }
 
   setWrap() {
     this.wrap = document.querySelector('.statistics-wrap');
     this.colors = ['#33cccc', '#00ccff', '#0099ff', '#0066ff', '#3366ff', '#0000ff', '#000099', '#003399', '#3366cc', '#336699'];
-    this.handlers = [];
-  }
-
-  getDistByRound(percent) {
-    return this.circleRound * (percent / 100);
-  }
-
-  makePercentSumList() {
-    const percentSumList = [];
-    const reversedList = this.categoryList.slice();
-    reversedList.reverse();
-    reversedList.reduce((prev, value) => {
-      const newValue = value.percent + prev; 
-      console.log(value);
-      percentSumList.unshift({ percentSum: newValue, name: value.category_name });
-      return newValue;
-    }, 0);
-
-    // 100으로 그래프 채우면 1만큼 비기때문에 101로 바꿔준다.
-    const errorValue = 1;
-    percentSumList[0].percentSum += errorValue;
-    console.log(percentSumList);
-    return percentSumList;
-  }
-
-  /**
-        <text x="5" y="-11" fill="#fff">65%</text>
-        <text x="15" y="-26" fill="#fff">5%</text>
-        <text x="18" y="-17" fill="#fff">35%</text>
-   */
-  buildCircle() {
-    const percentSumList = this.makePercentSumList();
-    let content = '';
-    percentSumList.forEach((info, i) => {
-      content += `
-        <circle 
-          class="pie" 
-          stroke-dasharray="${this.getDistByRound(info.percentSum)} ${this.circleRound}" 
-          stroke="${this.colors[i]}">
-        </circle>
-      `;
-    });
-    // super.addHandler(() => $('.first').click(() => console.log(1)));
-    return content;
-  }
-
-  
-
-  buildPi = () => {
-    const content = `
-    <div class="pi-wrap">
-        <svg class="svg-wrap">
-          <svg class="circle-wrap" >
-          ${this.buildCircle()}
-          </svg>
-        </svg>
-    </div>
-    `;
-    return content;
   }
 
 
@@ -135,9 +75,15 @@ class CategoryView extends View {
     this.state = state;
     this.setWrap();
     this.categoryObjToList();
+    
+    const pieView = new PieView({ 
+      categoryList: this.categoryList,
+      colors: this.colors, 
+    });
+
     this.wrap.innerHTML = `
       <div class="category-wrap">
-        ${this.buildPi()}
+        ${pieView.buildPi()}
         ${this.buildBar()}
       </div>
     `;
