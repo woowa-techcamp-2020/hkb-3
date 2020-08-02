@@ -62,6 +62,7 @@ Give a ⭐️ if this project helped you!
 
 ## 🗓회고
 * [2020-07-28 회고](https://github.com/woowa-techcamp-2020/hkb-3/wiki/2020-07-28-2%EC%9D%BC%EC%B0%A8-%ED%9A%8C%EA%B3%A0)
+* [2020-07-29 회고](https://github.com/woowa-techcamp-2020/hkb-3/wiki/2020-07-29-3%EC%9D%BC%EC%B0%A8-%ED%9A%8C%EA%B3%A0)
 
 
 
@@ -71,6 +72,8 @@ Give a ⭐️ if this project helped you!
 
 
 ## 📑Study
+
+* [SVG 탐험하기](https://github.com/woowa-techcamp-2020/hkb-3/wiki/SVG-%ED%83%90%ED%97%98%ED%95%98%EA%B8%B0https://github.com/woowa-techcamp-2020/hkb-3/wiki/SVG-%ED%83%90%ED%97%98%ED%95%98%EA%B8%B0)
 
 
 
