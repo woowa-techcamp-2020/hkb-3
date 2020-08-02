@@ -14,7 +14,7 @@ class PieView {
 
   degreeToRadian = (degree) => degree * (Math.PI / 180)
 
-  getPostOnCircle(percent) {
+  getPosOnCircle(percent) {
     const stretch = 120;
 
     // 각도와 퍼센트의 비율
@@ -46,7 +46,7 @@ class PieView {
         nextPercent = this.percentSumList[i + 1].percentSum;
       }
       const midPercent = (curPercent + nextPercent) / 2;
-      const { x, y } = this.getPostOnCircle(midPercent);
+      const { x, y } = this.getPosOnCircle(midPercent);
       const weight = info.name.length;
       const { lineX, textX } = this.getNextLineAndTextPos(midPercent, x, weight);
       content += `
