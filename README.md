@@ -73,7 +73,8 @@ Give a ⭐️ if this project helped you!
 
 ## 📑Study
 
-* [SVG 탐험하기](https://github.com/woowa-techcamp-2020/hkb-3/wiki/SVG-%ED%83%90%ED%97%98%ED%95%98%EA%B8%B0https://github.com/woowa-techcamp-2020/hkb-3/wiki/SVG-%ED%83%90%ED%97%98%ED%95%98%EA%B8%B0)
+* [SVG 탐험하기](* [SVG 탐험하기](https://github.com/woowa-techcamp-2020/hkb-3/wiki/SVG-%ED%83%90%ED%97%98%ED%95%98%EA%B8%B0)
+
 
 
 
