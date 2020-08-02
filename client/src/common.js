@@ -1,5 +1,5 @@
 import HomeView from './views/Home/homeView';
-import CalendarView from './views/Calendar/calendarView';
+import CalendarView from './views/Calendar';
 import StatisticsView from './views/Statistics';
 import RouterModel from './models/routerModel';
 import InitModel from './models/initModel';
@@ -8,6 +8,18 @@ import HomeModel from './models/homeModel';
 import StatisticsModel from './models/statisticsModel';
 
 const initModeltemp = new InitModel();
+
+export const $ = (str) => {
+  const element = document.querySelector(str);
+  return {
+    click(handler) {
+      element.addEventListener('click', handler);
+    },
+    getNode() {
+      return element;
+    },
+  };
+};
 
 export const elements = {
   routerModel: new RouterModel(),
@@ -80,14 +92,8 @@ export function renderByModel(model) {
 
 export const isPayment = (obj) => obj.state === '지출';
 
-export const $ = (str) => {
-  const element = document.querySelector(str);
-  return {
-    click(handler) {
-      element.addEventListener('click', handler);
-    },
-    getNode() {
-      return element;
-    },
-  };
-};
+
+export function fillZeroToDate(date) {
+  const dateLength = 2;
+  return date.padStart(dateLength, '0');
+}

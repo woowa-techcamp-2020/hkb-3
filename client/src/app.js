@@ -5,7 +5,9 @@ import './styles/statistics.scss';
 import './styles/home.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
-import { renderByUrl, elements, renderByModel } from './common';
+import {
+  renderByUrl, elements, renderByModel, $, 
+} from './common';
 
 
 
@@ -46,4 +48,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('popstate', renderByUrl);
   document.querySelector('.main-router-wrap')
     .addEventListener('click', (e) => elements.routerModel.onLink(e));
+
+  $('.main-month-wrap').click((event) => {
+    const { target } = event;
+    if(target.dataset.action === 'left') {
+      elements.initModel.decreaseMonth();
+    }else if(target.dataset.action === 'right') {
+      elements.initModel.increaseMonth();
+    }
+  });
 })();

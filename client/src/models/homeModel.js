@@ -9,7 +9,7 @@ class HomeModel extends Observable {
   }
 
   update(model) {
-    this.state = model.data;
+    this.state = model.state.data;
     this.notify(this);
   }
 }

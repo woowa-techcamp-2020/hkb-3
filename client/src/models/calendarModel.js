@@ -9,7 +9,7 @@ class CalendarModel extends Observable {
   }
 
   update(model) {
-    this.state = model.data;
+    this.state = model.state;
     this.notify(this);
   }
 }
