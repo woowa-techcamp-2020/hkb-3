@@ -51,49 +51,70 @@
     text-align: center;
     .category-wrap{
         .bar-wrap{
+            margin-bottom: 50px;
+            border-top: 2px solid #D3D3D3;
+            border-bottom: 1px solid #D3D3D3;
+
             .content-wrap{
                 // border: #F5F5F5 solid 1px;
                 display: grid;
-                grid-template-columns: auto auto 4fr auto; 
+                grid-template-columns: 1fr 1fr 9fr 2fr;
                 text-align: left;
+                grid-row-gap: 0; 
+                margin: 0;
+                border-bottom: 1px solid #D3D3D3;
+
                 div{
-                    padding: 5px;
+                    padding: 10px;
+                    vertical-align: middle;
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .percent{
+                    color: rgba(63,187,165,1);
+                    vertical-align: middle;
+
+                }
+                .amount{
+                    text-align: right;
                 }
             }
         }
         
         .pi-wrap{
-            margin: 30px 0;
-            svg {
-                width: 200px;
-                border-radius: 50%;
-                background: #3f51b5; 
-                transform: rotate(-90deg);
-              }
-              svg text {
-                transform: rotate(90deg);
-                font-size:5px;
-              }
+
+            .svg-wrap{
+                height: 600px;
+                width: 600px;
+                polyline {
+                    fill: none;
+                    stroke: #C0C0C0;
+                }
+                text{
+                    .percent{
+                        fill: rgba(63,187,165,1);
+                    }
+                }
+                .circle-wrap{
+                    border-radius: 50%;
+                    background: #3f51b5; 
+    
+                    circle {
+                        fill: none;
+                        stroke-width: 180;
+                        r: 90;
+                        cx: 50%;
+                        cy: 50%;
+                    }
+    
+                    .pie:hover{
+                        stroke: tomato;
+                    }
+                }
+            }
                
-              circle {
-                fill: none;
-                stroke-width: 32;
-                r: 16;
-                cx: 16;
-                cy: 16;
-              }
-               
-              circle.first {
-                stroke: #00bcd4;
-               
-              }
-               le.second {
-                stroke: #ffeb3b;
-              }
-                
-              circle.third {
-                stroke: purple;
-              }
+
+
         }
         
     }
