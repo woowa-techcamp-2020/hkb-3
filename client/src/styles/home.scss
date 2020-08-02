@@ -5,7 +5,7 @@
                 color: white;
                 background-color: #3a78ff;
             }
-            &-expenditure{
+            &-spend{
                 color: white;
                 background-color: #2ab6ae;
             }
@@ -15,7 +15,7 @@
             &-income{
                 color:#3a78ff;
             }
-            &-expenditure{
+            &-spend{
                 color:#2ab6ae;
             }
         }
@@ -29,6 +29,28 @@
     &-date{
         border-top: 1px #2cc2bb solid;
         border-bottom: 1px #2cc2bb solid;
+        &-income{
+            color:#3a78ff;
+        }
+        &-spend{
+            color:#2ab6ae;
+        }
     }
 
+    &-total{
+        &-income{
+            input[type="checkbox"]:checked{
+                color:red;
+                background-color: red;
+            }
+            color:#3a78ff;
+        }
+        &-spend{
+            input[type="checkbox"]:checked{
+                color:#2ab6ae;
+                background-color: #2ab6ae;
+            }
+            color:#2ab6ae;
+        }
+    }
 }

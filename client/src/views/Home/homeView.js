@@ -1,100 +1,118 @@
 import moment from 'moment';
 import comma from '../../lib/numberComma';
 import Api from '../../api/index';
+import TransListView from './components/transListView';
 
 class HomeView {
   constructor(model) {
     this.model = model;
     this.wrap = document.querySelector('.content-wrap');
     this.currDate = '';
+    this.incomeCheck = true;
+    this.spendCheck = true;
+    this.transListView = new TransListView();
   }
 
+  // 인풋 창들
+  inputFieldRender = () => {
+    const contents = `
+    <div class="transaction-input">
+      <div class="transaction-input-state">
+        <span class="transaction-input-state-text">분류</span>
+        <input type="radio" name="state" value="수입" checked>수입
+        <input type="radio" name="state" value="지출">지출
+      </div>
+      <div class="transaction-input-date">
+        <span class="transaction-input-date-text">날짜</span>
+        <input type="text" class="transaction-input-date-input"></input>
+      </div>
+      <div class="transaction-input-category">
+        <span class="transaction-input-category-text">카테고리</span>
+        <input type="text" class="transaction-input-category-input"></input>
+      </div>
+      <div class="transaction-input-method">
+        <span class="transaction-input-method-text">결제수단</span>
+        <input type="text" class="transaction-input-method-input"></input>
+      </div>
+      <div class="transaction-input-amount">
+        <span class="transaction-input-amount-text">금액</span>
+        <input type="number" class="transaction-input-amount-input"></input>
+      </div>
+      <div class="transaction-input-contents">
+        <span class="transaction-input-contents-text">내용</span>
+        <input type="text" class="transaction-input-contents-input"></input>
+      </div>
+      <div class="transaction-input-button">
+        <button class="transaction-input-button-confirm">확인</button>
+        <button class="transaction-input-button-clear">내용 지우기</button>
+        <button class="transaction-input-button-test">내역 자동 생성</button>
+      </div>
+    </div>`;
+    return contents;
+  }
+
+  // 화면 중간에 이번 달 총 수입, 총 지출 화면
+  totalFieldRender = (totalInOut) => {
+    const contents = `
+    <div class="transaction-total">
+      <div class="transaction-total-income">
+        <input class="transaction-total-income-input" type="checkbox" checked=${this.incomeCheck}>
+        <span>수입</span>
+        <span>${comma(totalInOut.totalIncome)}</span>
+        </div>
+      <div class="transaction-total-spend">
+        <input class="transaction-total-spend-input" type="checkbox" checked=${this.spendCheck}>
+        <span>지출</span>
+        <span>${comma(totalInOut.totalSpend)}</div></span>
+    </div>`;
+    return contents;
+  }
+
+  // 화면 그리기
   render = (state) => {
     console.log('home', state);
+    const totalInOut = this.getTotalIncome(state);
     this.currDate = state[0].date;
-    const transactionList = `
+
+    // ${this.listFieldRender(state)}
+    const contents = `
     <div class = "transaction-wrapper">
-      <div class="transaction-input">
-        <div class="transaction-input-state">
-          <span class="transaction-input-state-text">분류</span>
-            <input type="text" class="transaction-input-state-input"></input>
-        </div>
-        <div class="transaction-input-date">
-          <span class="transaction-input-date-text">날짜</span>
-          <input type="text" class="transaction-input-date-input"></input>
-        </div>
-        <div class="transaction-input-category">
-          <span class="transaction-input-category-text">카테고리</span>
-          <input type="text" class="transaction-input-category-input"></input>
-        </div>
-        <div class="transaction-input-method">
-          <span class="transaction-input-method-text">결제수단</span>
-          <input type="text" class="transaction-input-method-input"></input>
-        </div>
-        <div class="transaction-input-amount">
-          <span class="transaction-input-amount-text">금액</span>
-          <input type="number" class="transaction-input-amount-input"></input>
-        </div>
-        <div class="transaction-input-contents">
-          <span class="transaction-input-contents-text">내용</span>
-          <input type="text" class="transaction-input-contents-input"></input>
-        </div>
-        <div class="transaction-input-button">
-          <button class="transaction-input-button-confirm">확인</button>
-          <button class="transaction-input-button-clear">내용 지우기</button>
-          <button class="transaction-input-button-test">내역 자동 생성</button>
-        </div>
-      </div>
-
-      <div class="transaction-total">
-        <div class="transaction-total-income">수입</div>
-        <div class="transaction-total-expenditure">지출</div>
-      </div>
-
+      ${this.inputFieldRender()}
+      ${this.totalFieldRender(totalInOut)}
       <div class ="transaction-list">
-        <div class="transaction-date">
-          <span class="today">${this.getToday(state)}</span>
-        </div>
-
-        ${state.map((transaction) => `
-
-          ${this.isSameDate(transaction) ? '' : `
-            <div class="transaction-date">
-              ${this.getToday(transaction)}
-            </div>`}
-
-          <div class="transaction-contents ${transaction.id}">
-            <span class="transaction-column-category-${this.isIncome(transaction) ? 'income' : 'expenditure'}">${transaction.category_name}</span>
-            <span class="transaction-column-contents">${transaction.contents}</span>
-            <span class="transaction-column-method">${transaction.payment_method}</span>
-            <span class="transaction-column-amount-${this.isIncome(transaction) ? 'income' : 'expenditure'}">
-              ${this.isIncome(transaction) ? `+${comma(transaction.amount)}` : `-${comma(transaction.amount)}`}
-            </span>
-          </div>
-        `).join('')}
       </div>
     </div>
     `;
-    this.wrap.innerHTML = transactionList;
+    this.wrap.innerHTML = contents;
+
+    this.transListView.render(state, this.incomeCheck, this.spendCheck);
+    this.addEventToCheckbox();
     this.addEventToButtons();
   }
 
+  // 이번달 총 수입 구해서 리턴
+  getTotalIncome = (state) => {
+    let totalIncome = 0;
+    let totalSpend = 0;
+    state.forEach((transaction) => {
+      if(transaction.state === '지출') {
+        totalSpend += transaction.amount;
+      }
+      if(transaction.state === '수입') {
+        totalIncome += transaction.amount;
+      }
+    });
+    return { totalIncome, totalSpend };
+  }
+
+  // 버튼에 이벤트 리스너 추가하기
   addEventToButtons() {
-    console.log('hello!!!! 실핸되네??');
-    // 거래내역 추가하기 테스트 코드
-    // const trans = {
-    //   // id: 7,
-    //   contents: '맥도날드',
-    //   category_id: 3,
-    //   user_id: 3,
-    //   payment_id: 1,
-    //   date: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
-    //   amount: 6500,
-    //   state: '지출',
-    //   created_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
-    //   updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
-    // };
-    // const result = await Api.Transaction().createTransaction(trans);
+    this.addConfirmButtonEvent();
+    this.addClearButtonEvent();
+    this.addTestButtonEvent();
+  }
+
+  addConfirmButtonEvent = () => {
     const confirmButton = document.querySelector('.transaction-input-button-confirm');
     confirmButton.addEventListener('click', async () => {
       const trans = {
@@ -104,14 +122,17 @@ class HomeView {
         payment_id: document.querySelector('.transaction-input-method-input').value,
         date: new Date(moment(document.querySelector('.transaction-input-date-input').value).format('YYYY-MM-DD HH:mm:ss')),
         amount: document.querySelector('.transaction-input-amount-input').value,
-        state: document.querySelector('.transaction-input-state-input').value,
+        state: document.querySelector('input[name="state"]:checked').value,
         created_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
         updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')),
       };
       await Api.Transaction().createTransaction(trans);
       await this.model.fetchInitData();
-      console.log('hihihihi', trans);
+      this.transListView.render(this.model.data, this.incomeCheck, this.spendCheck);
     });
+  }
+
+  addClearButtonEvent= () => {
     const clearButton = document.querySelector('.transaction-input-button-clear');
     clearButton.addEventListener('click', () => {
       document.querySelector('.transaction-input-state-input').value = '';
@@ -121,13 +142,18 @@ class HomeView {
       document.querySelector('.transaction-input-method-input').value = '';
       document.querySelector('.transaction-input-date-input').value = '';
     });
-    
-    const states = ['수입', '지출'];
+  }
+
+  addTestButtonEvent = () => {
+    const states = [true, false];
     
     const testButton = document.querySelector('.transaction-input-button-test');
     testButton.addEventListener('click', () => {
       const state = Math.floor(Math.random() * 2);
-      document.querySelector('.transaction-input-state-input').value = states[state];
+      
+      document.querySelector('.transaction-input-state').children[1].checked = states[state];
+      document.querySelector('.transaction-input-state').children[2].checked = !states[state];
+      
       document.querySelector('.transaction-input-amount-input').value = (Math.floor(Math.random() * 100) + 1) * 1000;
       let category = 1;
 
@@ -144,65 +170,28 @@ class HomeView {
     });
   }
 
-  getToday = (tranaction) => {
-    let date = '';
-    if(tranaction.length > 0) {
-      date = new Date(tranaction[0].date);
-    }else{
-      date = new Date(tranaction.date);
-    }
-    const day = date.getDay();
-    let yoil = '';
-    switch(day) {
-    case 0:
-      yoil = '일';
-      break;
-    case 1:
-      yoil = '월';
-      break;
-    case 2:
-      yoil = '화';
-      break;
-    case 3:
-      yoil = '수';
-      break;
-    case 4:
-      yoil = '목';
-      break;
-    case 5:
-      yoil = '금';
-      break;
-    case 6:
-      yoil = '토';
-      break;
-    default:
-      break;
-    }
-    const currDate = `${date.getMonth() + 1}월 ${date.getDate()}일 ${yoil}`;
-    return currDate;
+  // 체크박스 이벤트 추가
+  addEventToCheckbox = () => {
+    this.addIncomeCheckboxEvent();
+    this.addSpendCheckboxEvent();
   }
 
-  isSameDate = (tranaction) => {
-    const curr = new Date(this.currDate);
-    const newtime = new Date(tranaction.date);
-    if(curr.getFullYear() === newtime.getFullYear() 
-      && curr.getMonth() === newtime.getMonth() 
-      && curr.getDate() === newtime.getDate()) {
-      return true;
-    }
-    
-    this.currDate = tranaction.date;
-    return false;
+  // 수입 체크박스 이벤트 추가
+  addIncomeCheckboxEvent = () => {
+    const incomeCheckbox = document.querySelector('.transaction-total-income').children[0];
+    incomeCheckbox.addEventListener('click', () => {
+      this.incomeCheck = incomeCheckbox.checked;
+      this.transListView.render(this.model.data, this.incomeCheck, this.spendCheck);
+    });
   }
 
-  // eslint-disable-next-line consistent-return
-  isIncome= (transaction) => {
-    if(transaction.state === '수입') {
-      return true;
-    } 
-    if(transaction.state === '지출') {
-      return false;
-    }
+  // 지출 체크박스 이벤트 추가
+  addSpendCheckboxEvent = () => {
+    const spendCheckbox = document.querySelector('.transaction-total-spend').children[0];
+    spendCheckbox.addEventListener('click', () => {
+      this.spendCheck = spendCheckbox.checked;
+      this.transListView.render(this.model.data, this.incomeCheck, this.spendCheck);
+    });
   }
 }
 
