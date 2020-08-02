@@ -5,13 +5,8 @@ import PieView from './pieVIew';
 class CategoryView extends View {
   constructor(...args) {
     super(args);
-  }
-
-  setWrap() {
-    this.wrap = document.querySelector('.statistics-wrap');
     this.colors = ['#33cccc', '#00ccff', '#0099ff', '#0066ff', '#3366ff', '#0000ff', '#000099', '#003399', '#3366cc', '#336699'];
   }
-
 
   buildBar = () => {
     let content = '<div class="bar-wrap">';
@@ -43,7 +38,7 @@ class CategoryView extends View {
   stateToCategoryObj() {
     const obj = {};
     let totalAmount = 0;
-    this.state.forEach((list) => {
+    this.data.forEach((list) => {
       if(obj[list.category_name] && isPayment(list)) {
         obj[list.category_name].amount += list.amount;
         totalAmount += list.amount;
@@ -72,8 +67,8 @@ class CategoryView extends View {
   }
 
   render(state) {
-    this.state = state;
-    this.setWrap();
+    this.data = state.data;
+    this.wrap = state.wrap;
     this.categoryObjToList();
     
     const pieView = new PieView({ 

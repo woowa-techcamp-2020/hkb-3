@@ -1,7 +1,3 @@
-import CategoryView from '.';
-import View from '../../view';
-import { $ } from '../../../common';
-
 class PieView {
   constructor(state) {
     this.categoryList = state.categoryList;
@@ -28,7 +24,6 @@ class PieView {
   getNextLineAndTextPos = (percent, x, weight) => {
     const stretch = 20;
     const textStretch = 30 * weight;
-    console.log(percent);
     if(percent >= 25 && percent < 75) {
       return { lineX: x - stretch, textX: x - stretch - textStretch };
     }
