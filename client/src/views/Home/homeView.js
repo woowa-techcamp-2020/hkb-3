@@ -51,9 +51,9 @@ class HomeView {
     confirmButton.addEventListener('click', async () => {
       const trans = {
         contents: document.querySelector('.transaction-input-contents-input').value,
-        category_id: document.querySelector('.transaction-input-category-input').value,
+        category_id: document.querySelector('.transaction-input-category-select').value,
         user_id: 1,
-        payment_id: document.querySelector('.transaction-input-method-input').value,
+        payment_id: document.querySelector('.transaction-input-method-select').value,
         date: new Date(moment(document.querySelector('.transaction-input-date-input').value).format('YYYY-MM-DD HH:mm:ss')),
         amount: document.querySelector('.transaction-input-amount-input').value,
         state: document.querySelector('input[name="state"]:checked').value,
@@ -71,9 +71,9 @@ class HomeView {
     clearButton.addEventListener('click', () => {
       document.querySelector('.transaction-input-state-input').value = '';
       document.querySelector('.transaction-input-amount-input').value = '';
-      document.querySelector('.transaction-input-category-input').value = '';
+      document.querySelector('.transaction-input-category-select').value = '';
       document.querySelector('.transaction-input-contents-input').value = '';
-      document.querySelector('.transaction-input-method-input').value = '';
+      document.querySelector('.transaction-input-method-select').value = '';
       document.querySelector('.transaction-input-date-input').value = '';
     });
   }
@@ -84,6 +84,8 @@ class HomeView {
     const testButton = document.querySelector('.transaction-input-button-test');
     testButton.addEventListener('click', () => {
       const state = Math.floor(Math.random() * 2);
+
+      
       
       document.querySelector('.transaction-input-state').children[1].checked = states[state];
       document.querySelector('.transaction-input-state').children[2].checked = !states[state];
@@ -91,15 +93,16 @@ class HomeView {
       document.querySelector('.transaction-input-amount-input').value = (Math.floor(Math.random() * 100) + 1) * 1000;
       let category = 1;
 
-      if(state === 1) {
+      if(state === 2) {
         category = 1;
       }else{
         category = Math.floor(Math.random() * 7) + 2;
       }
 
-      document.querySelector('.transaction-input-category-input').value = category;
+      document.querySelector('.transaction-input-category-select').value = category;
       document.querySelector('.transaction-input-contents-input').value = '';
-      document.querySelector('.transaction-input-method-input').value = Math.floor(Math.random() * 3) + 1;
+      document.querySelector('.transaction-input-method-select').value = Math.floor(Math.random() * 3) + 1;
+
       document.querySelector('.transaction-input-date-input').value = `2020-07-${Math.floor(Math.random() * 10) + 21}`;
     });
   }

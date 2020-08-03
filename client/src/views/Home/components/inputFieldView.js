@@ -10,6 +10,7 @@ class InputFieldView extends View {
   }
   
   render(state) {
+    this.state = state;
     this.setWrap();
     const contents = `
       <div class="transaction-input-state">
@@ -23,17 +24,24 @@ class InputFieldView extends View {
       </div>
       <div class="transaction-input-category">
         <span class="transaction-input-category-text">카테고리</span>
-        <input type="text" class="transaction-input-category-input"></input>
-        <select >
-          <option>Apple</option>
-          <option>Pear</option>
-          <option>Banana</option>
-          <option>Orange</option>
+        <select class="transaction-input-category-select" name="category">
+          <option value="1">월급</option>
+          <option value="2">생활</option>
+          <option value="3">식비</option>
+          <option value="4">교통</option>
+          <option value="5">쇼핑/뷰티</option>
+          <option value="6">의료/건강</option>
+          <option value="7">문화/여가</option>
+          <option value="8">미분류</option>
         </select>
       </div>
       <div class="transaction-input-method">
         <span class="transaction-input-method-text">결제수단</span>
-        <input type="text" class="transaction-input-method-input"></input>
+        <select class="transaction-input-method-select" name="category">
+          <option value="1">현대카드</option>
+          <option value="2">카카오체크카드</option>
+          <option value="3">국민은행</option>
+        </select>
       </div>
       <div class="transaction-input-amount">
         <span class="transaction-input-amount-text">금액</span>
