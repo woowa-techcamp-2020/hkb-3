@@ -15,7 +15,7 @@ class StatisticsModel extends Observable {
   }
 
   update(model) {
-    this.state = { data: model.data, renderContent: this.renderContent };
+    this.state = { data: model.state.data, renderContent: this.renderContent };
     this.notify(this);
   }
 }
