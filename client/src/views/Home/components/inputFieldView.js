@@ -20,7 +20,7 @@ class InputFieldView extends View {
       </div> 
       <div class="transaction-input-date">
         <span class="transaction-input-date-text">날짜</span>
-        <input type="text" class="transaction-input-date-input"></input>
+        <input type="text" class="transaction-input-date-input" placeholder="yyyy-mm-dd" maxlength="10"></input>
       </div>
       <div class="transaction-input-category">
         <span class="transaction-input-category-text">카테고리</span>
