@@ -1,6 +1,8 @@
 import CategoryView from './CategoryView';
 import DayView from './DayView';
 import $ from '../../lib/miniJQuery';
+import { isSpend } from '../../common';
+import numberComma from '../../lib/numberComma';
 
 class StatisticsView {
   constructor(state) {
@@ -30,8 +32,7 @@ class StatisticsView {
           <div>
             이번달 지출 금액: 
           </div>
-          <div>
-            100,000원
+          <div class="total-spend">
           </div>
         </div>
       </div>
@@ -50,12 +51,30 @@ class StatisticsView {
     });
   }
 
-  
+  setTotalSpend() {
+    $('.total-spend').getNode().innerText = `${numberComma(this.totalSpend)}원`;
+  }
+
+  getSpendList() {
+    const spends = [];
+    this.totalSpend = 0;
+    this.state.data.forEach((info) => {
+      if(isSpend(info)) {
+        spends.push(info);
+        this.totalSpend += info.amount;
+      }
+    });
+    return spends;
+  }
+
   render() {
     const newState = {
-      data: this.state.data, 
+      data: this.getSpendList(), 
       wrap: $('.statistics-wrap').getNode(),
+      date: this.state.date,
+      totalSpend: this.totalSpend,
     };
+    this.setTotalSpend();
     const categorySelect = $('#category').getNode();
 
     if(categorySelect.checked) {
