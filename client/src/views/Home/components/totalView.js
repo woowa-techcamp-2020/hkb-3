@@ -15,15 +15,16 @@ class TotalView extends View {
     this.setWrap();
     const totalInOut = this.getTotalIncome(state);
     const contents = `
-      <div class="transaction-total-income">
-      <input class="transaction-total-income-input" type="checkbox" checked=${this.incomeCheck}>
-      <span>수입</span>
-      <span>${comma(totalInOut.totalIncome)}</span>
-      </div>
-      <div class="transaction-total-spend">
-      <input class="transaction-total-spend-input" type="checkbox" checked=${this.spendCheck}>
-      <span>지출</span>
-      <span>${comma(totalInOut.totalSpend)}</div></span>
+      <label class="transaction-total-income">
+        <input class="transaction-total-income-input" type="checkbox" checked=${this.incomeCheck}>
+        <span>수입</span>
+        <span class="transaction-total-income-amount">${comma(totalInOut.totalIncome)}원</span>
+      </label>
+      <label class="transaction-total-spend">
+        <input class="transaction-total-spend-input" type="checkbox" checked=${this.spendCheck}>
+        <span>지출</span>
+        <span class="transaction-total-spend-amount">${comma(totalInOut.totalSpend)}원</span>
+      </label>
     `;
     this.wrap.innerHTML = contents;
     

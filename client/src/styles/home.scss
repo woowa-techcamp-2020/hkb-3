@@ -38,7 +38,14 @@
     }
 
     &-total{
+        margin: 30px 0;
+        text-align: center;
         &-income{
+            max-width: 200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 2fr 8fr;
+            text-align: right;
             input[type="checkbox"]:checked{
                 color:red;
                 background-color: red;
@@ -46,6 +53,11 @@
             color:#3a78ff;
         }
         &-spend{
+            max-width: 200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 2fr 8fr;
+            text-align: right;
             input[type="checkbox"]:checked{
                 color:#2ab6ae;
                 background-color: #2ab6ae;

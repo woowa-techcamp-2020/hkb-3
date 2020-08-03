@@ -78,6 +78,8 @@ class TableView {
 
     // eslint-disable-next-line no-undef
     const tableHtml = `
+      <div class="transaction-total">
+      </div>
       <div class="calendar">
         <div class="day-of-week">
             <div class="sunday">일</div>
