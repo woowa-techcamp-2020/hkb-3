@@ -112,19 +112,21 @@ class HomeView {
 
   // 수입 체크박스 이벤트 추가
   addIncomeCheckboxEvent = () => {
+    const that = this;
     const incomeCheckbox = document.querySelector('.transaction-total-income').children[0];
     incomeCheckbox.addEventListener('click', () => {
       this.incomeCheck = incomeCheckbox.checked;
-      this.transListView.render(this.model.data, this.incomeCheck, this.spendCheck);
+      this.transListView.render(this.model, this.incomeCheck, this.spendCheck);
     });
   }
 
   // 지출 체크박스 이벤트 추가
   addSpendCheckboxEvent = () => {
+    const that = this;
     const spendCheckbox = document.querySelector('.transaction-total-spend').children[0];
     spendCheckbox.addEventListener('click', () => {
       this.spendCheck = spendCheckbox.checked;
-      this.transListView.render(this.model.data, this.incomeCheck, this.spendCheck);
+      this.transListView.render(this.model, this.incomeCheck, this.spendCheck);
     });
   }
 }

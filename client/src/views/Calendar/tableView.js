@@ -35,7 +35,7 @@ class TableView {
   getClass = (idx, accessDateFlag) => {
     let classes = 'header';
     classes += !idx ? ' sunday' : '';
-    classes += !accessDateFlag ? ' other-date' : '';
+    classes += !accessDateFlag ? ' other-date' : ' date';
     return classes; 
   }
 
@@ -62,7 +62,7 @@ class TableView {
             <div class="${this.getClass(j, accessDateFlag)}">
               ${date}
             </div>
-            <div>
+            <div data-date=${date}>
             </div>
           </div>
         `;
