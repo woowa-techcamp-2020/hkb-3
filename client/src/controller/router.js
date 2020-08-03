@@ -4,11 +4,13 @@ import Api from '../api';
 import HomeView from '../views/Home/homeView';
 import CalendarView from '../views/Calendar';
 import StatisticsView from '../views/Statistics';
+import MainView from '../views/Main';
 
 class Router extends Observable {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
+
     this.viewMap = {
       [paths.home](state) {
         new HomeView().render(state);
@@ -29,7 +31,6 @@ class Router extends Observable {
   }
   
   renderByUrl(model) {
-    console.log(model);
     const targetView = this.getPath();
     this.viewMap[targetView](model.state);
   }
@@ -43,7 +44,7 @@ class Router extends Observable {
   renderByModel(model) {
     if(this.getPath() === paths[model.name]) { this.renderByUrl(model); }
   }
-  
+
 
   async onLink(e) {
     const listNode = e.target.closest('li');

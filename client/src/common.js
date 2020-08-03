@@ -5,17 +5,6 @@ import StatisticsModel from './models/statisticsModel';
 
 const initModeltemp = new InitModel();
 
-export const $ = (str) => {
-  const element = document.querySelector(str);
-  return {
-    click(handler) {
-      element.addEventListener('click', handler);
-    },
-    getNode() {
-      return element;
-    },
-  };
-};
 
 export const elements = {
   initModel: initModeltemp,
