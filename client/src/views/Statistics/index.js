@@ -1,23 +1,23 @@
 import CategoryView from './CategoryView';
 import DayView from './DayView';
-
-import View from '../view';
-import { elements } from '../../common';
 import $ from '../../lib/miniJQuery';
 
-class StatisticsView extends View {
-  constructor(arg) {
-    super(arg);
+class StatisticsView {
+  constructor(state) {
+    this.state = state;
     this.wrap = document.querySelector('.content-wrap');
     this.categoryView = new CategoryView();
     this.dayView = new DayView();
+
+    this.wrap.innerHTML = this.buildSelection(); 
+    this.addSelectHandler();
   }
 
   buildSelection = () => {
     const content = `
       <div class="select-wrap">
         <label for="category">  
-          <input type="radio" name="select" value="category" id="category">
+          <input type="radio" name="select" value="category" id="category" checked>
           카테고리 지출
           <span></span>
         </label>
@@ -38,36 +38,31 @@ class StatisticsView extends View {
       <div class="statistics-wrap">
       </div>
     `;
-    super.addHandler(() => $('.select-wrap').click((e) => this.selectHandler(e)));
     return content;
   }
 
-  selectHandler = (event) => {
-    const { target } = event;
-    if(target.nodeName === 'INPUT') {
-      const renderContent = target.value; 
-      elements.stastisticsModel.changeContent(renderContent);
-    }
+  addSelectHandler = () => {
+    $('.select-wrap').click((event) => {
+      const { target } = event;
+      if(target.nodeName === 'INPUT') {
+        this.render();
+      }
+    });
   }
 
-  setDefaultSelected = (renderContent) => {
-    $(`input[id="${renderContent}"]`).getNode().checked = true;
-  }
   
-  render(state) {
-    this.wrap.innerHTML = this.buildSelection(); 
-    const { renderContent } = state;
-    this.setDefaultSelected(renderContent);
+  render() {
     const newState = {
-      data: state.data, 
+      data: this.state.data, 
       wrap: $('.statistics-wrap').getNode(),
     };
-    if(renderContent === 'category') {
+    const categorySelect = $('#category').getNode();
+
+    if(categorySelect.checked) {
       this.categoryView.render(newState);
     }else{
       this.dayView.render(newState);
     }
-    super.notifyHandlers();
   }
 }
   

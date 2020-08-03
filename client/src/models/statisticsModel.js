@@ -9,13 +9,9 @@ class StatisticsModel extends Observable {
     this.name = 'statistics';
   }
 
-  changeContent(renderContent) {
-    this.state = { ...this.state, renderContent };
-    this.notify(this);
-  }
 
   update(model) {
-    this.state = { data: model.state.data, renderContent: this.renderContent };
+    this.state = { data: model.state.data };
     this.notify(this);
   }
 }

@@ -19,7 +19,7 @@ class Router extends Observable {
         new CalendarView(state).render();
       },
       [paths.statistics](state) {
-        new StatisticsView().render(state);
+        new StatisticsView(state).render();
       },
     };
   }
