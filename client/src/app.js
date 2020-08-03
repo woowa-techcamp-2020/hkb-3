@@ -5,10 +5,10 @@ import './styles/statistics.scss';
 import './styles/home.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
-import {
-  elements, $, 
-} from './common';
+import { elements } from './common';
 import Router from './controller/router';
+import $ from './lib/miniJQuery';
+import MainView from './views/Main';
 
 
 
@@ -32,6 +32,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const router = new Router();
 
   elements.initModel.addAllSubscribe(
+    new MainView(),
     elements.homeModel,
     elements.calendarModel,
     elements.stastisticsModel,
@@ -51,13 +52,4 @@ window.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('popstate', (state) => router.renderByUrl(state));
   document.querySelector('.main-router-wrap')
     .addEventListener('click', (e) => router.onLink(e));
-
-  $('.main-month-wrap').click((event) => {
-    const { target } = event;
-    if(target.dataset.action === 'left') {
-      elements.initModel.decreaseMonth();
-    }else if(target.dataset.action === 'right') {
-      elements.initModel.increaseMonth();
-    }
-  });
 })();
