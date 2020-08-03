@@ -16,7 +16,7 @@ class Router extends Observable {
         new HomeView(state).render(state);
       },
       [paths.calendar](state) {
-        new CalendarView().render(state);
+        new CalendarView(state).render();
       },
       [paths.statistics](state) {
         new StatisticsView().render(state);

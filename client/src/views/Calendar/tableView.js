@@ -1,6 +1,6 @@
 class TableView {
   constructor() {
-    this.wrap = document.querySelector('.content-wrap');
+    this.wrap = document.querySelector('.calendar-wrap');
     this.rowCounts = 5;
     this.colCounts = 7;
   }
@@ -62,7 +62,7 @@ class TableView {
             <div class="${this.getClass(j, accessDateFlag)}">
               ${date}
             </div>
-            <div data-date=${date}>
+            <div data-date=${date} class="amount-wrap">
             </div>
           </div>
         `;
@@ -78,8 +78,6 @@ class TableView {
 
     // eslint-disable-next-line no-undef
     const tableHtml = `
-      <div class="transaction-total">
-      </div>
       <div class="calendar">
         <div class="day-of-week">
             <div class="sunday">일</div>

@@ -1,4 +1,4 @@
-import { isPayment } from '../../../common';
+import { isIncome } from '../../../common';
 import View from '../../view';
 import PieView from './pieVIew';
 
@@ -39,10 +39,10 @@ class CategoryView extends View {
     const obj = {};
     let totalAmount = 0;
     this.data.forEach((list) => {
-      if(obj[list.category_name] && isPayment(list)) {
+      if(obj[list.category_name] && isIncome(list)) {
         obj[list.category_name].amount += list.amount;
         totalAmount += list.amount;
-      }else if(!obj[list.id] && isPayment(list)) {
+      }else if(!obj[list.id] && isIncome(list)) {
         obj[list.category_name] = { amount: list.amount };
         totalAmount += list.amount;
       }
