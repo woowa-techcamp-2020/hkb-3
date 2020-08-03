@@ -3,19 +3,16 @@ class TableView {
     this.wrap = document.querySelector('.content-wrap');
     this.rowCounts = 5;
     this.colCounts = 7;
-    this.setDate();
   }
 
 
-  setDate() {
-    const todayDate = new Date();
-
+  setDate(newDate) {
     // 요일
-    this.day = todayDate.getDay();
-    this.month = todayDate.getMonth();
+    this.day = newDate.getDay();
+    this.month = newDate.getMonth();
     // 특정 날짜
-    this.date = todayDate.getDate();
-    this.year = todayDate.getFullYear();
+    this.date = newDate.getDate();
+    this.year = newDate.getFullYear();
 
     // 날짜
     const startDate = new Date(this.year, this.month);
@@ -76,7 +73,9 @@ class TableView {
     return tableContents;
   }
 
-  render() {
+  render(date) {
+    this.setDate(date);
+
     // eslint-disable-next-line no-undef
     const tableHtml = `
       <div class="calendar">

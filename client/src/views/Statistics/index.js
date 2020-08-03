@@ -2,7 +2,8 @@ import CategoryView from './CategoryView';
 import DayView from './DayView';
 
 import View from '../view';
-import { $, elements } from '../../common';
+import { elements } from '../../common';
+import $ from '../../lib/miniJQuery';
 
 class StatisticsView extends View {
   constructor(arg) {

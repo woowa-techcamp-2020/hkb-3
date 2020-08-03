@@ -1,15 +1,16 @@
 import TableView from './tableView';
+import { fillZeroToDate } from '../../common';
+import $ from '../../lib/miniJQuery';
 
 class CalendarView {
   constructor(data) {
     this.data = data;
-    this.wrap = document.querySelector('.content-wrap');
+    this.wrap = $('.content-wrap').getNode();
     this.tableView = new TableView();
   }
   
   render(state) {
-    console.log('calendar', state);
-    this.tableView.render();
+    this.tableView.render(state.date);
   }
 }
   

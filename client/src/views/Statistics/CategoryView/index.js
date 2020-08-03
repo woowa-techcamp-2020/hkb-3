@@ -1,4 +1,4 @@
-import { isPayment, $ } from '../../../common';
+import { isPayment } from '../../../common';
 import View from '../../view';
 import PieView from './pieVIew';
 
