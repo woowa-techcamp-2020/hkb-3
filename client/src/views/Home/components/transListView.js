@@ -1,6 +1,5 @@
 import View from '../../view';
 import comma from '../../../lib/numberComma';
-import png from '../../../img/empty.png';
 
 class TransListView extends View {
   constructor(...args) {

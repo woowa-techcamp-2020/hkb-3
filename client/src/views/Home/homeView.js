@@ -1,7 +1,8 @@
 import moment from 'moment';
-import comma from '../../lib/numberComma';
 import Api from '../../api/index';
-import TransListView from './components/transListView';
+import TransListView from './components/transListView'; 
+import TotalView from './components/totalView';
+import InputFieldView from './components/inputFieldView';
 
 class HomeView {
   constructor(model) {
@@ -11,99 +12,32 @@ class HomeView {
     this.incomeCheck = true;
     this.spendCheck = true;
     this.transListView = new TransListView();
-  }
-
-  // 인풋 창들
-  inputFieldRender = () => {
-    const contents = `
-    <div class="transaction-input">
-      <div class="transaction-input-state">
-        <span class="transaction-input-state-text">분류</span>
-        <input type="radio" name="state" value="수입" checked>수입
-        <input type="radio" name="state" value="지출">지출
-      </div>
-      <div class="transaction-input-date">
-        <span class="transaction-input-date-text">날짜</span>
-        <input type="text" class="transaction-input-date-input"></input>
-      </div>
-      <div class="transaction-input-category">
-        <span class="transaction-input-category-text">카테고리</span>
-        <input type="text" class="transaction-input-category-input"></input>
-      </div>
-      <div class="transaction-input-method">
-        <span class="transaction-input-method-text">결제수단</span>
-        <input type="text" class="transaction-input-method-input"></input>
-      </div>
-      <div class="transaction-input-amount">
-        <span class="transaction-input-amount-text">금액</span>
-        <input type="number" class="transaction-input-amount-input"></input>
-      </div>
-      <div class="transaction-input-contents">
-        <span class="transaction-input-contents-text">내용</span>
-        <input type="text" class="transaction-input-contents-input"></input>
-      </div>
-      <div class="transaction-input-button">
-        <button class="transaction-input-button-confirm">확인</button>
-        <button class="transaction-input-button-clear">내용 지우기</button>
-        <button class="transaction-input-button-test">내역 자동 생성</button>
-      </div>
-    </div>`;
-    return contents;
-  }
-
-  // 화면 중간에 이번 달 총 수입, 총 지출 화면
-  totalFieldRender = (totalInOut) => {
-    const contents = `
-    <div class="transaction-total">
-      <div class="transaction-total-income">
-        <input class="transaction-total-income-input" type="checkbox" checked=${this.incomeCheck}>
-        <span>수입</span>
-        <span>${comma(totalInOut.totalIncome)}</span>
-        </div>
-      <div class="transaction-total-spend">
-        <input class="transaction-total-spend-input" type="checkbox" checked=${this.spendCheck}>
-        <span>지출</span>
-        <span>${comma(totalInOut.totalSpend)}</div></span>
-    </div>`;
-    return contents;
+    this.totalView = new TotalView();
+    this.inputFieldView = new InputFieldView();
   }
 
   // 화면 그리기
   render = (state) => {
     console.log('home', state);
-    const totalInOut = this.getTotalIncome(state);
-    this.currDate = state[0].date;
-
-    // ${this.listFieldRender(state)}
+    
     const contents = `
     <div class = "transaction-wrapper">
-      ${this.inputFieldRender()}
-      ${this.totalFieldRender(totalInOut)}
-      <div class ="transaction-list">
-      </div>
+      <div class="transaction-input"></div>
+      <div class= "transaction-total"></div>
+      <div class= "transaction-list"></div>
     </div>
     `;
     this.wrap.innerHTML = contents;
 
+    this.inputFieldView.render(state);
+    this.totalView.render(state);    
     this.transListView.render(state, this.incomeCheck, this.spendCheck);
+
     this.addEventToCheckbox();
     this.addEventToButtons();
   }
 
-  // 이번달 총 수입 구해서 리턴
-  getTotalIncome = (state) => {
-    let totalIncome = 0;
-    let totalSpend = 0;
-    state.forEach((transaction) => {
-      if(transaction.state === '지출') {
-        totalSpend += transaction.amount;
-      }
-      if(transaction.state === '수입') {
-        totalIncome += transaction.amount;
-      }
-    });
-    return { totalIncome, totalSpend };
-  }
+  
 
   // 버튼에 이벤트 리스너 추가하기
   addEventToButtons() {
