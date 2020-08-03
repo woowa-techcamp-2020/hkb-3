@@ -10,6 +10,7 @@ class View {
   notifyHandlers() {
     this.handlers.forEach((handler) => {
       handler();
+      this.handlers = [];
     });
   }
 }
