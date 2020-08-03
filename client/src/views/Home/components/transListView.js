@@ -13,8 +13,11 @@ class TransListView extends View {
     this.wrap = document.querySelector('.transaction-list');
   }
 
+  // eslint-disable-next-line consistent-return
   calcDayTotal=(state) => {
     this.dayTotal = new Map();
+    if(state === undefined || state.length <= 0) return null;
+    
     state.forEach((transaction) => {
       let income = 0;
       let spend = 0;
@@ -43,7 +46,7 @@ class TransListView extends View {
     this.state = state;
     this.calcDayTotal(state);
     this.setWrap();
-    if(incomeCheck || spendCheck) {
+    if(state !== undefined && (incomeCheck || spendCheck || state.length > 0)) {
       this.wrap.innerHTML = `
         ${state.map((transaction) => `
           ${this.isChecked(transaction, incomeCheck, spendCheck) ? `
@@ -63,6 +66,7 @@ class TransListView extends View {
       this.wrap.innerHTML = `
         <div class="transaction-contents-none">
             <div>거래 내역이 없습니다</div>
+            <img src ="https://i.imgur.com/t0Lantl.png" width="200">
         </div>`;
     }
     
