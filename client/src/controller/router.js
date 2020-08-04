@@ -16,10 +16,10 @@ class Router extends Observable {
         new HomeView(state).render();
       },
       [paths.calendar](state) {
-        new CalendarView().render(state);
+        new CalendarView(state).render();
       },
       [paths.statistics](state) {
-        new StatisticsView().render(state);
+        new StatisticsView(state).render();
       },
     };
   }

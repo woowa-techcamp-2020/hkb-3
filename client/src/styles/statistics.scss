@@ -44,6 +44,10 @@
     input[type="radio"]:checked ~ span:after{
         transform: translate(-50%, -50%) scale(1);
     }
+
+    .total-spend{
+        color: rgba(63,187,165,1);
+    }
 }
 
 .statistics-wrap{
@@ -112,10 +116,13 @@
                     }
                 }
             }
-               
-
 
         }
-        
+    }
+    .day-wrap{
+        line{
+            stroke: gray;
+            stroke-width:1;
+        }
     }
 }

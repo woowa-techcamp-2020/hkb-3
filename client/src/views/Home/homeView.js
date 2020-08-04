@@ -230,8 +230,6 @@ class HomeView {
     });
   }
 
-
-
   // 분류 radio버튼에 이벤트 추가
   addEventToRadio = () => {
     this.addIncomeRadioEvent();
@@ -242,7 +240,6 @@ class HomeView {
   addIncomeRadioEvent = () => {
     const incomeRadio = document.querySelector('.transaction-input-state').children[1];
     incomeRadio.addEventListener('click', () => {
-      // this.resetInputFieldView(incomeRadio.value, this.isModify);
       const state = incomeRadio.value;
       this.inputFieldView.renderCategory(state);
     });
@@ -252,8 +249,6 @@ class HomeView {
   addSpendRadioEvent = () => {
     const spendRadio = document.querySelector('.transaction-input-state').children[2];
     spendRadio.addEventListener('click', () => {
-      // this.resetInputFieldView(spendRadio.value, this.isModify);
-
       const state = spendRadio.value;
       this.inputFieldView.renderCategory(state);
     });
