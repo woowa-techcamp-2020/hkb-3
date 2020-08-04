@@ -26,6 +26,7 @@ class TotalView extends View {
         <span class="transaction-total-spend-amount">${comma(totalInOut.totalSpend)}원</span>
       </label>
     `;
+
     this.wrap.innerHTML = contents;
     
     super.notifyHandlers();
@@ -35,7 +36,7 @@ class TotalView extends View {
   getTotalIncome = (state) => {
     let totalIncome = 0;
     let totalSpend = 0;
-    if(state.length === 0) return { totalIncome, totalSpend };
+    if(state === undefined || state.length === 0) return { totalIncome, totalSpend };
     
     state.forEach((transaction) => {
       if(transaction.state === '지출') {
