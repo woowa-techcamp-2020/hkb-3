@@ -21,6 +21,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+/** ************************************
+ *            Passport setup
+ *************************************** */
+const FileStore = sessionFileStore(session);
+app.use(session({ 
+  secret: '비밀코드', 
+  resave: true, 
+  saveUninitialized: false,
+  store: new FileStore(), 
+})); // 세션 활성화
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 require('dotenv').config();
 
 const scriptRequestUrl = '/public';
@@ -60,7 +76,6 @@ app.get('/api-docs', swaggerUi.setup(swaggerSpec));
 /** ************************************
  *             Set Passport
  *************************************** */
-const FileStore = sessionFileStore(session);
 const LocalStrategy = passportLocal.Strategy;
 
 interface IUser {
@@ -71,16 +86,6 @@ const authData: IUser = {
   id: 'test',
   password: '1234',
 };
-
-app.use(session({ 
-  secret: '비밀코드', 
-  resave: true, 
-  saveUninitialized: false,
-  store: new FileStore(), 
-})); // 세션 활성화
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(flash());
 
 passport.serializeUser((user: IUser, done: any) => {
   done(null, user.id);
