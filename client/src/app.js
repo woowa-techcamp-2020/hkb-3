@@ -3,11 +3,11 @@ import './styles/main.scss';
 import './styles/calendar.scss';
 import './styles/statistics.scss';
 import './styles/home.scss';
+import './styles/login.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
 import { elements } from './common';
 import Router from './controller/router';
-import $ from './lib/miniJQuery';
 import MainView from './views/Main';
 
 
@@ -46,10 +46,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   elements.calendarModel.addSubscribe((model) => router.renderByModel(model));
   elements.stastisticsModel.addSubscribe((model) => router.renderByModel(model));
 
-  // init data 가져오기
-  await elements.initModel.fetchInitData();
-  
-  window.addEventListener('popstate', (state) => router.renderByUrl(state));
-  document.querySelector('.main-router-wrap')
-    .addEventListener('click', (e) => router.onLink(e));
+  router.init();
 })();
