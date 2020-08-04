@@ -23,7 +23,7 @@ class HomeView {
 
   // 화면 그리기
   async render() {
-    console.log('home', this.model);
+    // console.log('home', this.model);
     const state = this.model;
     const contents = `
     <div class = "transaction-wrapper">
@@ -59,10 +59,7 @@ class HomeView {
         }
         const transId = div.className.split(' ')[1];
         const transaction = await Api.Transaction().getTransactionById(transId);
-        console.log(transaction.data[0].payment_method, 
-          transaction.data[0].category_name, transaction.data[0].amount,
-          transaction.data[0].category_id);
-
+        
         if(transaction.data[0].state === 'income') {
           document.querySelector('.transaction-input-state').children[1].checked = true;
           document.querySelector('.transaction-input-state').children[2].checked = false;
@@ -210,23 +207,26 @@ class HomeView {
     const testButton = document.querySelector('.transaction-input-button-test');
     testButton.addEventListener('click', async () => {
       const state = Math.floor(Math.random() * 2);
-      console.log(states[state], state);
-      
 
       document.querySelector('.transaction-input-amount-input').value = (Math.floor(Math.random() * 100) + 1) * 1000;
-      let category = 1;
 
+      
       if(state === 0) {
-        category = 1;
+        document.querySelector('.transaction-input-state').children[1].checked = true;
+        document.querySelector('.transaction-input-state').children[2].checked = false;
       }else{
-        category = Math.floor(Math.random() * 7) + 2;
+        document.querySelector('.transaction-input-state').children[1].checked = false;
+        document.querySelector('.transaction-input-state').children[2].checked = true;
       }
-
-      document.querySelector('.transaction-input-category-select').value = category;
+      
       document.querySelector('.transaction-input-contents-input').value = '';
       document.querySelector('.transaction-input-method-select').value = Math.floor(Math.random() * 3) + 1;
-      document.querySelector('.transaction-input-date-input').value = `2020-07-${Math.floor(Math.random() * 3) + 29}`;
-      this.inputFieldView.renderCategory(states[state]);
+      document.querySelector('.transaction-input-date-input').value = `2020-08-${Math.floor(Math.random() * 21) + 10}`;
+      await this.inputFieldView.renderCategory(states[state]);
+
+      const cateList = await Api.Category().getCategoryByState(states[state]);
+      const cateIndex = Math.floor(Math.random() * cateList.data.length);
+      document.querySelector('.transaction-input-category-select').value = cateList.data[cateIndex].id;
     });
   }
 
