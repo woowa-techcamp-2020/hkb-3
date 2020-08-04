@@ -1,22 +1,32 @@
 import View from '../../view';
+import API from '../../../api/index';
 
 class InputFieldView extends View {
   constructor(...args) {
     super(args);
+    this.isModify = false;
   }
   
   setWrap() {
     this.wrap = document.querySelector('.transaction-input');
   }
+
+  getCategory = async (state) => {
+    const result = await API.Category().getCategoryByState(state);
+    return result.data;
+  }
   
-  render(state) {
-    this.state = state;
+  async render(params) {
+    const { isModify } = params;
+    const { state } = params;
+
+    const categoryList = await this.getCategory(state);
     this.setWrap();
     const contents = `
       <div class="transaction-input-state">
         <span class="transaction-input-state-text">분류</span>
-        <input type="radio" name="state" value="수입" checked>수입
-        <input type="radio" name="state" value="지출">지출
+        <input type="radio" name="state" value="income" ${state === 'income' ? 'checked' : ''}>수입
+        <input type="radio" name="state" value="spend" ${state === 'spend' ? 'checked' : ''}>지출
       </div> 
       <div class="transaction-input-date">
         <span class="transaction-input-date-text">날짜</span>
@@ -25,14 +35,11 @@ class InputFieldView extends View {
       <div class="transaction-input-category">
         <span class="transaction-input-category-text">카테고리</span>
         <select class="transaction-input-category-select" name="category">
-          <option value="1">월급</option>
-          <option value="2">생활</option>
-          <option value="3">식비</option>
-          <option value="4">교통</option>
-          <option value="5">쇼핑/뷰티</option>
-          <option value="6">의료/건강</option>
-          <option value="7">문화/여가</option>
-          <option value="8">미분류</option>
+          ${categoryList.map((category) => `
+            ${category.state === state ? `
+              <option value="${category.id}">${category.name}</option>
+            ` : ''}
+          `).join('')}
         </select>
       </div>
       <div class="transaction-input-method">
@@ -52,10 +59,34 @@ class InputFieldView extends View {
         <input type="text" class="transaction-input-contents-input"></input>
       </div>
       <div class="transaction-input-button">
-        <button class="transaction-input-button-confirm">확인</button>
+      ${isModify ? `
+        <button class="transaction-input-button-modify">수정</button>
+        <button class="transaction-input-button-cancel">취소</button>
+        <button class="transaction-input-button-delete">내역 삭제</button>
+      ` : `
+        <button class="transaction-input-button-confirm">거래 내역 추가</button>
         <button class="transaction-input-button-clear">내용 지우기</button>
+      `}
+        
         <button class="transaction-input-button-test">내역 자동 생성</button>
       </div>`;
+    this.wrap.innerHTML = contents;
+    super.notifyHandlers();
+  }
+
+  async renderCategory(state) {
+    this.wrap = document.querySelector('.transaction-input-category');
+    const categoryList = await this.getCategory(state);
+    const contents = `
+      <span class="transaction-input-category-text">카테고리</span>
+      <select class="transaction-input-category-select" name="category">
+        ${categoryList.map((category) => `
+          ${category.state === state ? `
+            <option value="${category.id}">${category.name}</option>
+          ` : ''}
+        `).join('')}
+      </select>
+    `;
     this.wrap.innerHTML = contents;
     super.notifyHandlers();
   }
