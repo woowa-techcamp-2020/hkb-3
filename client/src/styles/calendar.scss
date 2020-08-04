@@ -28,6 +28,16 @@
       .other-date{
         color: 	#C8C8C8
       }
+      .amount-wrap{
+        margin-top: 30px;
+        text-align: right;
+        .amount-income{
+          color:#3a78ff;
+        }
+        .amount-spend{
+          color: #2ab6ae;
+        }
+      }
     }
   }
 }

@@ -1,3 +1,5 @@
+import { elements } from '../common';
+
 const $ = (str) => {
   const element = document.querySelector(str);
   return {
