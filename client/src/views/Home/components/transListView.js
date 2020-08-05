@@ -1,9 +1,27 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import View from '../../view';
 import comma from '../../../lib/numberComma';
+import API from '../../../api/index';
+
+const SELECTOR_TRANSACTION_CONTENTS = '.js-transaction-contents';
+const SELECTOR_TRANSACTION_INPUT_STATE = '.js-transaction-input-state';
+const SELECTOR_TRANSACTION_INPUT_DATE_INPUT = '.js-transaction-input-date__input';
+
+const SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME = '.js-transaction-input-state__radio-income';
+const SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND = '.js-transaction-input-state__radio-spend';
+
+const SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT = '.js-transaction-input-category__select';
+const SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT = '.js-transaction-input-payment__select';
+const SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT = '.js-transaction-input-amount__input';
+const SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT = '.js-transaction-input-contents__input';
+
+const IMAGE_TRANSACTION_EMPTY = 'https://i.imgur.com/t0Lantl.png';
 
 class TransListView extends View {
   constructor(...args) {
     super(args);
+    [this.inputFieldView] = args;
     this.dayIncome = 0;
     this.daySpend = 0;
     this.dayTotal = new Map();
@@ -51,7 +69,7 @@ class TransListView extends View {
         ${state.map((transaction) => `
           ${this.isChecked(transaction, incomeCheck, spendCheck) ? `
             ${this.listDateRender(transaction, incomeCheck, spendCheck)}
-            <div class="transaction-contents ${transaction.id}">
+            <div class="transaction-contents js-transaction-contents ${transaction.id}">
               <span class="transaction-column-category-${this.isIncome(transaction) ? 'income' : 'spend'}">${transaction.category_name}</span>
               <span class="transaction-column-contents">${transaction.contents}</span>
               <span class="transaction-column-method">${transaction.payment_method}</span>
@@ -66,11 +84,55 @@ class TransListView extends View {
       this.wrap.innerHTML = `
         <div class="transaction-contents-none">
             <div>거래 내역이 없습니다</div>
-            <img src ="https://i.imgur.com/t0Lantl.png" width="200">
+            <img src ="${IMAGE_TRANSACTION_EMPTY}" width="200">
         </div>`;
     }
-    
+
+    this.addEventToTransaction();
     super.notifyHandlers();
+  }
+
+  // 거래내역 클릭할 때 이벤트 발생 -> 수정용
+  addEventToTransaction = () => {
+    const list = document.querySelectorAll(SELECTOR_TRANSACTION_CONTENTS);
+    list.forEach((div) => {
+      div.addEventListener('click', async () => {
+        if(this.isModify === false) {
+          this.isModify = true;
+        }
+        const transId = div.className.split(' ')[2];
+        const transaction = await API.Transaction().getTransactionById(transId);
+        
+        if(transaction.data[0].state === 'income') {
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
+        }
+        if(transaction.data[0].state === 'spend') {
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = false;
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = true;
+        }
+        [this.currTransaction] = transaction.data;
+        const inputFieldParmas = {
+          state: transaction.data[0].state, isModify: this.isModify,
+        };
+        await this.inputFieldView.render(inputFieldParmas);
+
+        const transDate = new Date(transaction.data[0].date);
+        let currMonth = transDate.getMonth() + 1;
+        if(currMonth < 10) {
+          currMonth = `0${currMonth}`;
+        }
+        let currDate = transDate.getDate();
+        if(currDate < 10) {
+          currDate = `0${currDate}`;
+        }
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = `${transDate.getFullYear()}-${currMonth}-${currDate}`;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = transaction.data[0].category_id;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = transaction.data[0].payment_id;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = transaction.data[0].amount;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = transaction.data[0].contents;
+      });
+    });
   }
 
   isChecked = (transaction, incomeCheck, spendCheck) => {
@@ -80,7 +142,6 @@ class TransListView extends View {
     if(transaction.state === 'spend' && spendCheck) {
       return true;
     } 
-
     return false;
   }
 
