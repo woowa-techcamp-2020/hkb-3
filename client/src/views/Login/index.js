@@ -10,7 +10,7 @@ class Login {
   buildNav = () => `
     <nav>
       <a class="nav-icon"></a>
-      <a class="nav-signup">회원가입</a>
+      <a class="nav-link" href="/auth/signup">회원가입</a>
     </nav>
   `
 

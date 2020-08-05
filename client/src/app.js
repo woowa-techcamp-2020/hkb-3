@@ -4,6 +4,7 @@ import './styles/calendar.scss';
 import './styles/statistics.scss';
 import './styles/home.scss';
 import './styles/login.scss';
+import './styles/signup.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
 import { elements } from './common';
