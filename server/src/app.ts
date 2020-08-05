@@ -13,6 +13,7 @@ import sessionFileStore from 'session-file-store';
 import PassportGithub from 'passport-github2';
 import indexRouter from './routes/index';
 import userService from './service/userService';
+import SocialUserDTO from './model/socialUserDTO';
 // import loginRouter from './routes/login';
 
 
@@ -39,17 +40,13 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 interface IUser {
-  id: string,
-  password: string,
-  username?: string,
-  email?: string
+  id: number,
+  email?: string,
+  password?: string,
+  name?: string,
+  socialID?: number,
   type?: string
 }
-const authData: IUser = {
-  id: 'test',
-  password: '1234',
-  username: 'myungwoo-Y',
-};
 
 passport.serializeUser((user: IUser, done: any) => { 
   done(null, user.id);
@@ -72,10 +69,32 @@ passport.use(new PassportGithub.Strategy({
   callbackURL: 'http://localhost:3000/auth/github/callback',
 },
 ((accessToken: any, refreshToken: any, profile: any, done: any) => {
-  console.log(profile);
-  if(profile.username === 'myungwoo-Y') {
-    done(null, profile);
-  }
+  const userJson = profile._json;
+  // 유저 찾기
+  userService.getUserBySocialId(userJson.id).then((res) => {
+    if(res.status === 'ok') { 
+      const user = res.data[0] as IUser;
+      done(null, user);
+    }else{
+      const socialUserDTO = new SocialUserDTO({
+        social_id: userJson.id,
+        name: userJson.login,
+        created_at: userJson.created_at,
+        updated_at: userJson.updated_at,
+      });
+      // 유저 생성
+      userService.createSocialUser(socialUserDTO).then((createRes) => {
+        const { insertId } = createRes[0];
+        const user:IUser = {
+          id: insertId,
+          socialID: userJson.id,
+          name: userJson.login,
+        };
+        // 로그인 이동
+        done(null, user);
+      });
+    }
+  });
 })));
 
 const LocalStrategy = passportLocal.Strategy;
@@ -87,8 +106,8 @@ passport.use(new LocalStrategy({ // local 전략을 세움
 },
 ((useremail:string, password:string, done: any) => {
   userService.getUserByEmail(useremail).then((res) => {
-    const user = res.data[0] as IUser;
     if(res.status === 'ok') {
+      const user = res.data[0] as IUser;
       if(useremail === user.email) {
         if(password === user.password) {
           return done(null, { ...user, type: 'local' });
@@ -106,17 +125,18 @@ passport.use(new LocalStrategy({ // local 전략을 세움
 
 
 const isAuthenticated = (req:any, res: Response, next: NextFunction) => {
-  console.log('request');
   if (req.user) {
+    console.log('isauthenticated');
     return next();
   }
 
   const loginUrl = '/auth/login';
+  const signupUrl = '/auth/signup';
 
-  if(req.originalUrl !== loginUrl) {
-    res.redirect(loginUrl);
-  } 
-  return next();
+  if(req.originalUrl === loginUrl || req.originalUrl === signupUrl) {
+    return next();
+  }
+  res.redirect(loginUrl);
 };
 
 
@@ -131,8 +151,6 @@ const scriptRequestUrl = '/public';
 app.use(scriptRequestUrl, express.static(`${__dirname}${scriptRequestUrl}`));
 // app.use('/auth', loginRouter);
 app.use('/', indexRouter);
-
-
 
 
 
@@ -164,17 +182,14 @@ app.get('/api-docs', swaggerUi.setup(swaggerSpec));
 
 
 
-
-
-
 /** ***********************************
- *        Serve front-end content
+ *        Serve front-end content`
  *************************************** */
 const viewsDir = path.join(__dirname, 'views');
 app.set('views', viewsDir);
 
 
-app.get('*', /* isAuthenticated, */ (req: Request, res: Response) => {
+app.get('*', isAuthenticated, (req: Request, res: Response) => {
   res.sendFile('index.html', { root: viewsDir });
 });
 
