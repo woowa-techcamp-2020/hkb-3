@@ -38,6 +38,29 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+interface IUser {
+  id: string,
+  password: string,
+  username?: string
+}
+const authData: IUser = {
+  id: 'test',
+  password: '1234',
+  username: 'myungwoo-Y',
+};
+
+passport.serializeUser((user: IUser, done: any) => {
+  console.log('Serialize');
+  done(null, user.username);
+});
+
+passport.deserializeUser((id: any, done: any) => {
+  console.log('Deserialize');
+  if(authData.id === id || authData.username === id) {
+    done(null, id);
+  }
+});
+
 passport.use(new Oauth2.Strategy({
   authorizationURL: 'https://github.com/login/oauth/authorize',
   tokenURL: 'https://github.com/login/oauth/access_token',
@@ -59,33 +82,13 @@ passport.use(new PassportGithub.Strategy({
 },
 ((accessToken: any, refreshToken: any, profile: any, done: any) => {
   console.log(profile);
-  if(profile.id === 'myungwoo-Y') {
-    done(null, profile.id);
+  if(profile.username === 'myungwoo-Y') {
+    done(null, profile);
   }
 })));
 
 const LocalStrategy = passportLocal.Strategy;
 
-interface IUser {
-  id: string,
-  password: string
-}
-const authData: IUser = {
-  id: 'test',
-  password: '1234',
-};
-
-passport.serializeUser((user: IUser, done: any) => {
-  console.log('Serialize');
-  done(null, user.id);
-});
-
-passport.deserializeUser((id: any, done: any) => {
-  console.log('Deserialize');
-  if(authData.id === id) {
-    done(null, id);
-  }
-});
 
 passport.use(new LocalStrategy(
   ((username:string, password:string, done: any) => {

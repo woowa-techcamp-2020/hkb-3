@@ -12,6 +12,11 @@ async function getUserById(id:Number) {
   return result[0];
 }
 
+async function getUserByEmail(email:string) {
+  const result = await pool.query(`select * from mydb.user where email="${email}"`);
+  return result[0];
+}
+
 async function deleteUser(id:Number) {
   const result = await pool.query(`delete from user where id= ${id}`);
   return result;
@@ -21,6 +26,8 @@ async function createUser(user:userDTO) {
   return result;
 }
 
+
+
 export default {
-  getAllUsers, getUserById, deleteUser, createUser, 
+  getAllUsers, getUserById, getUserByEmail, deleteUser, createUser, 
 };

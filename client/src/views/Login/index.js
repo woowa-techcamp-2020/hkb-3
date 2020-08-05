@@ -32,7 +32,7 @@ class Login {
             <form action="/auth/login" method="post">
               <div class="id-wrap">
                 <input 
-                  type="text" value="" name="username" autocomplete="off" autofocus=""
+                  type="email" value="" name="username" autocomplete="off" autofocus=""
                   placeholder="이메일 (example@gmail.com)"  class="login-id"
                 >
               </div>
