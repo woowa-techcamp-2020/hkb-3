@@ -35,8 +35,8 @@ export function getState(path) {
   }
 }
 
-export const isSpend = (obj) => obj.state === '지출';
-export const isIncome = (obj) => obj.state === '수입';
+export const isSpend = (obj) => obj.state === 'spend';
+export const isIncome = (obj) => obj.state === 'income';
 
 
 
@@ -54,7 +54,7 @@ export function sqlDateToDateObj(mysqlDate) {
   return jsDate;
 }
 
-export function getDateFromSqlDate(mysqlDate) { 
+export function getDateFromSqlDate(mysqlDate) {
   const [, , day] = [...mysqlDate.split('-')];
   const dayLength = 2;
   const date = parseInt(day.slice(0, dayLength));

@@ -13,7 +13,7 @@ class Router extends Observable {
 
     this.viewMap = {
       [paths.home](state) {
-        new HomeView(state).render(state);
+        new HomeView(state).render();
       },
       [paths.calendar](state) {
         new CalendarView(state).render();

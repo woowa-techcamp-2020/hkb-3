@@ -22,10 +22,10 @@ class TransListView extends View {
       let income = 0;
       let spend = 0;
 
-      if(transaction.state === '지출') {
+      if(transaction.state === 'spend') {
         spend += transaction.amount;
       }
-      if(transaction.state === '수입') {
+      if(transaction.state === 'income') {
         income += transaction.amount;
       }
 
@@ -56,7 +56,7 @@ class TransListView extends View {
               <span class="transaction-column-contents">${transaction.contents}</span>
               <span class="transaction-column-method">${transaction.payment_method}</span>
               <span class="transaction-column-amount-${this.isIncome(transaction) ? 'income' : 'spend'}">
-                ${this.isIncome(transaction) ? `+${comma(transaction.amount)}` : `-${comma(transaction.amount)}`}
+                ${this.isIncome(transaction) ? `+${comma(transaction.amount)}` : `-${comma(transaction.amount)}`} 원
               </span>
             </div>
           ` : ''}
@@ -74,10 +74,10 @@ class TransListView extends View {
   }
 
   isChecked = (transaction, incomeCheck, spendCheck) => {
-    if(transaction.state === '수입' && incomeCheck) { 
+    if(transaction.state === 'income' && incomeCheck) { 
       return true;
     } 
-    if(transaction.state === '지출' && spendCheck) {
+    if(transaction.state === 'spend' && spendCheck) {
       return true;
     } 
 
@@ -93,10 +93,10 @@ class TransListView extends View {
         <div class="transaction-date">
           <span class="transaction-date-date">${this.getToday(transaction)}</span>`;
       if(incomeCheck) {
-        contents += ` <span class="transaction-date-income">${comma(this.dayTotal.get(transaction.date).income)}</span>`;
+        contents += ` <span class="transaction-date-income">+${comma(this.dayTotal.get(transaction.date).income)} 원</span>`;
       }
       if(spendCheck) {
-        contents += ` <span class="transaction-date-spend">${comma(this.dayTotal.get(transaction.date).spend)}</span>`;
+        contents += ` <span class="transaction-date-spend">-${comma(this.dayTotal.get(transaction.date).spend)} 원</span>`;
       }
       contents += '</div>';
     }
@@ -157,10 +157,10 @@ class TransListView extends View {
 
   // eslint-disable-next-line consistent-return
   isIncome= (transaction) => {
-    if(transaction.state === '수입') {
+    if(transaction.state === 'income') {
       return true;
     } 
-    if(transaction.state === '지출') {
+    if(transaction.state === 'spend') {
       return false;
     }
   }
