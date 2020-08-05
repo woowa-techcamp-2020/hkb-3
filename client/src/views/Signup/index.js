@@ -1,4 +1,5 @@
 import Api from '../../api/index';
+import { paths } from '../../common';
 
 const { default: $ } = require('../../lib/miniJQuery');
 
@@ -14,8 +15,18 @@ class SignupView {
     </nav>
   `
 
-  addAuthHandler = () => {
-    $('.git-auth-button').click(Api.Auth().getGitAuth);
+  addSignupHandler = () => {
+    $('.submit-button').click((e) => {
+      e.preventDefault(); 
+      const name = $('input[name=name]').getNode().value;
+      const email = $('input[name=useremail]').getNode().value;
+      const password = $('input[name=password]').getNode().value;
+      console.log(name, email, password);
+      Api.User().createUser({ name, email, password })
+        .then(() => {
+          $('.nav-link').getNode().click();
+        });
+    });
   }
 
   render() {
@@ -29,7 +40,7 @@ class SignupView {
             <div class="login-title">
               회원가입
             </div>
-            <form action="/auth/login" method="post">
+            <form>
               <div class="signup-name-wrap">
               <input name="name" autocomplete="off" placeholder="이름 (2자 이상)" type="text" value="">
               </div>
@@ -44,13 +55,14 @@ class SignupView {
                   placeholder="비밀번호" autocomplete="off" class="login-pw">
               </div>
               <div class="login-button-wrap">
-                <button type="submit">회원가입</button>
+                <button class="submit-button">회원가입</button>
               </div>
             </form>
           </div>
         </div>
       </div>
     `;
+    this.addSignupHandler();
   }
 }
 
