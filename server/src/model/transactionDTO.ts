@@ -6,8 +6,6 @@ export default class TransactionDTO {
 
   public date:Date;
 
-  public state:string;
-
   public amount:number;
 
   public category_id:number;
@@ -26,7 +24,6 @@ export default class TransactionDTO {
     this.date = transactionData.date;
     this.category_id = transactionData.category_id;
     this.amount = transactionData.amount;
-    this.state = transactionData.state;
     this.user_id = transactionData.user_id;
     this.payment_id = transactionData.payment_id;
     this.created_at = transactionData.created_at;
@@ -45,16 +42,12 @@ export default class TransactionDTO {
     return this.date;
   }
 
-  getCategory() {
+  getCategoryId() {
     return this.category_id;
   }
 
   getAmount() {
     return this.amount;
-  }
-
-  getState() {
-    return this.state;
   }
 
   getUserId() {
@@ -85,16 +78,12 @@ export default class TransactionDTO {
     this.date = date;
   }
 
-  setCategory(category_id:number) {
+  setCategoryId(category_id:number) {
     this.category_id = category_id;
   }
 
   setAmount(amount:number) {
     this.amount = amount;
-  }
-
-  setState(state:string) {
-    this.state = state;
   }
 
   setUserId(user_id:number) {

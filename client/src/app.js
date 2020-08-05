@@ -10,21 +10,10 @@ import { elements } from './common';
 import Router from './controller/router';
 import MainView from './views/Main';
 
-
-
 window.addEventListener('DOMContentLoaded', async () => {
   // 유저 목록 가져오기 테스트 코드
   const userList = await Api.User().getAllUsers();
   console.log('userList=', userList);
-
-
-  // 거래내역 가져오기 테스트 코드
-  const userId = 1;
-  const payList = await Api.Transaction().getTransactionByUserId(userId);
-  console.log('payList=', payList);
-  
-  // console.log('createTransaction result=', result);
-  // console.log('currUser=', currUser);
 });
 
 (async () => {
