@@ -63,4 +63,27 @@ router.get('/logout', (req: any, res: Response) => {
   });
 });
 
+router.get('/github',
+  passport.authenticate('oauth2', {
+    scope: ['profile', 'email'],
+  }));
+
+router.get('/github/callback',
+  passport.authenticate('oauth2', { failureRedirect: '/auth/login' }),
+  (req, res) => {
+    console.log(req.query);
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+
+// router.get('/github',
+//   passport.authenticate('github', { scope: ['user'] }));
+
+// router.get('/github/callback', 
+//   passport.authenticate('github', { failureRedirect: '/auth/login' }),
+//   (req, res) => {
+//     // Successful authentication, redirect home.
+//     res.redirect('');
+//   });
+
 export default router;

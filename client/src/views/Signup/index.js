@@ -2,7 +2,7 @@ import Api from '../../api/index';
 
 const { default: $ } = require('../../lib/miniJQuery');
 
-class Login {
+class Signup {
   constructor() {
     this.wrap = $('.wrap').getNode();
   }
@@ -10,7 +10,7 @@ class Login {
   buildNav = () => `
     <nav>
       <a class="nav-icon"></a>
-      <a class="nav-signup">회원가입</a>
+      <a class="nav-signup" href="/auth/login">로그인</a>
     </nav>
   `
 
@@ -41,7 +41,7 @@ class Login {
                   placeholder="비밀번호" autocomplete="off" class="login-pw">
               </div>
               <div class="login-button-wrap">
-                <button type="submit">로그인</button>
+                <button type="submit">회원가입</button>
               </div>
             </form>
             <p>
@@ -62,4 +62,4 @@ class Login {
   }
 }
 
-export default Login;
+export default Signup;
