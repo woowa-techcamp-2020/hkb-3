@@ -1,0 +1,228 @@
+.background-wrap::before{
+  content: "";
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background: url(https://images.watcha.net/updatable_images/2650/original/6f4b1a977f1a274fc980e9ff64cd0eca574d96cd.jpg) center center / cover no-repeat;
+  transition: opacity 500ms ease 0s;
+}
+
+.background-wrap::after{
+  content: "";
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background: rgb(18, 18, 24);
+}
+
+.background-wrap{
+  height: 100vh;
+}
+
+nav{
+  .nav-icon{
+    position: relative;
+    z-index: 10001;
+    float: left;
+    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5OSIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDk5IDQwIj4KICAgIDxnIGZpbGw9IiNGRjA1NTgiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTI4LjU1NSAwTDI2LjcyMSAyNi42NTEgMjYuMjYyIDI2LjY3NiAyMi4zOCA4Ljc3NCAxNi4yMDcgOC43NzQgMTMuMjk5IDI3LjUzMyAxMi42ODIgMjcuNTY4IDkuODc5IDguNzc0IDAgOC43NzQgNS45NDIgMzkuNDE3IDE3LjA1NiAzOC4yNDkgMTkuMjYgMjAuOTQ1IDE5Ljg3NyAyMC45MTMgMjIuODQzIDM3LjY0IDMxLjk1IDM2LjY4MyAzOC4wNDcgMHpNNDIuOTY1IDI1LjU4NmwuOTUxLTEwLjU0OS44NS0uMDEzLjk5MyAxMC4zOC0yLjc5NC4xODJ6TTM5LjM1OSA4Ljc3NGwtNC41NTMgMjcuNjA4IDcuMjU0LS43NjIuNDQ2LTQuOTQ4IDMuNzI2LS4zMjUuNDU4IDQuNzg3IDYuNDgzLS42ODEtMy45MzYtMjUuNjc5SDM5LjM2ek04My44ODggMTcuNzRMODIuMjY4IDE3LjgwOCA4Mi4yNjggOC43NzQgNzcuNzI1IDguNzc0IDc3LjcyNSAzMS44NjUgODIuMjY4IDMxLjM5NSA4Mi4yNjggMjIuMTI1IDgzLjg4OCAyMi4wMjYgODMuODg4IDMxLjIyNCA4Ny45NzggMzAuNzk0IDg3Ljk3OCA4Ljc3NCA4My44ODggOC43NzR6TTkwLjYxMyA4Ljc3NEw4OS4wNiAzMC42ODFsMy45MzYtLjQxNC4xMjUtNC40NDggMS40MDItLjEyLjI0OCA0LjM4MyAzLjQ3Mi0uMzY1LTEuNzc0LTIwLjk0M2gtNS44NTV6bTIuODUgNC45OTJoLjM4NWwuNDc4IDguNDUzLTEuMTA2LjA3LjI0My04LjUyM3pNNTEuNzg0IDE1LjI4Nkw1NS41NjUgMTUuMTg3IDU1LjU2NSAzNC4yMDEgNjEuMTIyIDMzLjYxNyA2MS4xMjIgMTUuMDQxIDY0LjI4NiAxNC45NTggNjQuMjg2IDguNzc0IDUxLjc4NCA4Ljc3NHpNNzEuNzI3IDI5LjEyOWwtMS41NDQuMTI4di0xNS45bDEuNTQ0LS4wMjN2NC4zMzJsNC42MDktLjE3NnYtNC4yNDJjMC0yLjgyNi0xLjkwOC00LjgwNi01LjM4LTQuODA2LTMuNzA1IDAtNS44NTYgMS45OC01Ljg1NiA0Ljk5OHYxNS4xOTJjMCAzLjE0OCAxLjc2NSA0LjY3IDUuNzc4IDQuMjIgMy42MjUtLjQwNiA1LjUzNS0yLjQyOCA1LjUzNS01LjQ0N3YtNC45MjZsLTQuNjg2LjI3OXY2LjM3eiIvPgogICAgPC9nPgo8L3N2Zz4K) 0 16px no-repeat;
+    background-size: 99px 40px;
+    width: 99px;
+    height: 72px;
+    cursor: pointer;
+  }
+
+  .nav-signup{
+    position: relative;
+    z-index: 10001;
+    background: #fff;
+    color: #121218;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    padding: 5px 18px 6px;
+    border-radius: 40px;
+    margin: 23px 0 0;
+    line-height: 21px;
+    float: right;
+    cursor: pointer;
+  }
+}
+
+.login-wrap{
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 300px;
+
+  .login-title{
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 14px;
+  }
+
+  form{
+    .id-wrap{
+      position: relative;
+      width: 100%;
+      input{
+        box-sizing : border-box;
+        overflow: visible;
+        font-size: 16px;
+        line-height: normal;
+        border-color: rgba(154,151,161,0.2);
+        border: 1px solid #d4d4d4;
+        border-top-width: 1px;
+        border-bottom-width: 0;
+        color: #333333;
+        font-weight: 400;
+        width: 100%;
+        padding: 10px 10px 10px 14px;
+        border-radius: 4px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: start;
+        appearance: textfield;
+        background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+        -webkit-rtl-ordering: logical;
+        cursor: text;
+      }
+    }
+
+    .pw-wrap{
+      position: relative;
+      width: 100%;
+      input{
+        box-sizing : border-box;
+        overflow: visible;
+        font-size: 16px;
+        line-height: normal;
+        border-color: rgba(154,151,161,0.2);
+        border-top-width: 1px;
+        color: #333333;
+        font-weight: 400;
+        border: 1px solid #d4d4d4;
+        border-bottom-width: 1px;
+        width: 100%;
+        padding: 10px 10px 10px 14px;
+        border-radius: 4px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        word-spacing: normal;
+        text-transform: none;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: start;
+        appearance: textfield;
+        background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+        -webkit-rtl-ordering: logical;
+        cursor: text;
+      }
+    }
+  }
+
+  .login-button-wrap{
+    width: 100%;
+    padding: 0 0 21px;
+    border-bottom: 1px solid rgba(154,151,161,0.2);
+    margin: 16px 0 0;
+    box-sizing: border-box;
+
+    button{
+      color: #FFFFFF;
+      font-weight: 700;
+      letter-spacing: -0.1px;
+      text-align: center;
+      width: 100%;
+      border-radius: 26px; 
+      font-size: 16px;
+      line-height: 47px;
+      height: 48px;
+      cursor: pointer;
+      border-width: 0px;
+      border-style: none;
+      border-color: transparent;
+      border-image: initial;
+      outline: none 0px;
+      padding: 0px;
+      margin: 0;
+      background-color: #EB0056;
+    }
+  }
+
+  p{
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+    opacity: 0.6;
+    margin: 15px 0 13px;
+    padding: 0px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  ul{
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    list-style-type: none;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 0px;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    li{
+      box-sizing: border-box;
+      display: list-item;
+      button{
+        background: url(https://i.imgur.com/m60RREc.png) no-repeat;
+        background-size: cover;
+        vertical-align: top;
+        width: 38px;
+        height: 38px;
+        border-width: 0px;
+        border-style: none;
+        border-color: transparent;
+        border-image: initial;
+        outline: none 0px;
+        padding: 0px;
+        font-size: 100%;
+        margin: 0;
+        overflow: visible;
+        text-rendering: auto;
+        letter-spacing: normal;
+        word-spacing: normal;
+        text-indent: 0px;
+        text-shadow: none;
+        display: inline-block;
+        text-align: center;
+        align-items: flex-start;
+      }
+    }
+
+  }
+}

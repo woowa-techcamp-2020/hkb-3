@@ -1,16 +1,18 @@
 import Observable from '../models/observable';
-import { getState, elements, paths } from '../common';
-import Api from '../api';
+import { getState, paths, elements } from '../common';
 import HomeView from '../views/Home/homeView';
 import CalendarView from '../views/Calendar';
 import StatisticsView from '../views/Statistics';
-import MainView from '../views/Main';
+import Login from '../views/Login';
 
 class Router extends Observable {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
+    this.setViewMap();
+  }
 
+  setViewMap() {
     this.viewMap = {
       [paths.home](state) {
         new HomeView(state).render();
@@ -21,7 +23,21 @@ class Router extends Observable {
       [paths.statistics](state) {
         new StatisticsView(state).render();
       },
+      [paths.login]() {
+        new Login().render();
+      },
     };
+  }
+
+  async init() {
+    if(this.getPath() === paths.login) {
+      new Login().render();
+    }else{
+      await elements.initModel.fetchInitData();
+      window.addEventListener('popstate', (state) => this.renderByUrl(state));
+      document.querySelector('.main-router-wrap')
+        .addEventListener('click', (e) => this.onLink(e));
+    }
   }
 
   getCurrentPath = (e, listNode) => {

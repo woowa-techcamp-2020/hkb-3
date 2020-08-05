@@ -6,20 +6,27 @@ export default class UserDTO {
 
   public email:string;
 
+  public name:string;
+
   public created_at:Date;
 
   public updated_at:Date;
-
+  
   constructor(userData:any) {
     this.id = userData.id;
     this.password = userData.password;
     this.email = userData.email;
     this.created_at = userData.created_at;
     this.updated_at = userData.updated_at;
+    this.name = userData.name;
   }
 
   getId() {
     return this.id;
+  }
+
+  getName() {
+    return this.name;
   }
 
   getEmail() {
@@ -42,6 +49,10 @@ export default class UserDTO {
     this.id = id;
   }
 
+  setName(name:string) {
+    this.name = name;
+  }
+  
   setEmail(email:string) {
     this.email = email;
   }
