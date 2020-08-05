@@ -20,6 +20,7 @@ export const paths = {
   calendar: '/calendar',
   statistics: '/statistics',
   login: '/auth/login',
+  signup: '/auth/signup',
 };
 
 

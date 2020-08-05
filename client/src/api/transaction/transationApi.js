@@ -8,7 +8,6 @@ async function createTransaction(transaction) {
     const result = await response.json();
     return result;
   });
-  
   return fetchResult;
 }
 
@@ -32,7 +31,6 @@ async function deleteTransaction(id) {
     const result = await response.json();
     return result;
   });
-  
   return fetchResult;
 }
 

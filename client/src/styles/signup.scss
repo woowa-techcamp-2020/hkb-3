@@ -1,0 +1,62 @@
+.signup-name-wrap{
+  position: relative;
+  width: 100%;
+  input{
+    box-sizing : border-box;
+    overflow: visible;
+    font-size: 16px;
+    line-height: normal;
+    border-color: rgba(154,151,161,0.2);
+    border: 1px solid #d4d4d4;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    color: #333333;
+    font-weight: 400;
+    width: 100%;
+    padding: 10px 10px 10px 14px;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: textfield;
+    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+  }
+}
+
+
+.signup-email-wrap{
+  position: relative;
+  width: 100%;
+  input{
+    box-sizing : border-box;
+    overflow: visible;
+    font-size: 16px;
+    line-height: normal;
+    border-color: rgba(154,151,161,0.2);
+    border: 1px solid #d4d4d4;
+    border-top-width: 1px;
+    border-bottom-width: 0;
+    color: #333333;
+    font-weight: 400;
+    width: 100%;
+    padding: 10px 10px 10px 14px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: textfield;
+    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+  }
+}
