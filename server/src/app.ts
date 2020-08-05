@@ -9,10 +9,10 @@ import passport from 'passport';
 import session from 'express-session';
 import passportLocal from 'passport-local';
 import cors from 'cors';
-import Oauth2 from 'passport-oauth2';
 import sessionFileStore from 'session-file-store';
 import PassportGithub from 'passport-github2';
 import indexRouter from './routes/index';
+import userService from './service/userService';
 // import loginRouter from './routes/login';
 
 
@@ -41,7 +41,9 @@ app.use(passport.session());
 interface IUser {
   id: string,
   password: string,
-  username?: string
+  username?: string,
+  email?: string
+  type?: string
 }
 const authData: IUser = {
   id: 'test',
@@ -49,31 +51,20 @@ const authData: IUser = {
   username: 'myungwoo-Y',
 };
 
-passport.serializeUser((user: IUser, done: any) => {
-  console.log('Serialize');
-  done(null, user.username);
+passport.serializeUser((user: IUser, done: any) => { 
+  done(null, user.id);
 });
 
-passport.deserializeUser((id: any, done: any) => {
-  console.log('Deserialize');
-  if(authData.id === id || authData.username === id) {
-    done(null, id);
+passport.deserializeUser(async (id: any, done: any) => {
+  const res = await userService.getUserById(id);
+  if(res.status === 'ok') {
+    const user = res.data[0] as IUser;
+    return done(null, user);
   }
+  return done(null, false, {
+    message: 'Incorrect user.',
+  });
 });
-
-passport.use(new Oauth2.Strategy({
-  authorizationURL: 'https://github.com/login/oauth/authorize',
-  tokenURL: 'https://github.com/login/oauth/access_token',
-  clientID: 'f764d2d4b757b7705a44',
-  clientSecret: '24e47fffaecab54fc3a6ed807e20fc7c85d2462b',
-  callbackURL: 'http://localhost:3000/auth/github/callback',
-},
-((accessToken: any, refreshToken: any, profile: any, cb: any) => {
-  console.log(profile);
-  if(profile.id === 'myungwoo-Y') {
-    cb(null, profile.id);
-  }
-})));
 
 passport.use(new PassportGithub.Strategy({
   clientID: 'f764d2d4b757b7705a44',
@@ -90,21 +81,28 @@ passport.use(new PassportGithub.Strategy({
 const LocalStrategy = passportLocal.Strategy;
 
 
-passport.use(new LocalStrategy(
-  ((username:string, password:string, done: any) => {
-    if(username === authData.id) {
-      if(password === authData.password) {
-        return done(null, authData);
+passport.use(new LocalStrategy({ // local 전략을 세움
+  usernameField: 'useremail',
+  passwordField: 'password',
+},
+((useremail:string, password:string, done: any) => {
+  userService.getUserByEmail(useremail).then((res) => {
+    const user = res.data[0] as IUser;
+    if(res.status === 'ok') {
+      if(useremail === user.email) {
+        if(password === user.password) {
+          return done(null, { ...user, type: 'local' });
+        }
+        return done(null, false, {
+          message: 'Incorrect password.',
+        });
       }
-      return done(null, false, {
-        message: 'Incorrect password.',
-      });
     }
     return done(null, false, {
-      message: 'Incorrect username.',
+      message: 'Incorrect useremail.',
     });
-  }),
-));
+  });
+})));
 
 
 const isAuthenticated = (req:any, res: Response, next: NextFunction) => {

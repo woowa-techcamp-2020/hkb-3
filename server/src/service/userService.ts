@@ -24,6 +24,15 @@ async function getUserById(id:Number) {
   
   return { status: 'fail', message: '유저없음' };
 }
+
+async function getUserByEmail(email:string) {
+  const result = await userRepo.getUserByEmail(email);
+  if(result.length > 0) {
+    return { status: 'ok', message: '유저 검색 완료', data: result };
+  }
+  
+  return { status: 'fail', message: '유저없음' };
+}
   
 async function deleteUser(id:Number) {
   const result = userRepo.deleteUser(id);
@@ -32,5 +41,5 @@ async function deleteUser(id:Number) {
 
 
 export default {
-  getAllUsers, getUserById, deleteUser, createUser, 
+  getAllUsers, getUserById, deleteUser, createUser, getUserByEmail,
 };
