@@ -34,9 +34,9 @@ class Router extends Observable {
       new Login().render();
     }else{
       await elements.initModel.fetchInitData();
-      window.addEventListener('popstate', (state) => router.renderByUrl(state));
+      window.addEventListener('popstate', (state) => this.renderByUrl(state));
       document.querySelector('.main-router-wrap')
-        .addEventListener('click', (e) => router.onLink(e));
+        .addEventListener('click', (e) => this.onLink(e));
     }
   }
 
