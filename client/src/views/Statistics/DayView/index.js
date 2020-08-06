@@ -3,6 +3,10 @@ class DayWarp {
     this.width = 1200;
     this.height = 650;
     this.defaultX = 100;
+    this.heightPadding = 50;
+    this.heightDiffer = 50;
+    this.widthRightPadding = 10;
+    this.defaultHeight = this.height - this.heightPadding;
   }
 
   getLastDate() {
@@ -15,12 +19,9 @@ class DayWarp {
 
   buildBasicLine = () => {
     const lineNumber = 11;
-    this.heightPadding = 50;
-    const defaultHeight = this.height - this.heightPadding;
-    this.heightDiffer = 50;
     const xPadding = 20;
     const amountDiffer = this.maxSpend / (lineNumber - 1);
-    let content = `<line x1="${this.defaultX}" y1="${defaultHeight}" x2="100%" y2="${defaultHeight}" />`;
+    let content = `<line x1="${this.defaultX}" y1="${this.defaultHeight}" x2="100%" y2="${this.defaultHeight}" />`;
     new Array(lineNumber).fill().reduce((prev, cur, i) => {
       const newHeight = prev - this.heightDiffer;
       let amount = 0;
@@ -34,15 +35,13 @@ class DayWarp {
         </text>
       `;
       return newHeight;
-    }, defaultHeight);
+    }, this.defaultHeight);
     return content;
   }
 
   buildDates() {
-    const lastDate = this.getLastDate();
     const dateNumber = 6;
     const differDate = 5;
-    this.differX = ((this.width - this.defaultX) / parseInt(lastDate));
     const heightPadding = 20;
     let content = '';
     new Array(dateNumber).fill().reduce((prev, cur, i) => {
@@ -73,7 +72,7 @@ class DayWarp {
     const numberOfPadding = 3;
     const totalHeight = this.height - this.heightDiffer * numberOfPadding;
     let content = '';
-    let points = '';
+    let points = `${this.defaultX} ${this.defaultHeight - this.heightDiffer},`;
     const sortByDateList = this.getListRemovedDateDuplicate();
 
 
@@ -101,6 +100,9 @@ class DayWarp {
 
 
   buildLineGraph() {
+    const lastDate = this.getLastDate();
+    this.differX = ((this.width - this.defaultX - this.widthRightPadding) / parseInt(lastDate));
+
     const content = `
       <svg width="${this.width}px" height="${this.height}px">
         ${this.buildBasicLine()}
