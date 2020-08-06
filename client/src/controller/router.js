@@ -7,6 +7,9 @@ import Login from '../views/Login';
 import SignupView from '../views/Signup';
 import $ from '../lib/miniJQuery';
 
+const SELECTOR_HEADER_ROUTER_WRAP = '.js-header-router';
+
+
 class Router extends Observable {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
@@ -52,7 +55,7 @@ class Router extends Observable {
     }else{
       await elements.initModel.fetchInitData();
       window.addEventListener('popstate', (state) => this.renderByUrl(state));
-      document.querySelector('.main-router-wrap')
+      document.querySelector(SELECTOR_HEADER_ROUTER_WRAP)
         .addEventListener('click', (e) => this.onLink(e));
     }
   }

@@ -1,5 +1,4 @@
 import Api from '../../api/index';
-import { paths } from '../../common';
 
 const { default: $ } = require('../../lib/miniJQuery');
 
