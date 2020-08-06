@@ -36,7 +36,8 @@ const SELECTOR_TRANSACTION_INPUT_BUTTON_MODIFY  = '.js-transaction-input-button_
 const SELECTOR_TRANSACTION_INPUT_BUTTON_CANCEL  = '.js-transaction-input-button__cancel'; // 취소
 const SELECTOR_TRANSACTION_INPUT_BUTTON_TEST    = '.js-transaction-input-button__test';  // 내역 자동 생성
 
-const SELECTOR_TRANSACTION_CONTENTS = '.js-transaction-contents';
+const SELECTOR_SELECTED_TRANSACTION = '.js-selected-transaction';
+const CLASS_SELECTED_TRANSACTION = 'js-selected-transaction';
 
 const tempDate = new Date();
 let tempMonth = (tempDate.getMonth() + 1);
@@ -45,6 +46,7 @@ let tempDay = tempDate.getDate();
 if(tempDay < 10) tempDay = `0${tempDay}`;
 
 const CURR_DATE = `${tempDate.getFullYear()}-${tempMonth}-${tempDay}`;
+
 class InputFieldView extends View {
   constructor(...args) {
     super(args);
@@ -254,7 +256,7 @@ class InputFieldView extends View {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS);
     const contents = `
       <div class="transaction-input-contents__text">내용</div>
-      <input type="text" class="transaction-input-contents__input js-transaction-input-contents__input" placeholder="거래 내용을 입력해주세요"></input>`;
+      <input type="text" class="transaction-input-contents__input js-transaction-input-contents__input" maxlength="15" placeholder="거래 내용을 입력해주세요"></input>`;
     // render
     wrap.innerHTML = contents;
   }
@@ -297,16 +299,16 @@ class InputFieldView extends View {
     confirmButton.addEventListener('click', async () => {
       let contents = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value;
       contents = contents.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    
+      
       const trans = {
         contents,
         category_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value,
-        user_id: 1,
+        user_id: elements.initModel.state.userInfo.id,
         payment_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value,
-        date: new Date(moment(document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value).format('YYYY-MM-DD HH:mm:ss')).toISOString(),
+        date: moment(new Date(`${document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value} 00:00:00`)).format('YYYY-MM-DD HH:mm:ss'),
         amount: document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value.split(',').join(''),
-        created_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
-        updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
+        created_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+        updated_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
       await API.Transaction().createTransaction(trans);
       await elements.initModel.fetchInitData();
@@ -331,7 +333,7 @@ class InputFieldView extends View {
   addDeleteButtonEvent = () => {
     const deleteButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_DELETE);
     deleteButton.addEventListener('click', async () => {
-      const transId = document.querySelector(SELECTOR_TRANSACTION_CONTENTS).className.split(' ')[2];
+      const transId = document.querySelector(SELECTOR_SELECTED_TRANSACTION).className.split(' ')[2];
       await API.Transaction().deleteTransaction(transId);
       await elements.initModel.fetchInitData();
 
@@ -347,15 +349,15 @@ class InputFieldView extends View {
       let contents = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value;
       contents = contents.replace(/</g, '&lt;').replace(/>/g, '&gt;');
       
-      const transId = document.querySelector(SELECTOR_TRANSACTION_CONTENTS).className.split(' ')[2];
+      const transId = document.querySelector(SELECTOR_SELECTED_TRANSACTION).className.split(' ')[2];
       const trans = {
         id: transId,
         new_contents: contents,
         new_category_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value,
         new_payment_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value,
-        new_date: new Date(moment(document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value).format('YYYY-MM-DD HH:mm:ss')).toISOString(),
+        new_date: moment(new Date(document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value)).format('YYYY-MM-DD HH:mm:ss'),
         new_amount: document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value.split(',').join(''),
-        updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
+        updated_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
 
       await API.Transaction().updateTransaction(trans);
@@ -370,6 +372,10 @@ class InputFieldView extends View {
   addCancelButtonEvent = () => {
     const cancelButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_CANCEL);
     cancelButton.addEventListener('click', () => {
+      const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
+      if(selectedTransaction !== null) {
+        selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
+      }
       this.render({ state: 'income', isModify: false });
     });
   }
