@@ -60,9 +60,9 @@ class Router extends Observable {
     }
   }
 
-  getCurrentPath = (e, listNode) => {
+  getCurrentPath = (e) => {
     if(e.target.nodeName === 'A') e.preventDefault(); 
-    const path = listNode.querySelector('a').getAttribute('href');
+    const path = e.target.getAttribute('href');
     return path;
   }
   
@@ -82,18 +82,16 @@ class Router extends Observable {
   }
 
   async authLink(e) {
-    if(e.target.nodeName === 'A') e.preventDefault(); 
-    const path = e.target.getAttribute('href');
+    const path = this.getCurrentPath();
     history.pushState(null, '', path);  
     this.viewMap[path](); 
   }
 
 
   async onLink(e) {
-    const listNode = e.target.closest('li');
-    if(!listNode) return;
+    if(e.target.nodeName !== 'A') return;
       
-    const path = this.getCurrentPath(e, listNode);
+    const path = this.getCurrentPath(e);
     this.path = path;
     const model = await getState(path);
     this.state = model;

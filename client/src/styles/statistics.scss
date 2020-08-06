@@ -3,6 +3,10 @@ $circle-round: 565.49;
 $circle-delay: 1s;
 $spendTextColor : rgb(212, 108, 108);
 
+.statistice-contents{
+    margin-top: 20%;
+    text-align: center;
+}
 .select-wrap{
     display: grid;
     grid-template-columns: repeat(2, auto) 1fr; 
