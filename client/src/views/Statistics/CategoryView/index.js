@@ -5,7 +5,7 @@ import comma from '../../../lib/numberComma';
 class CategoryView extends View {
   constructor(...args) {
     super(args);
-    this.colors = ['#33cccc', '#00ccff', '#0099ff', '#0066ff', '#3366ff', '#0000ff', '#000099', '#003399', '#3366cc', '#336699'];
+    this.colors = ['#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#0000ff', '#f95d6a', '#ff7c43', '#ffa600', '#F9F871'];
   }
 
   buildBar = () => {

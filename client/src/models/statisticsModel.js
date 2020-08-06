@@ -7,11 +7,16 @@ class StatisticsModel extends Observable {
     super();
     this.renderContent = 'category';
     this.name = 'statistics';
+    this.selectedId = 'category';
+  }
+
+  setSelectedId(elementID) {
+    this.selectedId = elementID;
   }
 
 
   update(model) {
-    this.state = { data: model.state.data, date: model.state.date };
+    this.state = { data: model.state.data, date: model.state.date, selectedId: this.selectedId };
     this.notify(this);
   }
 }
