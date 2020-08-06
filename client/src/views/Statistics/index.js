@@ -4,6 +4,8 @@ import $ from '../../lib/miniJQuery';
 import { isSpend, elements } from '../../common';
 import numberComma from '../../lib/numberComma';
 
+const IMAGE_TRANSACTION_EMPTY = 'https://i.imgur.com/t0Lantl.png';
+
 class StatisticsView {
   constructor(state) {
     this.state = state;
@@ -77,19 +79,28 @@ class StatisticsView {
   }
 
   render() {
-    const newState = {
-      data: this.getSpendList(), 
-      wrap: $('.statistics-wrap').getNode(),
-      date: this.state.date,
-      totalSpend: this.totalSpend,
-    };
-    this.setTotalSpend();
-    const categorySelect = $('#category').getNode();
-
-    if(categorySelect.checked) {
-      this.categoryView.render(newState);
+    if(!this.state.data) {
+      this.wrap.innerHTML = ` 
+        <div class="transaction-contents-none statistice-contents">
+          <img src="${IMAGE_TRANSACTION_EMPTY}" width="200">
+          <div>거래 내역이 없습니다</div>
+        </div>
+      `;
     }else{
-      this.dayView.render(newState);
+      const newState = {
+        data: this.getSpendList(), 
+        wrap: $('.statistics-wrap').getNode(),
+        date: this.state.date,
+        totalSpend: this.totalSpend,
+      };
+      this.setTotalSpend();
+      const categorySelect = $('#category').getNode();
+  
+      if(categorySelect.checked) {
+        this.categoryView.render(newState);
+      }else{
+        this.dayView.render(newState);
+      }
     }
   }
 }
