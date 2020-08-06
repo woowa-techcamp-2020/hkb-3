@@ -8,9 +8,9 @@ class HomeView {
   constructor(model) {
     this.model = model;
     this.wrap = document.querySelector(SELECTOR_CONTENT_WRAP);
-    this.totalView = new TotalView();
-    this.inputFieldView = new InputFieldView();
+    this.inputFieldView = new InputFieldView(model);
     this.transListView = new TransListView(this.inputFieldView);
+    this.totalView = new TotalView(this.transListView);
   }
 
   // 화면 그리기
@@ -26,7 +26,8 @@ class HomeView {
     this.wrap.innerHTML = contents;
 
     this.totalView.render(state);
-    this.transListView.render(state, true, true);
+    this.transListView.render(state);
+    this.transListView.addTransViewListenser();
     await this.inputFieldView.render({ state: 'income', isModify: false });
   }
 }

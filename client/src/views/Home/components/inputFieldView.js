@@ -28,16 +28,19 @@ const SELECTOR_TRANSACTION_INPUT_CONTENTS       = '.js-transaction-input-content
 const SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT = '.js-transaction-input-contents__input';
 
 const SELECTOR_TRANSACTION_INPUT_BUTTON         = '.js-transaction-input-button';
-const SELECTOR_TRANSACTION_INPUT_BUTTON_CONFIRM = '.js-transaction-input-button__confirm';
-const SELECTOR_TRANSACTION_INPUT_BUTTON_CLEAR   = '.js-transaction-input-button__clear';
-const SELECTOR_TRANSACTION_INPUT_BUTTON_DELETE  = '.js-transaction-input-button__delete';
-const SELECTOR_TRANSACTION_INPUT_BUTTON_MODIFY  = '.js-transaction-input-button__modify';
-const SELECTOR_TRANSACTION_INPUT_BUTTON_CANCEL  = '.js-transaction-input-button__cancel';
-const SELECTOR_TRANSACTION_INPUT_BUTTON_TEST    = '.js-transaction-input-button__test';
+const SELECTOR_TRANSACTION_INPUT_BUTTON_CONFIRM = '.js-transaction-input-button__confirm'; // 거래 내역 추가
+const SELECTOR_TRANSACTION_INPUT_BUTTON_CLEAR   = '.js-transaction-input-button__clear';  // 내용 지우기
+const SELECTOR_TRANSACTION_INPUT_BUTTON_DELETE  = '.js-transaction-input-button__delete'; // 내역 삭제
+const SELECTOR_TRANSACTION_INPUT_BUTTON_MODIFY  = '.js-transaction-input-button__modify'; // 수정
+const SELECTOR_TRANSACTION_INPUT_BUTTON_CANCEL  = '.js-transaction-input-button__cancel'; // 취소
+const SELECTOR_TRANSACTION_INPUT_BUTTON_TEST    = '.js-transaction-input-button__test';  // 내역 자동 생성
+
+const SELECTOR_TRANSACTION_CONTENTS = '.js-transaction-contents';
 
 class InputFieldView extends View {
   constructor(...args) {
     super(args);
+    [this.model] = args;
     this.isModify = false;
     this.month = new Map();
   }
@@ -69,7 +72,7 @@ class InputFieldView extends View {
 
     this.renderState(state);
     this.renderDate();
-    this.renderCategory(state);
+    await this.renderCategory(state);
     this.renderPayment();
     this.renderAmount();
     this.renderContents();
@@ -81,9 +84,19 @@ class InputFieldView extends View {
   renderState = (state) => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE);
     const contents = `
-      <span class="transaction-input-state__text">분류</span>
-      <input type="radio" class="transaction-input-state__radio-income js-transaction-input-state__radio-income" name="state" value="income" ${state === 'income' ? 'checked' : ''}>수입
-      <input type="radio" class="transaction-input-state__radio-spend js-transaction-input-state__radio-spend" name="state" value="spend" ${state === 'spend' ? 'checked' : ''}>지출
+      <div class="transaction-input-state__text">분류</div>
+      <div class="transaction-input-state-radio-wrap">
+        <label class="radio-color">
+          <input type="radio" class="transaction-input-state__radio-income js-transaction-input-state__radio-income" 
+                  name="state" value="income" ${state === 'income' ? 'checked' : ''}></input>
+          <span class="transaction-input-state__radio-text">수입</span>
+        </label>
+        <label class="radio-color">
+          <input type="radio" class="transaction-input-state__radio-spend js-transaction-input-state__radio-spend" 
+                  name="state" value="spend" ${state === 'spend' ? 'checked' : ''}></input>
+          <span class="transaction-input-state__radio-text">지출</span>
+        </label>
+      </div>
     `;
     // render
     wrap.innerHTML = contents;
@@ -99,27 +112,27 @@ class InputFieldView extends View {
 
   // 수입 라디오 버튼
   addIncomeRadioEvent = () => {
-    const incomeRadio = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE).children[1];
+    const incomeRadio = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME);
     incomeRadio.addEventListener('click', () => {
       const state = incomeRadio.value;
-      this.inputFieldView.renderCategory(state);
+      this.renderCategory(state);
     });
   }
 
   // 지출 라디오 버튼 
   addSpendRadioEvent = () => {
-    const spendRadio = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE).children[2];
+    const spendRadio = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND);
     spendRadio.addEventListener('click', () => {
       const state = spendRadio.value;
-      this.inputFieldView.renderCategory(state);
+      this.renderCategory(state);
     });
   }
 
   renderDate = () => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE);
     const contents = `
-      <span class="transaction-input-date__text">날짜</span>
-      <input type="text" class="transaction-input-date__input js-transaction-input-date__input" placeholder="yyyy-mm-dd" maxlength="10"></input>
+      <div class="transaction-input-date__text">날짜</div>
+      <input type="text" class="transaction-input-date__input js-transaction-input-date__input" placeholder="  yyyy-mm-dd" maxlength="10"></input>
     `;
     // render
     wrap.innerHTML = contents;
@@ -212,11 +225,11 @@ class InputFieldView extends View {
     return tempDate;
   }
 
-  async renderCategory(state) {
+  renderCategory = async (state) => {
     this.wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY);
     const categoryList = await this.getCategory(state);
     const contents = `
-      <span class="transaction-input-category__text">카테고리</span>
+      <div class="transaction-input-category__text">카테고리</div>
       <select class="transaction-input-category__select js-transaction-input-category__select" name="category">
         ${categoryList.map((category) => `
           ${category.state === state ? `
@@ -237,7 +250,7 @@ class InputFieldView extends View {
   renderPayment = () => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT);
     const contents = `
-      <span class="transaction-input-payment__text">결제수단</span>
+      <div class="transaction-input-payment__text">결제수단</div>
       <select class="transaction-input-payment__select js-transaction-input-payment__select" name="payment">
         <option value="1">현대카드</option>
         <option value="2">카카오체크카드</option>
@@ -250,7 +263,7 @@ class InputFieldView extends View {
   renderAmount = () => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT);
     const contents = `
-      <span class="transaction-input-amount__text">금액</span>
+      <div class="transaction-input-amount__text">금액</div>
       <input type="number" class="transaction-input-amount__input js-transaction-input-amount__input"></input>`;
     // render
     wrap.innerHTML = contents;
@@ -259,8 +272,8 @@ class InputFieldView extends View {
   renderContents = () => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS);
     const contents = `
-      <span class="transaction-input-contents__text">내용</span>
-      <input type="text" class="transaction-input-contents__input js-transaction-input-contents__input"></input>`;
+      <div class="transaction-input-contents__text">내용</div>
+      <input type="text" class="transaction-input-contents__input js-transaction-input-contents__input" placeholder="  거래 내용을 입력해주세요"></input>`;
     // render
     wrap.innerHTML = contents;
   }
@@ -270,7 +283,7 @@ class InputFieldView extends View {
     const contents = `
         ${isModify ? `
           <button class="transaction-input-button__modify js-transaction-input-button__modify">수정</button>
-          <button class="transaction-input-button__cancel js-transaction-input-button__calcel">취소</button>
+          <button class="transaction-input-button__cancel js-transaction-input-button__cancel">취소</button>
           <button class="transaction-input-button__delete js-transaction-input-button__delete">내역 삭제</button>
         ` : `
           <button class="transaction-input-button__confirm js-transaction-input-button__confirm">거래 내역 추가</button>
@@ -281,13 +294,13 @@ class InputFieldView extends View {
     // render
     wrap.innerHTML = contents;
     // add Event Listener
-    this.addEventToButtons();
+    this.addEventToButtons(isModify);
   }
 
   // 버튼에 이벤트 리스너 추가하기
-  addEventToButtons() {
+  addEventToButtons(isModify) {
     this.addTestButtonEvent();
-    if(this.isModify) {
+    if(isModify) {
       this.addDeleteButtonEvent();
       this.addModifyButtonEvent();
       this.addCancelButtonEvent();
@@ -303,7 +316,7 @@ class InputFieldView extends View {
     confirmButton.addEventListener('click', async () => {
       let contents = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value;
       contents = contents.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      
+    
       const trans = {
         contents,
         category_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value,
@@ -316,11 +329,10 @@ class InputFieldView extends View {
       };
       await API.Transaction().createTransaction(trans);
       await elements.initModel.fetchInitData();
-      this.transListView.render(this.model, this.incomeCheck, this.spendCheck);
     });
   }
  
-  // 거래내역 지우기
+  // 거래내역 지우기 clear
   addClearButtonEvent= () => {
     const clearButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_CLEAR);
     clearButton.addEventListener('click', () => {
@@ -338,12 +350,12 @@ class InputFieldView extends View {
   addDeleteButtonEvent = () => {
     const deleteButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_DELETE);
     deleteButton.addEventListener('click', async () => {
-      await API.Transaction().deleteTransaction(this.currTransaction.id);
+      const transId = document.querySelector(SELECTOR_TRANSACTION_CONTENTS).className.split(' ')[2];
+      await API.Transaction().deleteTransaction(transId);
       await elements.initModel.fetchInitData();
 
       // 삭제 한 후 수정 상태 돌리기
-      this.isModify = false;
-      this.render('income', this.isModify);
+      this.render({ state: 'income', isModify: false });
     });
   }
 
@@ -354,8 +366,9 @@ class InputFieldView extends View {
       let contents = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value;
       contents = contents.replace(/</g, '&lt;').replace(/>/g, '&gt;');
       
+      const transId = document.querySelector(SELECTOR_TRANSACTION_CONTENTS).className.split(' ')[2];
       const trans = {
-        id: this.currTransaction.id,
+        id: transId,
         new_contents: contents,
         new_category_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value,
         new_payment_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value,
@@ -368,8 +381,7 @@ class InputFieldView extends View {
       await elements.initModel.fetchInitData();
 
       // 수정 한 후 수정 상태 돌리기
-      this.isModify = false;
-      this.render('income', this.isModify);
+      this.render({ state: 'income', isModify: false });
     });
   }
 
@@ -377,8 +389,7 @@ class InputFieldView extends View {
   addCancelButtonEvent = () => {
     const cancelButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_CANCEL);
     cancelButton.addEventListener('click', () => {
-      this.isModify = false;
-      this.render('income', this.isModify);
+      this.render({ state: 'income', isModify: false });
     });
   }
 
@@ -403,6 +414,7 @@ class InputFieldView extends View {
       document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = '';
       document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = Math.floor(Math.random() * 3) + 1;
       document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = `2020-08-${Math.floor(Math.random() * 21) + 10}`;
+      
       await this.renderCategory(states[state]);
 
       const cateList = await API.Category().getCategoryByState(states[state]);

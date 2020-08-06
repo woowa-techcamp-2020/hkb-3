@@ -1,16 +1,13 @@
 import Observable from '../models/observable';
 import { getState, elements, paths } from '../common';
-import Api from '../api';
 import HomeView from '../views/Home/homeView';
 import CalendarView from '../views/Calendar';
 import StatisticsView from '../views/Statistics';
-import MainView from '../views/Main';
 
 class Router extends Observable {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
-
     this.viewMap = {
       [paths.home](state) {
         new HomeView(state).render();

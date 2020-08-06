@@ -3,12 +3,14 @@ import comma from '../../../lib/numberComma';
 
 
 const SELECTOR_TRANSACTION_TOTAL = '.js-transaction-total';
-const SELECTOR_TRANSACTION_TOTAL_INCOME_CHECKBOX = '.js-transaction-total-income__checkbox';
-const SELECTOR_TRANSACTION_TOTAL_SPEND_CHECKBOX = '.js-transaction-total-spend__checkbox';
 
 class TotalView extends View {
   constructor(...args) {
     super(args);
+    [this.transListView] = args;
+    if(this.transListView !== undefined) {
+      this.transactionList = this.transListView.state;
+    }
     this.incomeCheck = true;
     this.spendCheck = true;
   }
@@ -32,9 +34,7 @@ class TotalView extends View {
         <span class="transaction-total-spend__amount">-${comma(totalInOut.totalSpend)} 원</span>
       </label>
     `;
-
     this.wrap.innerHTML = contents;
-    this.addEventToCheckbox();
     super.notifyHandlers();
   }
 
@@ -53,30 +53,6 @@ class TotalView extends View {
       }
     });
     return { totalIncome, totalSpend };
-  }
-
-  // 체크박스 이벤트 추가
-  addEventToCheckbox = () => {
-    this.addIncomeCheckboxEvent();
-    this.addSpendCheckboxEvent();
-  }
-
-  // 수입 체크박스 이벤트 추가
-  addIncomeCheckboxEvent = () => {
-    const incomeCheckbox = document.querySelector(SELECTOR_TRANSACTION_TOTAL_INCOME_CHECKBOX);
-    incomeCheckbox.addEventListener('click', () => {
-      this.incomeCheck = incomeCheckbox.checked;
-      this.transListView.render(this.model, this.incomeCheck, this.spendCheck);
-    });
-  }
-
-  // 지출 체크박스 이벤트 추가
-  addSpendCheckboxEvent = () => {
-    const spendCheckbox = document.querySelector(SELECTOR_TRANSACTION_TOTAL_SPEND_CHECKBOX);
-    spendCheckbox.addEventListener('click', () => {
-      this.spendCheck = spendCheckbox.checked;
-      this.transListView.render(this.model, this.incomeCheck, this.spendCheck);
-    });
   }
 }   
       
