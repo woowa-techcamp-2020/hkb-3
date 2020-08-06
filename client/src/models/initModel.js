@@ -24,14 +24,13 @@ class InitModel extends Observable {
   }
 
   async fetchInitData() {
-    const userId = 1;
     let month = this.state.date.getMonth() + 1;
     if(month < 10) {
       month = `0${month}`;
     }
     const userInfo = await Api.User().getUserInfo();
     const date = `${this.state.date.getFullYear()}-${month}`;
-    const res = await Api.Transaction().getTransactionByUserIdAndDate(userId, date);
+    const res = await Api.Transaction().getTransactionByUserIdAndDate(userInfo.id, date);
     this.state = { ...this.state, data: res.data, userInfo };
     super.notify(this);
   }

@@ -1,6 +1,6 @@
 import View from '../../view';
 import PieView from './pieVIew';
-
+import comma from '../../../lib/numberComma';
 
 class CategoryView extends View {
   constructor(...args) {
@@ -26,7 +26,7 @@ class CategoryView extends View {
             </svg>
           </div>
           <div class="amount">
-            ${payment.amount}원
+            ${comma(payment.amount)}원
           </div>
         </div>
       `;

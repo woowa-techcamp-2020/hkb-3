@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
+import moment from 'moment';
 import View from '../../view';
 import comma from '../../../lib/numberComma';
 import API from '../../../api/index';
@@ -22,6 +23,8 @@ const SELECTOR_TRANSACTION_TOTAL_SPEND_CHECKBOX = '.js-transaction-total-spend__
 
 const IMAGE_TRANSACTION_EMPTY = 'https://i.imgur.com/t0Lantl.png';
 // const IMAGE_TRANSACTION_EMPTY = '';
+const SELECTOR_SELECTED_TRANSACTION = '.js-selected-transaction';
+const CLASS_SELECTED_TRANSACTION = 'js-selected-transaction';
 
 class TransListView extends View {
   constructor(...args) {
@@ -143,7 +146,13 @@ class TransListView extends View {
         const transId = div.className.split(' ')[2];
         
         const transaction = await API.Transaction().getTransactionById(transId);
-        console.log(transaction.data[0]);
+        
+        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
+        if(selectedTransaction !== null) {
+          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
+        }
+
+        console.log(transaction.data[0].id, transaction.data[0].updated_at, transaction.data[0].amount);
         if(transaction.data[0].state === 'income') {
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
@@ -157,7 +166,7 @@ class TransListView extends View {
         };
         await this.inputFieldView.render(inputFieldParmas);
 
-        
+        // console.log(moment(new Date()).format('YYYY-MM-DD hh:mm:ss'));
         const transDate = new Date(transaction.data[0].date);
         let currMonth = transDate.getMonth() + 1;
         if(currMonth < 10) {
@@ -172,6 +181,7 @@ class TransListView extends View {
         document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = transaction.data[0].payment_id;
         document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = transaction.data[0].amount;
         document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = transaction.data[0].contents;
+        div.classList.add(CLASS_SELECTED_TRANSACTION);
       });
     });
   }

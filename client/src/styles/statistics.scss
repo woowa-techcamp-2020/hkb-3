@@ -1,6 +1,7 @@
 @import "./global.scss";
 $circle-round: 565.49;
 $circle-delay: 1s;
+$spendTextColor : rgb(212, 108, 108);
 
 .select-wrap{
     display: grid;
@@ -50,7 +51,7 @@ $circle-delay: 1s;
     }
 
     .total-spend{
-        color: rgba(63,187,165,1);
+        color: $spendTextColor ;
     }
 }
 
