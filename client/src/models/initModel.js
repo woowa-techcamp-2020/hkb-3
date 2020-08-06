@@ -29,9 +29,10 @@ class InitModel extends Observable {
     if(month < 10) {
       month = `0${month}`;
     }
+    const userInfo = await Api.User().getUserInfo();
     const date = `${this.state.date.getFullYear()}-${month}`;
     const res = await Api.Transaction().getTransactionByUserIdAndDate(userId, date);
-    this.state = { ...this.state, data: res.data };
+    this.state = { ...this.state, data: res.data, userInfo };
     super.notify(this);
   }
 }

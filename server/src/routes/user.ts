@@ -60,6 +60,13 @@ router.get('/user/:id', async (req, res, next) => {
   res.json(result);
 });
 
+/* GET users listing. */
+router.get('/info', async (req, res, next) => {
+  const result = await userService.getUserInfo(req.user);
+  res.json(result);
+});
+
+
 
 /* GET users listing. */
 router.post('/user', async (req, res, next) => {
