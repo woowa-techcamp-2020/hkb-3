@@ -1,62 +1,155 @@
-.signup-name-wrap{
-  position: relative;
-  width: 100%;
-  input{
-    box-sizing : border-box;
-    overflow: visible;
-    font-size: 16px;
-    line-height: normal;
-    border-color: rgba(154,151,161,0.2);
-    border: 1px solid #d4d4d4;
-    border-top-width: 1px;
-    border-bottom-width: 0;
-    color: #333333;
-    font-weight: 400;
+$header-height : 80px;
+$button-margin : 25px;
+
+$mainColor0 : #6a6edf;
+$mainColor1 : #9a9cea;
+$mainColor2 : #a2b9ee;
+$mainColor3 : #a2dcee;
+$mainColor4 : #adeee2;
+
+$__input_align_self: center;
+$__input_justify_self: center;
+$__input_width : 90%;
+$__input_padding : 8px;
+
+$transition-time : 0.2s;
+
+.register-wrap{
+  z-index: 1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid: 1fr 3fr 1fr / 1fr ;
+  .register-title{
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    justify-self: center;
+    align-self: start;
+  }
+
+  .register-form{
+    justify-self: center;
+    align-self: center;
     width: 100%;
-    padding: 10px 10px 10px 14px;
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: start;
-    appearance: textfield;
-    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-    -webkit-rtl-ordering: logical;
-    cursor: text;
+    .register-name-wrap{
+      display: grid;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .register-name{
+        justify-self: center;
+        align-self: center;
+        border: 1px solid $mainColor1;
+        color: black;
+        border-radius: 10px;
+        background-color: white;
+        width: $__input_width;
+        -webkit-transition: $transition-time;
+        transition: $transition-time;
+        outline: none;
+        height: 32px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .register-name:focus{
+        cursor: text;
+          box-shadow: 0px 0px 8px 2px $mainColor1;
+      }
+    }
+    
+    
+    .register-email-wrap{
+      display: grid;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .register-email{
+        justify-self: center;
+        align-self: center;
+        border: 1px solid $mainColor1;
+        color: black;
+        border-radius: 10px;
+        background-color: white;
+        width: $__input_width;
+        -webkit-transition: $transition-time;
+        transition: $transition-time;
+        outline: none;
+        height: 32px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .register-email:focus{
+        cursor: text;
+          box-shadow: 0px 0px 8px 2px $mainColor1;
+      }
+    }
+
+    .register-pw-wrap{
+      display: grid;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .register-pw{
+        justify-self: center;
+        align-self: center;
+        border: 1px solid $mainColor1;
+        color: black;
+        border-radius: 10px;
+        background-color: white;
+        width: $__input_width;
+        -webkit-transition: $transition-time;
+        transition: $transition-time;
+        outline: none;
+        height: 32px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .register-pw:focus{
+        cursor: text;
+          box-shadow: 0px 0px 8px 2px $mainColor1;
+      }
+    }
+  }
+
+  .register-button-wrap{
+    width: 100%;
+    box-sizing: border-box;
+    button{
+      
+      font-weight: 700;
+      letter-spacing: -0.1px;
+      text-align: center;
+      width: 100%;
+      border-radius: 26px; 
+      font-size: 16px;
+      line-height: 47px;
+      height: 48px;
+      border-width: 0px;
+      border-style: none;
+      border-image: initial;
+      outline: none 0px;
+      padding: 0px;
+      margin: 0;
+      transition: 0.2s;
+      border: 1px solid $mainColor0;
+      background-color: white;
+      color: $mainColor0;
+      opacity: 0.8;
+    }
+    button:hover{
+      border: 0px;
+      opacity: 1;
+      background-color: $mainColor0;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
   }
 }
 
 
-.signup-email-wrap{
-  position: relative;
-  width: 100%;
-  input{
-    box-sizing : border-box;
-    overflow: visible;
-    font-size: 16px;
-    line-height: normal;
-    border-color: rgba(154,151,161,0.2);
-    border: 1px solid #d4d4d4;
-    border-top-width: 1px;
-    border-bottom-width: 0;
-    color: #333333;
-    font-weight: 400;
-    width: 100%;
-    padding: 10px 10px 10px 14px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    text-align: start;
-    appearance: textfield;
-    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-    -webkit-rtl-ordering: logical;
-    cursor: text;
-  }
-}

@@ -24,7 +24,32 @@ async function updateTransaction(transaction:TransactionDTO) {
 }
 
 async function createTransaction(transaction:TransactionDTO) {
-  const result = await pool.query('insert into mydb.transaction set ?', transaction);
+  const result = await pool.query('insert into mydb.transaction set ', transaction);
+  return result;
+}
+
+async function createTestTransaction(userId:number) {
+  const result = await pool.query(`delete from mydb.transaction where user_id = ${userId};
+    insert INTO mydb.transaction VALUES (NULL,'영화관', '2020-08-31 00:00:00', '24000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 7 , ${userId}, 1);
+    insert INTO mydb.transaction VALUES (NULL,'월급', '2020-08-31 00:00:00', '4500000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 1 , ${userId}, 3);
+    insert INTO mydb.transaction VALUES (NULL,'맛집 탐방', '2020-08-30 00:00:00', '24000', '2020-08-30 00:00:00', '2020-08-30 00:00:00', 3 , ${userId}, 2);
+    insert INTO mydb.transaction VALUES (NULL,'맥북 구입', '2020-08-30 00:00:00', '2400000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 7 , ${userId}, 3);
+    insert INTO mydb.transaction VALUES (NULL,'용돈', '2020-08-30 00:00:00',  '300000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 9 , ${userId}, 2);
+    insert INTO mydb.transaction VALUES (NULL,'병원 진료', '2020-08-29 00:00:00', '14000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 6 , ${userId}, 1);
+    insert INTO mydb.transaction VALUES (NULL,'옷 쇼핑', '2020-08-28 00:00:00', '114000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 5 , ${userId}, 3);
+    insert INTO mydb.transaction VALUES (NULL,'길에서 주움', '2020-08-27 00:00:00',  '500', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 10 , ${userId}, 2);
+    insert INTO mydb.transaction VALUES (NULL,'맥도날드', '2020-08-26 00:00:00', '12000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 3 , ${userId}, 1);
+
+    insert INTO mydb.transaction VALUES (NULL,'바스버거', '2020-09-30 00:00:00', '34000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 3 , ${userId}, 3);
+    insert INTO mydb.transaction VALUES (NULL,'용돈', '2020-09-25 00:00:00', '10000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 9 , ${userId}, 2);
+    insert INTO mydb.transaction VALUES (NULL,'해외여행', '2020-09-24 00:00:00', '1536000', '2020-08-30 00:00:00', '2020-08-30 00:00:00', 7 , ${userId}, 1);
+    insert INTO mydb.transaction VALUES (NULL,'맥북 구입', '2020-09-16 00:00:00', '24000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 7 , ${userId}, 2);
+    insert INTO mydb.transaction VALUES (NULL,'용돈', '2020-09-14 00:00:00',  '300000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 9 , ${userId}, 3);
+    insert INTO mydb.transaction VALUES (NULL,'병원 진료', '2020-09-13 00:00:00', '14000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 6 , ${userId}, 2);
+    insert INTO mydb.transaction VALUES (NULL,'옷 쇼핑', '2020-09-13 00:00:00', '114000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 5 , ${userId}, 1);
+    insert INTO mydb.transaction VALUES (NULL,'길에서 주움', '2020-09-13 00:00:00',  '500', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 10 , ${userId}, 1);
+    insert INTO mydb.transaction VALUES (NULL,'맥도날드', '2020-09-11 00:00:00', '12000', '2020-08-31 12:00:00', '2020-08-31 12:00:00', 3 , ${userId}, 3);
+  `);
   return result;
 }
 
@@ -93,4 +118,5 @@ export default {
   getTransactionById,
   getTransactionByUserId,
   getTransactionByUserIdAndDate,
+  createTestTransaction,
 };

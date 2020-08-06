@@ -45,7 +45,6 @@ async function updateTransaction(params:any) {
     return { result: 'fail', message: '존재하지 않는 내역입니다' };
   } 
   const transactionDTO = new TransactionDTO(tempTransaction[0]);
-  console.log('transactionDTO 수정 전', transactionDTO);
   transactionDTO.setUpdatedAt(params.updated_at);
   if(params.new_contents) transactionDTO.setContents(params.new_contents);
   if(params.new_amount) transactionDTO.setAmount(Number(params.new_amount));
@@ -53,9 +52,7 @@ async function updateTransaction(params:any) {
   if(params.new_payment_id) transactionDTO.setPaymentId(Number(params.new_payment_id));
   if(params.new_date) transactionDTO.setDate(params.new_date);
   
-  console.log('transactionDTO 수정 후', transactionDTO);
   const updateResult = await transactionRepo.updateTransaction(transactionDTO);
-  console.log(updateResult[0]);
   
   const transaction = await transactionRepo.getTransactionById(transactionDTO.getId());
   return {

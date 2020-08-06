@@ -11,6 +11,18 @@ async function createTransaction(transaction) {
   return fetchResult;
 }
 
+async function createTestTransaction(userId) {
+  const fetchResult = await fetch('/api/transaction/test', {
+    method: 'POST',
+    body: JSON.stringify({ userId }),
+    headers: { 'Content-Type': 'application/json' },
+  }).then(async (response) => {
+    const result = await response.json();
+    return result;
+  });
+  return fetchResult;
+}
+
 async function updateTransaction(transaction) {
   const fetchResult = await fetch('/api/transaction', {
     method: 'PUT',
@@ -78,4 +90,5 @@ export default {
   getTransactionById,
   getTransactionByUserId,
   getTransactionByUserIdAndDate,
+  createTestTransaction,
 };
