@@ -22,6 +22,7 @@ const SELECTOR_TRANSACTION_TOTAL_INCOME_CHECKBOX = '.js-transaction-total-income
 const SELECTOR_TRANSACTION_TOTAL_SPEND_CHECKBOX = '.js-transaction-total-spend__checkbox';
 
 const IMAGE_TRANSACTION_EMPTY = 'https://i.imgur.com/t0Lantl.png';
+  
 // const IMAGE_TRANSACTION_EMPTY = '';
 const SELECTOR_SELECTED_TRANSACTION = '.js-selected-transaction';
 const CLASS_SELECTED_TRANSACTION = 'js-selected-transaction';
@@ -146,13 +147,7 @@ class TransListView extends View {
         const transId = div.className.split(' ')[2];
         
         const transaction = await API.Transaction().getTransactionById(transId);
-        
-        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
-        if(selectedTransaction !== null) {
-          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
-        }
 
-        console.log(transaction.data[0].id, transaction.data[0].updated_at, transaction.data[0].amount);
         if(transaction.data[0].state === 'income') {
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
@@ -161,12 +156,19 @@ class TransListView extends View {
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = false;
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = true;
         }
+        
         const inputFieldParmas = {
           state: transaction.data[0].state, isModify: true,
         };
-        await this.inputFieldView.render(inputFieldParmas);
 
-        // console.log(moment(new Date()).format('YYYY-MM-DD hh:mm:ss'));
+        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
+
+        if(selectedTransaction === null) {
+          await this.inputFieldView.render(inputFieldParmas);
+        }else{
+          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
+          await this.inputFieldView.renderCategory(transaction.data[0].state);
+        }
         const transDate = new Date(transaction.data[0].date);
         let currMonth = transDate.getMonth() + 1;
         if(currMonth < 10) {
