@@ -42,6 +42,7 @@ $transaction-input-element-margin : 5px;
 
     .transaction-input-state{
         margin: $transaction-input-margin;
+        margin-bottom: 0px;
         display: grid;
         .transaction-input-state__text{
             color: $__text_color;
@@ -102,6 +103,7 @@ $transaction-input-element-margin : 5px;
     }
     .transaction-input-date{
         margin:$transaction-input-margin;
+        margin-bottom: 0px;
         display: grid;
         .transaction-input-date__text{
             color: $__text_color;
@@ -130,6 +132,7 @@ $transaction-input-element-margin : 5px;
     }
     .transaction-input-category{
         margin:$transaction-input-margin;
+        margin-bottom: 0px;
         display: grid;
         .transaction-input-category__text{
             color: $__text_color;
@@ -158,6 +161,7 @@ $transaction-input-element-margin : 5px;
     }
     .transaction-input-payment{
         margin:$transaction-input-margin;
+        margin-bottom: 0px;
         display: grid;
         .transaction-input-payment__text{
             color: $__text_color;
@@ -186,6 +190,7 @@ $transaction-input-element-margin : 5px;
     }
     .transaction-input-amount{
         margin:$transaction-input-margin;
+        margin-bottom: 0px;
         display: grid;
         .transaction-input-amount__text{
             color: $__text_color;
@@ -215,6 +220,7 @@ $transaction-input-element-margin : 5px;
     }
     .transaction-input-contents{
         margin:$transaction-input-margin;
+        margin-bottom: 0px;
         display: grid;
         .transaction-input-contents__text{
             color: $__text_color;
