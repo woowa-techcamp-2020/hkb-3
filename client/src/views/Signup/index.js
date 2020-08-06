@@ -1,11 +1,10 @@
 import Api from '../../api/index';
-import { paths } from '../../common';
 
 const { default: $ } = require('../../lib/miniJQuery');
 
 class SignupView {
   constructor() {
-    this.wrap = $('.wrap').getNode();
+    this.wrap = $('.app').getNode();
   }
 
   buildNav = () => `

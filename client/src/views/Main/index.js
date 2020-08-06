@@ -2,12 +2,14 @@ import $ from '../../lib/miniJQuery';
 import { fillZeroToDate, elements } from '../../common';
 import View from '../view';
 
+const APP = '.app';
+
 class MainView extends View {
   constructor(data) {
     super(data);
     this.data = data;
     this.wrap = $('.content-wrap').getNode();
-    this.wrap = $('.wrap').getNode();
+    this.wrap = $(APP).getNode();
     this.state = null;
   }
 
@@ -22,30 +24,36 @@ class MainView extends View {
   buildHeader = () => {
     const content = `
         <div class="main-header">
-            <div class=title>
-                우아한 가계부
-            </div> 
+          <div class="header-title-wrap">
+              <div class="header-title">우아한 가계부</div>
+          </div>
+          <nav class="header-router js-header-router">
+            <div class="header-router__transaction">
+              <a class="header-router__transaction__text" href="/">Transaction History</a>
             </div>
-            <div class="container">
-            <div class="main-month-wrap">
-                <i class="fas fa-caret-square-left" data-action="left"></i>
-                <div class="main-month">
-                
-                </div>
-                <i class="fas fa-caret-square-right" data-action="right"></i>
+            <div class="header-router__calendar">
+              <a class="header-router__calendar__text" href="/calendar">Calendar</a>
             </div>
-            <nav class="main-router-wrap">
-                <ul>
-                    <li><a href="/" class="content">내역</a></li>
-                    <li><div class="empty-line"></div></li>
-                    <li><a href="/calendar" class="content">달력</a></li>
-                    <li><div class="empty-line"></div></li>
-                    <li><a href="/statistics" class="content">통계</a></li>
-                </ul>
-            </nav>
-            <div class="content-wrap">
+            <div class="header-router__statistics">
+              <a class="header-router__statistics__text" href="/statistics">Statistics</a>
+            </div>
+          </nav>
+          
+          <div class="header-user-wrap">
+            <div calss="header-user">이찬호님</div>
+          </div>
+          <div class="header-btn-wrap">
+            <button class="header-btn">로그아웃</input>
+          </div>
+        </div>
 
-            </div>
+        <div class="container">
+          <div class="main-month-wrap">
+              <i class="fas fa-chevron-left" data-action="left"></i>
+              <div class="main-month"></div>
+              <i class="fas fa-chevron-right" data-action="right"></i>
+          </div>
+          <div class="content-wrap js-content-wrap"></div>
         </div>  
       `;
 

@@ -1,5 +1,7 @@
 @import "./global.scss";
 $circle-round: 565.49;
+$circle-delay: 1s;
+
 .select-wrap{
     display: grid;
     grid-template-columns: repeat(2, auto) 1fr; 
@@ -88,7 +90,6 @@ $circle-round: 565.49;
         }
         
         .pi-wrap{
-            $circle-delay: 1s;
             .svg-wrap{
                 height: 600px;
                 width: 600px;

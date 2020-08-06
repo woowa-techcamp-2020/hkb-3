@@ -1,30 +1,163 @@
+$mainColor0 : #6a6edf;
+$mainColor1 : #9a9cea;
+$mainColor2 : #a2b9ee;
+$mainColor3 : #a2dcee;
+$mainColor4 : #adeee2;
+$app-background-color: rgb(245, 245, 245);
+$header-height : 60px;
+
 body{
     margin: 0;
+    height : 100vh;
 }
+
+.app{
+    height : 100vh;
+    background-color: $app-background-color;
+}
+
 .main-header{
     width: 100%;
-    text-align: center;
-    color: white;
-    background: rgb(120,254,230);
-    background: linear-gradient(90deg, rgba(120,254,230,1) 0%, rgba(99,230,206,1) 50%, rgba(63,187,165,1) 100%);
+    height: $header-height;
+    display: grid;
+    grid-template-columns: 2.4fr 6fr 1fr 1fr;
+    grid-template-rows: $header-height;
+    // background: $mainColor1;
 
-    .title{
-        font-family: sans-serif;;
-        font-size: 40px;
-        line-height: 47px;
-        padding: 15px 0;
-        color: #FFFFFF;
+    .header-title-wrap{
+        align-self: center;
+        justify-self: start;
+        margin-left: 20px;
+        font-family: sans-serif;
+        font-size: 30px;
+        color: $mainColor0;
+        font-weight: bold;
+    }
+    
+    .header-router{
+        display: grid;
+        height: $header-height;
+        grid-template-columns: 2fr 1fr 2fr;
         font-weight: bold;
 
+        a:link { color: black; text-decoration: none;}
+        a:visited { color: black; text-decoration: none;}
+        
+        .header-router__transaction{
+            align-self: center;
+            justify-self: end;
+        }
+        .header-router__transaction:hover{
+            a{
+                color:$mainColor0;
+            }  
+        }
+
+        .header-router__calendar{
+            align-self: center;
+            justify-self: center;
+        }
+        .header-router__calendar:hover{
+            a{
+                color:$mainColor0;
+            }
+        }
+
+        .header-router__statistics{
+            align-self: center;
+            justify-self: start;
+        }
+        .header-router__statistics:hover{
+            a{
+                color:$mainColor0;
+            }
+        }
+
+        .content:hover{
+            background-color: white;
+        }
+    }
+    .header-user-wrap{
+        align-self: center;
+        justify-self: end;
+    }
+    .header-btn-wrap{
+        align-self: center;
+        justify-self: center;
+        .header-btn{
+            border-radius: 10px;
+            border: 1px solid $mainColor1;
+            color: $mainColor1;
+            background-color: white;
+            font-size: medium;
+            height: 30px;
+        }
+        .header-btn:hover{
+            background-color: $mainColor1;
+            color: white;
+        }
     }
 }
 
+@media (min-width: 200px) and (max-width: 767px) {
+    .main-header {
+        grid-template-columns: 4fr 6fr 2fr 1.5fr;
+
+        .header-router{
+            grid-template-columns: 1fr 1fr 1fr;
+            
+            .header-router__transaction{
+                align-self: center;
+                justify-self: center;
+            }
+    
+            .header-router__calendar{
+                align-self: center;
+                justify-self: center;
+            }
+    
+            .header-router__statistics{
+                align-self: center;
+                justify-self: center;
+            }
+        }
+    }
+}
+@media (min-width: 767px) and (max-width: 992px) {
+    .main-header {
+        grid-template-columns: 3fr 7fr 1.5fr 1.5fr;
+    }
+}
+@media (min-width: 992px) and (max-width: 1200px) {
+    .main-header {
+        grid-template-columns: 3fr 8fr 1.5fr 1.5fr;
+    }
+}
+
+@media (min-width: 1200px){
+    .main-header {
+        grid-template-columns: 3fr 10fr 1.5fr 1.5fr;
+    }
+}
+
+.currend-router{
+    color:$mainColor1;
+}
+.fa-chevron-left:hover{
+    color: $mainColor0;
+    cursor: pointer;
+}
+.fa-chevron-right:hover{
+    color: $mainColor0;
+    cursor: pointer;
+}
+
 .main-month-wrap{
-    margin: 20px 0;
+    margin: 20px;
     text-align: center;
     i{
         display: inline-block;
-        font-size: 30px;
+        font-size: 25px;
     }
     .main-month{
         display: inline-block;
@@ -33,48 +166,3 @@ body{
     }
 }
 
-.main-router-wrap{
-    li{
-        display: inline;
-        color: purple;
-        font-size: xx-large;
-        padding: 0;
-
-        a:link { color: black; text-decoration: none;}
-        a:visited { color: black; text-decoration: none;}
-    };
-
-    .content{
-        padding: 0 60px;
-        width: 120px;
-    }
-
-    .content:hover{
-        background-color: white;
-        border-radius: 20px;
-    }
-    
-    ul {
-        background-color: #E0E0E0;
-        border-radius: 20px;
-        width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        list-style: none;
-        padding: 5px;
-        text-align: center;
-    };
-
-    .empty-line{
-        width: 3px;
-        height: 25px;
-        display: inline-block;
-        background: black;
-        padding: 0;
-        margin: 0 2px;
-    }
-}
-
-.content-wrap{
-    margin-top: 30px;
-}
