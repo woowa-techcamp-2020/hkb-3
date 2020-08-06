@@ -2,7 +2,6 @@ import './styles/container.scss';
 import './styles/main.scss';
 import './styles/calendar.scss';
 import './styles/statistics.scss';
-import './styles/home.scss';
 import './styles/login.scss';
 import './styles/signup.scss';
 import './styles/home-transaction-list.scss';

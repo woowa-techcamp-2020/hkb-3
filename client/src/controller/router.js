@@ -19,7 +19,6 @@ class Router extends Observable {
 
   setViewMap() {
     const router = this;
-
     this.viewMap = {
       [paths.home](state) {
         new HomeView(state).render();
@@ -57,7 +56,7 @@ class Router extends Observable {
       await elements.initModel.fetchInitData();
       window.addEventListener('popstate', (state) => this.renderByUrl(state));
       document.querySelector(SELECTOR_HEADER_ROUTER_WRAP)
-        .addEventListener('click', (e) => router.onLink(e));
+        .addEventListener('click', (e) => this.onLink(e));
     }
   }
 

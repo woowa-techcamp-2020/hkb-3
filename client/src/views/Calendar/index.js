@@ -15,7 +15,7 @@ class CalendarView {
 
   renderTotalViewWrap() {
     this.wrap.innerHTML = `
-      <div class="transaction-total">
+      <div class="transaction-total js-transaction-total">
       </div>
       <div class='calendar-wrap'>
       </div>

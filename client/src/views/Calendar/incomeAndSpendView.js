@@ -46,8 +46,8 @@ class IncomeAndSpendView {
   
   render(data) {
     this.data = data;
-    const incomeInput = $('.transaction-total-income-input').getNode();
-    const spendInput = $('.transaction-total-spend-input').getNode();
+    const incomeInput = $('.js-transaction-total-income__checkbox').getNode();
+    const spendInput = $('.js-transaction-total-spend__checkbox').getNode();
     if(incomeInput.checked) {
       this.renderIncome();
     }
