@@ -30,6 +30,18 @@ async function getAllUsers() {
 
   return fetchResult;
 }
+
+async function getUserInfo() {
+  const fetchResult = await fetch('/api/info', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  }).then(async (response) => {
+    const result = await response.json();
+    return result;
+  });
+
+  return fetchResult;
+}
   
 async function getUserById(id) {
   const fetchResult = await fetch(`/api/user/${id}`, {
@@ -72,4 +84,5 @@ export default {
   getUserById,
   updateUser,
   deleteUser,
+  getUserInfo,
 };

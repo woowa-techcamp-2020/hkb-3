@@ -1,4 +1,5 @@
 import SocialUserDTO from 'src/model/socialUserDTO';
+import { use } from 'passport';
 import userDTO from '../model/userDTO';
 import userRepo from '../repository/userRepository';
 
@@ -21,6 +22,16 @@ async function getUserById(id:Number) {
   const result = await userRepo.getUserById(id);
   if(result.length > 0) {
     return { status: 'ok', message: '유저 검색 완료', data: result };
+  }
+  
+  return { status: 'fail', message: '유저없음' };
+}
+
+async function getUserInfo(user:any) {
+  if(user) {
+    return {
+      status: 'ok', id: user.id, email: user.email, name: user.name, 
+    };
   }
   
   return { status: 'fail', message: '유저없음' };
@@ -63,4 +74,5 @@ export default {
   getUserByEmail,
   getUserBySocialId,
   createSocialUser,
+  getUserInfo,
 };
