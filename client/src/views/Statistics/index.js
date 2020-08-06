@@ -1,7 +1,7 @@
 import CategoryView from './CategoryView';
 import DayView from './DayView';
 import $ from '../../lib/miniJQuery';
-import { isSpend } from '../../common';
+import { isSpend, elements } from '../../common';
 import numberComma from '../../lib/numberComma';
 
 class StatisticsView {
@@ -12,14 +12,22 @@ class StatisticsView {
     this.dayView = new DayView();
 
     this.wrap.innerHTML = this.buildSelection(); 
+    this.setSelectInput();
     this.addSelectHandler();
   }
+
+  setSelectInput() {
+    const id = this.state.selectedId;
+    const input = $(`#${id}`).getNode();
+    input.checked = true;
+  }
+
 
   buildSelection = () => {
     const content = `
       <div class="select-wrap">
         <label for="category">  
-          <input type="radio" name="select" value="category" id="category" checked>
+          <input type="radio" name="select" value="category" id="category">
           카테고리 지출
           <span></span>
         </label>
@@ -46,6 +54,7 @@ class StatisticsView {
     $('.select-wrap').click((event) => {
       const { target } = event;
       if(target.nodeName === 'INPUT') {
+        elements.stastisticsModel.setSelectedId(target.id);
         this.render();
       }
     });

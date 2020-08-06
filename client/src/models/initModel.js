@@ -23,6 +23,8 @@ class InitModel extends Observable {
     super.notify(this);
   }
 
+  
+
   async fetchInitData() {
     let month = this.state.date.getMonth() + 1;
     if(month < 10) {
