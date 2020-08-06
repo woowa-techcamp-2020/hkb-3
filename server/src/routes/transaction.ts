@@ -36,6 +36,12 @@ router.post('/transaction', async (req, res, next) => {
   res.json(result);
 });
 
+// 테스트 거래내역 추가
+router.post('/transaction/test', async (req, res, next) => {
+  const result = await transactionRepo.createTestTransaction(Number(req.body.userId));
+  res.json(result);
+});
+
 // 거래내역 삭제
 router.delete('/transaction/:id', async (req, res, next) => {
   const result = await transactionService.deleteTransaction(Number(req.params.id));
