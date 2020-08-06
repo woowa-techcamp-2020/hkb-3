@@ -82,7 +82,7 @@ class Router extends Observable {
   }
 
   async authLink(e) {
-    const path = this.getCurrentPath();
+    const path = e.target.getAttribute('href');
     history.pushState(null, '', path);  
     this.viewMap[path](); 
   }
