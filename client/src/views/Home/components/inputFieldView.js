@@ -1,10 +1,11 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-multi-spaces */
 /* eslint-disable max-len */
 import moment from 'moment';
 import View from '../../view';
 import API from '../../../api/index';
 import { elements } from '../../../common';
-
+import comma from '../../../lib/numberComma';
 import validation from '../../../lib/validation';
 
 const SELECTOR_TRANSACTION_INPUT                    = '.js-transaction-input';
@@ -37,6 +38,13 @@ const SELECTOR_TRANSACTION_INPUT_BUTTON_TEST    = '.js-transaction-input-button_
 
 const SELECTOR_TRANSACTION_CONTENTS = '.js-transaction-contents';
 
+const tempDate = new Date();
+let tempMonth = (tempDate.getMonth() + 1);
+if(tempMonth < 10) tempMonth = `0${tempMonth}`;
+let tempDay = tempDate.getDate();
+if(tempDay < 10) tempDay = `0${tempDay}`;
+
+const CURR_DATE = `${tempDate.getFullYear()}-${tempMonth}-${tempDay}`;
 class InputFieldView extends View {
   constructor(...args) {
     super(args);
@@ -128,28 +136,34 @@ class InputFieldView extends View {
     });
   }
 
+
+  // <input type="text" class="transaction-input-date__input js-transaction-input-date__input" placeholder="yyyy-mm-dd" maxlength="10"></input>
   renderDate = () => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE);
     const contents = `
       <div class="transaction-input-date__text">날짜</div>
-      <input type="text" class="transaction-input-date__input js-transaction-input-date__input" placeholder="  yyyy-mm-dd" maxlength="10"></input>
+      <input type="date" class="transaction-input-date__input js-transaction-input-date__input" min="1901-01-01" max=${CURR_DATE} value="${CURR_DATE}"></input>
     `;
     // render
     wrap.innerHTML = contents;
     // add Event Listener
-    this.addDateInputEvent();
+    // this.addDateInputEvent();
   }
+
 
   addDateInputEvent = () => {
     const dateInput = document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT);
     dateInput.addEventListener('input', () => {
-      if(!validation.validateDate(dateInput.value.substring(
-        dateInput.value.length - 1, dateInput.value.length,
-      ))) {
-        dateInput.value = dateInput.value.substring(0, dateInput.value.length - 1);
+      let tempInput = dateInput.value;
+      tempInput = tempInput.replace(/-/g, '');
+      
+      // 숫자 아니면 지워버령
+      if(!validation.validateOnlyNumber(tempInput.substring(tempInput.length - 1, tempInput.length))) {
+        dateInput.value = tempInput.substring(0, tempInput.length - 1);
       } 
 
-      dateInput.value = this.numberCheck(dateInput.value);
+      // 숫자면 날짜 포맷으로 변경
+      dateInput.value = this.makeNumberToDateFormat(dateInput.value);
     });
 
     dateInput.addEventListener('focusout', () => {
@@ -160,69 +174,6 @@ class InputFieldView extends View {
         dateInput.value = `${tempInput.substr(0, 4)}-${tempInput.substr(4, 2)}-0${tempInput.substr(6)}`;
       }
     });
-  }
-
-  numberCheck= (dateInput) => {
-    this.month.set(1, 31);
-    this.month.set(2, 28);
-    this.month.set(3, 31);
-    this.month.set(4, 30);
-    this.month.set(5, 31);
-    this.month.set(6, 30);
-    this.month.set(7, 31);
-    this.month.set(8, 31);
-    this.month.set(9, 30);
-    this.month.set(10, 31);
-    this.month.set(12, 31);
-    
-    let tempDate = dateInput;
-    tempDate = tempDate.replace(/-/g, '');
-    const currDate = new Date();
-    const currFullYear = currDate.getFullYear();
-    let currMonth = currDate.getMonth() + 1;
-    if(currMonth < 10) {
-      currMonth = `0${currMonth}`;
-    }
-    let currDay = currDate.getDate();
-    if(currDay < 10) {
-      currDay = `0${currDay}`;
-    }
-
-    if(tempDate.length === 4) {
-      if(tempDate > currFullYear) {
-        tempDate = currFullYear;
-      }
-      if(tempDate === '0000') {
-        tempDate = '1901';
-      }
-    }else if(tempDate.length > 4 && tempDate.length <= 6) {
-      if(tempDate.substr(4) > Number(currMonth)) {
-        tempDate = `${tempDate.substr(0, 4)}-${currMonth}`;
-      }else{
-        let month = tempDate.substr(4);
-        if(month > 12) {
-          month = 12;
-        }
-        if(month === '00') {
-          month = '01';
-        }
-        tempDate = `${tempDate.substr(0, 4)}-${month}`;
-      }
-    }else if(tempDate.length > 6) {
-      if(tempDate.substr(6) > Number(currDay)) {
-        tempDate = `${tempDate.substr(0, 4)}-${tempDate.substr(4, 2)}-${currDay}`;
-      }else{
-        let day = tempDate.substr(6);
-        if(day > this.month.get(Number(tempDate.substr(4, 2)))) {
-          day = this.month.get(Number(tempDate.substr(4, 2)));
-        }
-        if(day === '00') {
-          day = '01';
-        }
-        tempDate = `${tempDate.substr(0, 4)}-${tempDate.substr(4, 2)}-${day}`;
-      }
-    }
-    return tempDate;
   }
 
   renderCategory = async (state) => {
@@ -264,16 +215,46 @@ class InputFieldView extends View {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT);
     const contents = `
       <div class="transaction-input-amount__text">금액</div>
-      <input type="number" class="transaction-input-amount__input js-transaction-input-amount__input"></input>`;
+      <input type="text" class="transaction-input-amount__input js-transaction-input-amount__input" placeholder="금액을 입력해주세요" maxlength="12"></input>`;
     // render
     wrap.innerHTML = contents;
+    this.addAmountInputEvent();
+  }
+
+  // 금액 입력 창
+  addAmountInputEvent = () => {
+    const amountInput = document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT);
+    amountInput.addEventListener('input', () => {
+      let inputValue = amountInput.value.split(',').join('');
+      
+      // 숫자 외 다른 문자 오면 지움
+      if(!validation.validateOnlyNumber(inputValue.substring(
+        inputValue.length - 1, inputValue.length,
+      ))) {
+        inputValue = inputValue.substring(0, inputValue.length - 1);
+      }
+
+      // 숫자가 0이면 지움
+      if(Number(inputValue) === 0) {
+        inputValue = inputValue.substring(0, inputValue.length - 1);
+      }
+
+      if(inputValue.length >= 4 && inputValue.length < 7) {
+        inputValue = `${inputValue.substring(0, inputValue.length - 3)},${inputValue.substring(inputValue.length - 3, inputValue.length)}`;
+      } else if(inputValue.length >= 7 && inputValue.length < 10) {
+        inputValue = `${inputValue.substring(0, inputValue.length - 6)},${inputValue.substring(inputValue.length - 6, inputValue.length - 3)},${inputValue.substring(inputValue.length - 3, inputValue.length)}`;
+      }else if(inputValue.length >= 10) {
+        inputValue = `${inputValue.substring(0, inputValue.length - 9)},${inputValue.substring(inputValue.length - 9, inputValue.length - 6)},${inputValue.substring(inputValue.length -  6, inputValue.length - 3)},${inputValue.substring(inputValue.length - 3, inputValue.length)}`;
+      }
+      amountInput.value = inputValue;
+    });
   }
 
   renderContents = () => {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS);
     const contents = `
       <div class="transaction-input-contents__text">내용</div>
-      <input type="text" class="transaction-input-contents__input js-transaction-input-contents__input" placeholder="  거래 내용을 입력해주세요"></input>`;
+      <input type="text" class="transaction-input-contents__input js-transaction-input-contents__input" placeholder="거래 내용을 입력해주세요"></input>`;
     // render
     wrap.innerHTML = contents;
   }
@@ -323,7 +304,7 @@ class InputFieldView extends View {
         user_id: 1,
         payment_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value,
         date: new Date(moment(document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value).format('YYYY-MM-DD HH:mm:ss')).toISOString(),
-        amount: document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value,
+        amount: document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value.split(',').join(''),
         created_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
         updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
       };
@@ -373,7 +354,7 @@ class InputFieldView extends View {
         new_category_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value,
         new_payment_id: document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value,
         new_date: new Date(moment(document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value).format('YYYY-MM-DD HH:mm:ss')).toISOString(),
-        new_amount: document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value,
+        new_amount: document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value.split(',').join(''),
         updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
       };
 

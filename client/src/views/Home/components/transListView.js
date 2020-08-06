@@ -118,7 +118,9 @@ class TransListView extends View {
     const incomeCheckbox = document.querySelector(SELECTOR_TRANSACTION_TOTAL_INCOME_CHECKBOX);
     incomeCheckbox.addEventListener('click', () => {
       this.incomeCheck = incomeCheckbox.checked;
+      this.currDate = '';
       this.render(this.state);
+      this.addEventToTransaction();
     });
   }
 
@@ -127,7 +129,9 @@ class TransListView extends View {
     const spendCheckbox = document.querySelector(SELECTOR_TRANSACTION_TOTAL_SPEND_CHECKBOX);
     spendCheckbox.addEventListener('click', () => {
       this.spendCheck = spendCheckbox.checked;
+      this.currDate = '';
       this.render(this.state);
+      this.addEventToTransaction();
     });
   }
 
@@ -152,6 +156,7 @@ class TransListView extends View {
           state: transaction.data[0].state, isModify: true,
         };
         await this.inputFieldView.render(inputFieldParmas);
+
         
         const transDate = new Date(transaction.data[0].date);
         let currMonth = transDate.getMonth() + 1;

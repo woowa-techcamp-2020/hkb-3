@@ -18,12 +18,19 @@ $__text_justify_self: start;
 $__input_align_self: center;
 $__input_justify_self: center;
 
+$__input_width : 90%;
+$__input_padding : 8px;
+
+$__select_width : 95%;
+$__select_padding : 8px;
+
 $incomeTextColor : #9a9cea;
 $spendTextColor : rgb(212, 108, 108);
 
 $transition-time : 0.3s;
 
-$transaction-input-margin : 5px;
+$transaction-input-margin : 10px;
+$transaction-input-element-margin : 5px;
 
 .transaction-input{
     display: grid;
@@ -32,10 +39,9 @@ $transaction-input-margin : 5px;
     grid-template-rows: repeat(7, auto)1fr;
     background-color: $transaction-list-back-color;
     border-radius: 15px;
-    padding : 5px;
 
     .transaction-input-state{
-        margin:$transaction-input-margin;
+        margin: $transaction-input-margin;
         display: grid;
         .transaction-input-state__text{
             color: $__text_color;
@@ -108,10 +114,10 @@ $transaction-input-margin : 5px;
             border: 1px solid $mainColor1;
             color: black;
             border-radius: 10px;
-            margin:$transaction-input-margin;
+            margin:$transaction-input-element-margin;
             background-color: white;
-            height: 29px;
-            width: 95%;
+            width: $__input_width;
+            padding: $__input_padding;
             -webkit-transition: $transition-time;
             transition: $transition-time;
             outline: none;
@@ -136,10 +142,10 @@ $transaction-input-margin : 5px;
             border: 1px solid $mainColor1;
             color: black;
             border-radius: 10px;
-            margin:$transaction-input-margin;
+            margin:$transaction-input-element-margin;
             background-color: white;
-            height: 33px;
-            width: 97%;
+            width: $__select_width;
+            padding: $__select_padding;
             -webkit-transition: $transition-time;
             transition: $transition-time;
             outline: none;
@@ -164,10 +170,10 @@ $transaction-input-margin : 5px;
             border: 1px solid $mainColor1;
             color: black;
             border-radius: 10px;
-            margin:$transaction-input-margin;
+            margin:$transaction-input-element-margin;
             background-color: white;
-            height: 33px;
-            width: 97%;
+            width: $__select_width;
+            padding: $__select_padding;
             -webkit-transition: $transition-time;
             transition: $transition-time;
             outline: none;
@@ -190,13 +196,13 @@ $transaction-input-margin : 5px;
         }
         .transaction-input-amount__input{
             
-            margin:$transaction-input-margin;
+            margin:$transaction-input-element-margin;
             border: 1px solid $mainColor1;
             color: black;
             border-radius: 10px;
             background-color: white;
-            height: 29px;
-            width: 95%;
+            width: $__input_width;
+            padding: $__input_padding;
             -webkit-transition: $transition-time;
             transition: $transition-time;
             outline: none;
@@ -221,10 +227,10 @@ $transaction-input-margin : 5px;
             border: 1px solid $mainColor1;
             color: black;
             border-radius: 10px;
-            margin:$transaction-input-margin;
+            margin:$transaction-input-element-margin;
             background-color: white;
-            height: 29px;
-            width: 95%;
+            width: $__input_width;
+            padding: $__input_padding;
             -webkit-transition: $transition-time;
             transition: $transition-time;
             outline: none;
