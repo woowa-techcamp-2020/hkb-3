@@ -1,6 +1,7 @@
 import View from '../../view';
 import PieView from './pieVIew';
 
+
 class CategoryView extends View {
   constructor(...args) {
     super(args);
@@ -64,6 +65,7 @@ class CategoryView extends View {
     this.categoryList.sort((a, b) => b.amount - a.amount);
     this.categoryList[0].percent += maxPercent - totalPercent;
   }
+
 
   render(state) {
     this.data = state.data;

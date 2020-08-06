@@ -1,3 +1,5 @@
+import $ from '../../../lib/miniJQuery';
+
 class DayWarp {
   constructor() {
     this.width = 1200;
@@ -145,6 +147,13 @@ class DayWarp {
     this.maxSpend = parseInt(strNewMaxSpend);
   } 
 
+  setLineDashLength = () => {
+    // path.style.strokeDasharray
+    const polyline = $('polyline').getNode();
+    polyline.style.strokeDasharray = polyline.getTotalLength();
+    polyline.style.strokeDashoffset = polyline.getTotalLength();
+  }
+
 
 
   render = (state) => {
@@ -156,6 +165,7 @@ class DayWarp {
           ${this.buildLineGraph()}
         </div>
     `;
+    this.setLineDashLength();
   }
 }
 

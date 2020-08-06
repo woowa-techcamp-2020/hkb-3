@@ -1,5 +1,5 @@
 @import "./global.scss";
-
+$circle-round: 565.49;
 .select-wrap{
     display: grid;
     grid-template-columns: repeat(2, auto) 1fr; 
@@ -88,18 +88,21 @@
         }
         
         .pi-wrap{
-
+            $circle-delay: 1s;
             .svg-wrap{
                 height: 600px;
                 width: 600px;
                 polyline {
                     fill: none;
                     stroke: #C0C0C0;
+                    animation: apear $circle-delay steps(1, end) forwards; 
+
                 }
                 text{
                     .percent{
                         fill: $color-1;
                     }
+                    animation: apear $circle-delay steps(1, end) forwards; 
                 }
                 .circle-wrap{
                     border-radius: 50%;
@@ -112,9 +115,37 @@
                         cx: 50%;
                         cy: 50%;
                     }
+
+                    .apeared-pie{
+                        animation: apear $circle-delay linear forwards; 
+                    }
+
     
                     .pie:hover{
                         stroke: tomato;
+                    }
+
+                    .cover-pie{
+                        stroke: white;
+                        transform-origin: 50% 50%;
+                        transform: rotate(-90deg);
+                        stroke-dasharray: $circle-round $circle-round;
+                        animation: draw-circle $circle-delay linear forwards; 
+                    }
+                    
+                    @keyframes apear {
+                        0% { 
+                            opacity: 0; 
+                        }
+
+                        100% { 
+                            opacity: 1; 
+                        }
+                    }
+                    @keyframes draw-circle {
+                        to {
+                          stroke-dasharray: 0 $circle-round;
+                        }
                     }
                 }
             }
@@ -128,22 +159,18 @@
             stroke-width:1;
         }
 
-        $delay: 4s;
+        $line-delay: 1.5s;
 
         polyline{
             fill:none;
             stroke:$color-2;
             stroke-width:3;
-            stroke-dasharray: 3000;
-            stroke-dashoffset: 3000;
-            animation: draw $delay linear forwards; 
+            animation: draw $line-delay linear forwards; 
             @keyframes draw {
                 to {
                   stroke-dashoffset: 0;
+                }
             }
-        }
-
-
         }   
         
           
@@ -151,7 +178,7 @@
             fill:white;
             stroke:$color-1;
             stroke-width:3;
-            animation: $delay fadeIn;
+            animation: $line-delay fadeIn;
             animation-fill-mode: forwards;
             
             visibility: hidden;
