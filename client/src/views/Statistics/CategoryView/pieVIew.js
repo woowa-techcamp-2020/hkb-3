@@ -21,13 +21,14 @@ class PieView {
     return { x, y };
   }
 
-  getNextLineAndTextPos = (percent, x, weight) => {
+  isLeftSemicircle = (percent) => percent >= 25 && percent < 75
+
+  getPosOptionsBySemicircle = (percent, x) => {
     const stretch = 20;
-    const textStretch = 30 * weight;
-    if(percent >= 25 && percent < 75) {
-      return { lineX: x - stretch, textX: x - stretch - textStretch };
+    if(this.isLeftSemicircle(percent)) {
+      return { lineX: x - stretch, textX: x - stretch, textAnchorOption: 'end' };
     }
-    return { lineX: x + stretch, textX: x + stretch };
+    return { lineX: x + stretch, textX: x + stretch, textAnchorOption: 'start' };
   }
 
   buildPath() {
@@ -42,11 +43,10 @@ class PieView {
       }
       const midPercent = (curPercent + nextPercent) / 2;
       const { x, y } = this.getPosOnCircle(midPercent);
-      const weight = info.name.length;
-      const { lineX, textX } = this.getNextLineAndTextPos(midPercent, x, weight);
+      const { lineX, textX, textAnchorOption } = this.getPosOptionsBySemicircle(midPercent, x);
       content += `
         <polyline points="${this.mid} ${this.mid}, ${x} ${y}, ${lineX} ${y}"/>
-        <text x=${textX} y=${y}> 
+        <text x=${textX} y=${y} text-anchor="${textAnchorOption}"> 
           ${info.name} <tspan class="percent">${info.percent}%</tspan>
         </text>
       `;
@@ -84,12 +84,18 @@ class PieView {
     this.percentSumList.forEach((info, i) => {
       content += `
             <circle 
-              class="pie" 
+              class="pie apeared-pie" 
               stroke-dasharray="${this.getDistByRound(info.percentSum)} ${this.circleRound}" 
               stroke="${this.colors[i]}">
             </circle>
           `;
     });
+    content += `
+      <circle 
+        class="pie cover-pie" 
+      >
+      </circle>
+    `;
     return content;
   }
     

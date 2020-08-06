@@ -19,6 +19,8 @@ export const paths = {
   home: '/',
   calendar: '/calendar',
   statistics: '/statistics',
+  login: '/auth/login',
+  signup: '/auth/signup',
 };
 
 

@@ -2,19 +2,16 @@ import './styles/container.scss';
 import './styles/main.scss';
 import './styles/calendar.scss';
 import './styles/statistics.scss';
-// import './styles/home.scss';
 import './styles/home-transaction-list.scss';
 import './styles/home-transaction-input.scss';
 import './styles/home-transaction-total.scss';
+import './styles/login.scss';
+import './styles/signup.scss';
 import 'core-js/modules/es.array.flat';
 import Api from './api/index.js';
 import { elements } from './common';
 import Router from './controller/router';
-import $ from './lib/miniJQuery';
 import MainView from './views/Main';
-
-
-const SELECTOR_HEADER_ROUTER_WRAP = '.js-header-router';
 
 window.addEventListener('DOMContentLoaded', async () => {
   // 유저 목록 가져오기 테스트 코드
@@ -41,10 +38,5 @@ window.addEventListener('DOMContentLoaded', async () => {
   elements.calendarModel.addSubscribe((model) => router.renderByModel(model));
   elements.stastisticsModel.addSubscribe((model) => router.renderByModel(model));
 
-  // init data 가져오기
-  await elements.initModel.fetchInitData();
-  
-  window.addEventListener('popstate', (state) => router.renderByUrl(state));
-  document.querySelector(SELECTOR_HEADER_ROUTER_WRAP)
-    .addEventListener('click', (e) => router.onLink(e));
+  router.init();
 })();
