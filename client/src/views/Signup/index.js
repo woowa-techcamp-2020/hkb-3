@@ -5,7 +5,7 @@ const { default: $ } = require('../../lib/miniJQuery');
 
 class SignupView {
   constructor() {
-    this.wrap = $('.wrap').getNode();
+    this.wrap = $('.app').getNode();
   }
 
   buildNav = () => `

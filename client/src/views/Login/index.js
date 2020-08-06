@@ -4,7 +4,7 @@ const { default: $ } = require('../../lib/miniJQuery');
 
 class Login {
   constructor() {
-    this.wrap = $('.wrap').getNode();
+    this.wrap = $('.app').getNode();
   }
 
   buildNav = () => `
