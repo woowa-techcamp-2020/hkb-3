@@ -8,16 +8,9 @@ import './styles/home-transaction-list.scss';
 import './styles/home-transaction-input.scss';
 import './styles/home-transaction-total.scss';
 import 'core-js/modules/es.array.flat';
-import Api from './api/index.js';
 import { elements } from './common';
 import Router from './controller/router';
 import MainView from './views/Main';
-
-window.addEventListener('DOMContentLoaded', async () => {
-  // 유저 목록 가져오기 테스트 코드
-  const userList = await Api.User().getAllUsers();
-  console.log('userList=', userList);
-});
 
 (async () => {
   // init data 가져오면 각 모델에 데이터 추가 
