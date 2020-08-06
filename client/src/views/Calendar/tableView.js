@@ -1,21 +1,18 @@
 class TableView {
   constructor() {
-    this.wrap = document.querySelector('.content-wrap');
+    this.wrap = document.querySelector('.calendar-wrap');
     this.rowCounts = 5;
     this.colCounts = 7;
-    this.setDate();
   }
 
 
-  setDate() {
-    const todayDate = new Date();
-
+  setDate(newDate) {
     // 요일
-    this.day = todayDate.getDay();
-    this.month = todayDate.getMonth();
+    this.day = newDate.getDay();
+    this.month = newDate.getMonth();
     // 특정 날짜
-    this.date = todayDate.getDate();
-    this.year = todayDate.getFullYear();
+    this.date = newDate.getDate();
+    this.year = newDate.getFullYear();
 
     // 날짜
     const startDate = new Date(this.year, this.month);
@@ -38,7 +35,7 @@ class TableView {
   getClass = (idx, accessDateFlag) => {
     let classes = 'header';
     classes += !idx ? ' sunday' : '';
-    classes += !accessDateFlag ? ' other-date' : '';
+    classes += !accessDateFlag ? ' other-date' : ' date';
     return classes; 
   }
 
@@ -65,7 +62,7 @@ class TableView {
             <div class="${this.getClass(j, accessDateFlag)}">
               ${date}
             </div>
-            <div>
+            <div data-date=${date} class="amount-wrap">
             </div>
           </div>
         `;
@@ -76,7 +73,9 @@ class TableView {
     return tableContents;
   }
 
-  render() {
+  render(date) {
+    this.setDate(date);
+
     // eslint-disable-next-line no-undef
     const tableHtml = `
       <div class="calendar">

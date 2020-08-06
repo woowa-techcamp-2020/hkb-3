@@ -5,7 +5,7 @@
                 color: white;
                 background-color: #3a78ff;
             }
-            &-expenditure{
+            &-spend{
                 color: white;
                 background-color: #2ab6ae;
             }
@@ -15,7 +15,7 @@
             &-income{
                 color:#3a78ff;
             }
-            &-expenditure{
+            &-spend{
                 color:#2ab6ae;
             }
         }
@@ -29,6 +29,84 @@
     &-date{
         border-top: 1px #2cc2bb solid;
         border-bottom: 1px #2cc2bb solid;
+        &-income{
+            color:#3a78ff;
+        }
+        &-spend{
+            color:#2ab6ae;
+        }
     }
 
+    &-total{
+        margin: 30px 0;
+        text-align: center;
+        &-income{
+            max-width: 200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 2fr 8fr;
+            text-align: right;
+            color:#3a78ff;
+            input{
+              background-color: #eee;
+              border-radius: 50%;
+            }
+
+            input[type=checkbox]:checked{
+              background-color: #3a78ff;
+            }
+
+            input[type=checkbox]:after {
+              content: "  ";
+              background-color: #3a78ff;
+              display: inline-block;
+              width: 13px;
+              visibility: visible;
+            }
+              
+            input[type=checkbox]:checked:after {
+              background-color: #3a78ff;
+              border-radius: 3px;
+              text-align: center;
+              content: "\2714";
+              height: 13px;
+              color: white;
+            }
+            color:#3a78ff;
+        }
+        &-spend{
+            max-width: 200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 2fr 8fr;
+            text-align: right;
+
+            input{
+              background-color: #eee;
+              border-radius: 50%;
+            }
+
+            input[type=checkbox]:checked{
+              background-color: #2ab6ae;
+            }
+
+            input[type=checkbox]:after {
+              content: "  ";
+              background-color: #2ab6ae;
+              display: inline-block;
+              width: 13px;
+              visibility: visible;
+            }
+              
+            input[type=checkbox]:checked:after {
+              background-color: #2ab6ae;
+              border-radius: 3px;
+              text-align: center;
+              content: "\2714";
+              height: 13px;
+              color: white;
+            }
+            color:#2ab6ae;
+        }
+    }
 }

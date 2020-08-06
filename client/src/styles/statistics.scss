@@ -1,3 +1,8 @@
+@import "./global.scss";
+$circle-round: 565.49;
+$circle-delay: 1s;
+$spendTextColor : rgb(212, 108, 108);
+
 .select-wrap{
     display: grid;
     grid-template-columns: repeat(2, auto) 1fr; 
@@ -20,7 +25,7 @@
             height: 14px;
             width: 14px;
             border-radius: 50%;
-            border: 2px solid skyblue;
+            border: 2px solid $color-2;
             float: left;
             margin-right: 5px;
         }
@@ -30,7 +35,7 @@
             height: 10px;
             width: 10px;
             border-radius: 50%;
-            background: skyblue;
+            background: $color-2;
             margin-top: 7px;
             margin-left: 7px;
             display: block;
@@ -44,6 +49,10 @@
     input[type="radio"]:checked ~ span:after{
         transform: translate(-50%, -50%) scale(1);
     }
+
+    .total-spend{
+        color: $spendTextColor ;
+    }
 }
 
 .statistics-wrap{
@@ -51,50 +60,138 @@
     text-align: center;
     .category-wrap{
         .bar-wrap{
+            margin-bottom: 50px;
+            border-top: 2px solid #D3D3D3;
+            border-bottom: 1px solid #D3D3D3;
+
             .content-wrap{
                 // border: #F5F5F5 solid 1px;
                 display: grid;
-                grid-template-columns: auto auto 4fr auto; 
+                grid-template-columns: 1.4fr 1fr 9fr 2fr;
                 text-align: left;
+                grid-row-gap: 0; 
+                margin: 0;
+                border-bottom: 1px solid #D3D3D3;
+
                 div{
-                    padding: 5px;
+                    padding: 10px;
+                    vertical-align: middle;
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .percent{
+                    color: $color-1;
+                    vertical-align: middle;
+
+                }
+                .amount{
+                    text-align: right;
                 }
             }
         }
         
         .pi-wrap{
-            margin: 30px 0;
-            svg {
-                width: 200px;
-                border-radius: 50%;
-                background: #3f51b5; 
-                transform: rotate(-90deg);
-              }
-              svg text {
-                transform: rotate(90deg);
-                font-size:5px;
-              }
-               
-              circle {
-                fill: none;
-                stroke-width: 32;
-                r: 16;
-                cx: 16;
-                cy: 16;
-              }
-               
-              circle.first {
-                stroke: #00bcd4;
-               
-              }
-               le.second {
-                stroke: #ffeb3b;
-              }
-                
-              circle.third {
-                stroke: purple;
-              }
+            .svg-wrap{
+                height: 600px;
+                width: 600px;
+                polyline {
+                    fill: none;
+                    stroke: #C0C0C0;
+                    animation: apear $circle-delay steps(1, end) forwards; 
+
+                }
+                text{
+                    .percent{
+                        fill: $color-1;
+                    }
+                    animation: apear $circle-delay steps(1, end) forwards; 
+                }
+                .circle-wrap{
+                    border-radius: 50%;
+                    background: #3f51b5; 
+    
+                    circle {
+                        fill: none;
+                        stroke-width: 180;
+                        r: 90;
+                        cx: 50%;
+                        cy: 50%;
+                    }
+
+                    .apeared-pie{
+                        animation: apear $circle-delay linear forwards; 
+                    }
+
+    
+                    .pie:hover{
+                        stroke: tomato;
+                    }
+
+                    .cover-pie{
+                        stroke: white;
+                        transform-origin: 50% 50%;
+                        transform: rotate(-90deg);
+                        stroke-dasharray: $circle-round $circle-round;
+                        animation: draw-circle $circle-delay linear forwards; 
+                    }
+                    
+                    @keyframes apear {
+                        0% { 
+                            opacity: 0; 
+                        }
+
+                        100% { 
+                            opacity: 1; 
+                        }
+                    }
+                    @keyframes draw-circle {
+                        to {
+                          stroke-dasharray: 0 $circle-round;
+                        }
+                    }
+                }
+            }
+
         }
+    }
+    .day-wrap{
+        margin-bottom: 30px;
+        line{
+            stroke:#E0E0E0;
+            stroke-width:1;
+        }
+
+        $line-delay: 1.5s;
+
+        polyline{
+            fill:none;
+            stroke:$color-2;
+            stroke-width:3;
+            animation: draw $line-delay linear forwards; 
+            @keyframes draw {
+                to {
+                  stroke-dashoffset: 0;
+                }
+            }
+        }   
         
+          
+        circle{
+            fill:white;
+            stroke:$color-1;
+            stroke-width:3;
+            animation: $line-delay fadeIn;
+            animation-fill-mode: forwards;
+            
+            visibility: hidden;
+            @keyframes fadeIn {
+                99% {
+                    visibility: hidden;
+                }
+                100% {
+                    visibility: visible;
+                }
+            }
+        }
     }
 }

@@ -5,11 +5,13 @@ class StatisticsModel extends Observable {
   // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
+    this.renderContent = 'category';
     this.name = 'statistics';
   }
 
+
   update(model) {
-    this.state = model.data;
+    this.state = { data: model.state.data, date: model.state.date };
     this.notify(this);
   }
 }
