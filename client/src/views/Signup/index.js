@@ -9,8 +9,8 @@ class SignupView {
 
   buildNav = () => `
     <nav>
-      <a class="nav-icon"></a>
-      <a class="nav-link" href="/auth/login">로그인</a>
+      <a class="nav-icon">우아한 가계부</a>
+      <button class="nav-button" href="/auth/login">로그인</a>
     </nav>
   `
 
@@ -30,34 +30,28 @@ class SignupView {
 
   render() {
     this.wrap.innerHTML = `
-      <div class="container">
+      <div class="nav-wrap">
         ${this.buildNav()}
       </div>
       <div class="background-wrap" src="https://images.watcha.net/updatable_images/2650/original/6f4b1a977f1a274fc980e9ff64cd0eca574d96cd.jpg">
-        <div class="container">
-          <div class="login-wrap">
-            <div class="login-title">
-              회원가입
+        <div class="register-wrap">
+          <div class="register-title">회원가입</div>
+          <form class="register-form">
+            <div class="register-name-wrap">
+              <input name="name" autocomplete="off" placeholder="이름 (2자 이상)" type="text" value="" class="register-name" maxlength="10">
             </div>
-            <form>
-              <div class="signup-name-wrap">
-              <input name="name" autocomplete="off" placeholder="이름 (2자 이상)" type="text" value="">
-              </div>
-              <div class="signup-email-wrap">
-                <input 
-                  type="text" value="" name="useremail" autocomplete="off" autofocus=""
-                  placeholder="이메일 (example@gmail.com)"  class="login-id"
-                >
-              </div>
-              <div class="pw-wrap">
-                <input type="password" value="" name="password"  
-                  placeholder="비밀번호" autocomplete="off" class="login-pw">
-              </div>
-              <div class="login-button-wrap">
-                <button class="submit-button">회원가입</button>
-              </div>
-            </form>
-          </div>
+            <div class="register-email-wrap">
+              <input type="text" value="" name="useremail" autocomplete="off" autofocus=""
+                placeholder="이메일 (example@gmail.com)"  class="register-email" maxlength="30">
+            </div>
+            <div class="register-pw-wrap">
+              <input type="password" value="" name="password"  
+                placeholder="비밀번호" autocomplete="off" class="register-pw" maxlength="20">
+            </div>
+            <div class="register-button-wrap">
+              <button class="submit-button">회원가입</button>
+            </div>
+          </form>
         </div>
       </div>
     `;

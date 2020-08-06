@@ -42,7 +42,7 @@ class Router extends Observable {
 
   addAuthLink() {
     window.addEventListener('popstate', (state) => this.renderByUrl(state));
-    $('.nav-link').click((e) => this.authLink(e));
+    $('.nav-button').click((e) => this.authLink(e));
   }
 
   async init() {
