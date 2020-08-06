@@ -53,16 +53,15 @@ $transaction-input-element-margin : 5px;
 
         
         .transaction-input-state-radio-wrap{
-            width: 100%;
-            align-self: $__input_align_self;
-            justify-self: stretch;
-
+            display: grid;
+            grid : 1fr / 1fr 1fr;
+            margin: 5px;
             .radio-color {
-                float:left;
-                width:40%;
+                justify-self: center;
+                align-self: center;
+                width:94%;
                 background-color: white;
                 border-radius:10px;
-                margin:4px;
                 border:1px solid $mainColor1;
                 overflow:auto;
             }
@@ -258,6 +257,7 @@ $transaction-input-element-margin : 5px;
             height: 29px;
             -webkit-transition: $transition-time;
             transition: $transition-time;
+            outline: none;
         }
         .transaction-input-button__confirm:hover{
             background-color: $mainColor1;
@@ -274,6 +274,7 @@ $transaction-input-element-margin : 5px;
             height: 29px;
             -webkit-transition: $transition-time;
             transition: $transition-time;
+            outline: none;
         }
         .transaction-input-button__clear:hover{
             background-color: $mainColor1;
@@ -290,6 +291,7 @@ $transaction-input-element-margin : 5px;
             height: 29px;
             -webkit-transition: $transition-time;
             transition: $transition-time;
+            outline: none;
         }
         .transaction-input-button__modify:hover{
             background-color: $mainColor1;
@@ -306,6 +308,7 @@ $transaction-input-element-margin : 5px;
             height: 29px;
             -webkit-transition: $transition-time;
             transition: $transition-time;
+            outline: none;
         }
         .transaction-input-button__delete:hover{
             background-color: $spendTextColor;
@@ -323,6 +326,7 @@ $transaction-input-element-margin : 5px;
             height: 29px;
             -webkit-transition: $transition-time;
             transition: $transition-time;
+            outline: none;
         }
         .transaction-input-button__cancel:hover{
             background-color: $mainColor1;
@@ -339,6 +343,7 @@ $transaction-input-element-margin : 5px;
             height: 29px;
             -webkit-transition: $transition-time;
             transition: $transition-time;
+            outline: none;
         }
         .transaction-input-button__test:hover{
             background-color: $mainColor1;
