@@ -11,11 +11,12 @@ import passportLocal from 'passport-local';
 import cors from 'cors';
 import sessionFileStore from 'session-file-store';
 import PassportGithub from 'passport-github2';
+import DotEnv from 'dotenv';
 import indexRouter from './routes/index';
 import userService from './service/userService';
 import SocialUserDTO from './model/socialUserDTO';
-// import loginRouter from './routes/login';
 
+// import loginRouter from './routes/login';
 
 const app = express();
 app.use(cors());
@@ -23,7 +24,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
 
 /** ************************************
  *            Passport setup
@@ -63,10 +63,11 @@ passport.deserializeUser(async (id: any, done: any) => {
   });
 });
 
+DotEnv.config();
 passport.use(new PassportGithub.Strategy({
-  clientID: 'f764d2d4b757b7705a44',
-  clientSecret: '24e47fffaecab54fc3a6ed807e20fc7c85d2462b',
-  callbackURL: 'http://localhost:3000/auth/github/callback',
+  clientID: process.env.CLIENT_ID as string,
+  clientSecret: process.env.CLIENT_SECRET as string,
+  callbackURL: process.env.CALLBACK_URL as string,
 },
 ((accessToken: any, refreshToken: any, profile: any, done: any) => {
   const userJson = profile._json;
@@ -145,7 +146,6 @@ const isAuthenticated = (req:any, res: Response, next: NextFunction) => {
 /** ************************************
  *               Routing
  *************************************** */
-require('dotenv').config();
 
 const scriptRequestUrl = '/public';
 app.use(scriptRequestUrl, express.static(`${__dirname}${scriptRequestUrl}`));
@@ -163,7 +163,7 @@ const swaggerDefinition = {
     version: '1.0.0', // Version (required)
     description: '', // Description (optional)
   },
-  host: 'localhost:3000', // Host (optional)
+  host: process.env.SWAGGER_HOST, // Host (optional)
   basePath: '/', // Base path (optional)
 };
 const routerDir = './src/routes';  
