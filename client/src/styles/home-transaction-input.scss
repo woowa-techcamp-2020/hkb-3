@@ -1,0 +1,339 @@
+$grid-first-line-height : 30px;
+$grid-second-line-height : 60px;
+
+$mainColor0 : #6a6edf;
+$mainColor1 : #9a9cea;
+$mainColor2 : #a2b9ee;
+$mainColor3 : #a2dcee;
+$mainColor4 : #adeee2;
+
+$transaction-list-back-color : rgb(250, 250, 250);
+
+$__text_color: gray;
+$__text_font_size: 20px;
+$__text_fint-weight: bold;
+$__text_align_self: center;
+$__text_justify_self: start;
+
+$__input_align_self: center;
+$__input_justify_self: center;
+
+$incomeTextColor : #9a9cea;
+$spendTextColor : rgb(212, 108, 108);
+
+$transition-time : 0.3s;
+
+$transaction-input-margin : 5px;
+
+.transaction-input{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(7, auto)1fr;
+    background-color: $transaction-list-back-color;
+    border-radius: 15px;
+    padding : 5px;
+
+    .transaction-input-state{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-state__text{
+            color: $__text_color;
+            font-size: $__text_font_size;
+            font-weight: $__text_fint-weight;
+            align-self: $__text_align_self;
+            justify-self: $__text_justify_self;
+        }
+
+        
+        .transaction-input-state-radio-wrap{
+            width: 100%;
+            align-self: $__input_align_self;
+            justify-self: stretch;
+
+            .radio-color {
+                float:left;
+                width:40%;
+                background-color: white;
+                border-radius:10px;
+                margin:4px;
+                border:1px solid $mainColor1;
+                overflow:auto;
+            }
+
+            .radio-color .transaction-input-state__radio-income{
+                position:absolute;
+                top:-20px;
+            }
+
+            .radio-color:hover {
+                background-color: #9a9dea36;
+                cursor: pointer;
+            }
+
+            .radio-color .transaction-input-state__radio-spend{
+                position:absolute;
+                top:-20px;
+            }
+
+            .radio-color .transaction-input-state__radio-text{
+                text-align:center;
+                color: $mainColor1;
+                padding:5px 0px;
+                display:block;
+            }
+
+            .transaction-input-state__radio-spend:checked + span {
+                background-color:$mainColor1;
+                color:white;
+            }
+            .transaction-input-state__radio-income:checked + span {
+                background-color:$mainColor1;
+                color:white;
+            }
+        }
+        
+    }
+    .transaction-input-date{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-date__text{
+            color: $__text_color;
+            font-size: $__text_font_size;
+            font-weight: $__text_fint-weight;
+            align-self: $__text_align_self;
+            justify-self: $__text_justify_self;
+        }
+        .transaction-input-date__input{
+            border: 1px solid $mainColor1;
+            color: black;
+            border-radius: 10px;
+            margin:$transaction-input-margin;
+            background-color: white;
+            height: 29px;
+            width: 95%;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+            outline: none;
+            align-self: $__input_align_self;
+            justify-self: $__input_justify_self;
+        }
+        .transaction-input-date__input:focus{
+            box-shadow: 0px 0px 8px 2px $mainColor1;
+        }
+    }
+    .transaction-input-category{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-category__text{
+            color: $__text_color;
+            font-size: $__text_font_size;
+            font-weight: $__text_fint-weight;
+            align-self: $__text_align_self;
+            justify-self: $__text_justify_self;
+        }
+        .transaction-input-category__select{
+            border: 1px solid $mainColor1;
+            color: black;
+            border-radius: 10px;
+            margin:$transaction-input-margin;
+            background-color: white;
+            height: 33px;
+            width: 97%;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+            outline: none;
+            align-self: $__input_align_self;
+            justify-self: $__input_justify_self;
+        }
+        .transaction-input-category__select:focus{
+            box-shadow: 0px 0px 8px 2px $mainColor1;
+        }
+    }
+    .transaction-input-payment{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-payment__text{
+            color: $__text_color;
+            font-size: $__text_font_size;
+            font-weight: $__text_fint-weight;
+            align-self: $__text_align_self;
+            justify-self: $__text_justify_self;
+        }
+        .transaction-input-payment__select{
+            border: 1px solid $mainColor1;
+            color: black;
+            border-radius: 10px;
+            margin:$transaction-input-margin;
+            background-color: white;
+            height: 33px;
+            width: 97%;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+            outline: none;
+            align-self: $__input_align_self;
+            justify-self: $__input_justify_self;
+        }
+        .transaction-input-payment__select:focus{
+            box-shadow: 0px 0px 8px 2px $mainColor1;
+        }
+    }
+    .transaction-input-amount{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-amount__text{
+            color: $__text_color;
+            font-size: $__text_font_size;
+            font-weight: $__text_fint-weight;
+            align-self: $__text_align_self;
+            justify-self: $__text_justify_self;
+        }
+        .transaction-input-amount__input{
+            
+            margin:$transaction-input-margin;
+            border: 1px solid $mainColor1;
+            color: black;
+            border-radius: 10px;
+            background-color: white;
+            height: 29px;
+            width: 95%;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+            outline: none;
+            align-self: $__input_align_self;
+            justify-self: $__input_justify_self;
+        }
+        .transaction-input-amount__input:focus{
+            box-shadow: 0px 0px 8px 2px $mainColor1;
+        }
+    }
+    .transaction-input-contents{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-contents__text{
+            color: $__text_color;
+            font-size: $__text_font_size;
+            font-weight: $__text_fint-weight;
+            align-self: $__text_align_self;
+            justify-self: $__text_justify_self;
+        }
+        .transaction-input-contents__input{
+            border: 1px solid $mainColor1;
+            color: black;
+            border-radius: 10px;
+            margin:$transaction-input-margin;
+            background-color: white;
+            height: 29px;
+            width: 95%;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+            outline: none;
+            align-self: $__input_align_self;
+            justify-self: $__input_justify_self;
+        }
+        .transaction-input-contents__input:focus{
+            box-shadow: 0px 0px 8px 2px $mainColor1;
+        }
+    }
+    .transaction-input-button{
+        margin:$transaction-input-margin;
+        display: grid;
+        .transaction-input-button__confirm{
+            border: 1px solid $mainColor1;
+            border-radius: 10px;
+            background-color: white;
+            color: $mainColor1;
+            margin: 5px;
+            height: 29px;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+        }
+        .transaction-input-button__confirm:hover{
+            background-color: $mainColor1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .transaction-input-button__clear{
+            border: 1px solid $mainColor1;
+            color: $mainColor1;
+            border-radius: 10px;
+            background-color: white;
+            margin: 5px;
+            height: 29px;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+        }
+        .transaction-input-button__clear:hover{
+            background-color: $mainColor1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .transaction-input-button__modify{
+            border: 1px solid $mainColor1;
+            color: $mainColor1;
+            border-radius: 10px;
+            background-color: white;
+            margin: 5px;
+            height: 29px;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+        }
+        .transaction-input-button__modify:hover{
+            background-color: $mainColor1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .transaction-input-button__delete{
+            border: 1px solid $spendTextColor;
+            color: $spendTextColor;
+            border-radius: 10px;
+            background-color: white;
+            margin: 5px;
+            height: 29px;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+        }
+        .transaction-input-button__delete:hover{
+            background-color: $spendTextColor;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .transaction-input-button__cancel{
+            border: 1px solid $mainColor1;
+            color: $mainColor1;
+            border-radius: 10px;
+            background-color: white;
+            
+            margin: 5px;
+            height: 29px;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+        }
+        .transaction-input-button__cancel:hover{
+            background-color: $mainColor1;
+            color: white;
+            cursor: pointer;
+        }
+
+        .transaction-input-button__test{
+            border: 1px solid $mainColor1;
+            color: $mainColor1;
+            border-radius: 10px;
+            background-color: white;
+            margin: 5px;
+            height: 29px;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+        }
+        .transaction-input-button__test:hover{
+            background-color: $mainColor1;
+            color: white;
+            cursor: pointer;
+        }
+
+    }
+}

@@ -1,0 +1,221 @@
+$mainColor0 : #6a6edf;
+$mainColor1 : #9a9cea;
+$mainColor2 : #a2b9ee;
+$mainColor3 : #a2dcee;
+$mainColor4 : #adeee2;
+
+$app-background-color: rgb(245, 245, 245);
+$transaction-list-back-color : rgb(250, 250, 250);
+// $incomeTextColor : #4cd4ae;
+// $spendTextColor : #e84575;
+
+$incomeTextColor : #9a9cea;
+$spendTextColor : rgb(212, 108, 108);
+
+$transaction-contents-font-size : 20px;
+$transaction-payment-font-size : 15px;
+$transaction-payment-font-color : #acbbdf;
+
+$header-height : 60px;
+$main-month-wrap-height : 39px;
+$gap : 30px;
+$grid-first-line-height : 30px;
+
+$transition-time : 0.2s;
+
+.transaction-wrapper{
+    height: calc(100vh - #{$gap} - #{$header-height} - #{$main-month-wrap-height} - #{$grid-first-line-height});
+    display: grid;
+    grid-template-columns: 6fr 3fr;
+    gap: $gap $gap;
+    grid-template-rows: $grid-first-line-height auto;
+    
+
+    .transaction-total{
+        align-self: center;
+        justify-self: center;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+    }
+
+    .transaction-list{
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        align-self: start;
+        justify-self: start;
+        width: 100%;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        background-color: $transaction-list-back-color;
+        border-radius: 15px;
+        padding : 5px;
+
+        .transaction-date{
+            display: grid;
+            margin: 10px;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: $grid-first-line-height auto;
+
+            .transaction-date__date{
+                color: gray;
+                font-size: 20px;
+                font-weight: bold;
+                align-self: center;
+                justify-self: start;
+            }
+            .transaction-date__income{
+                color: $incomeTextColor;
+                align-self: center;
+                justify-self: end;
+            }
+            .transaction-date__spend{
+                color: $spendTextColor;
+                align-self: center;
+                justify-self: end;
+            }
+        }
+        @media (min-width: 768px) {
+            .transaction-date {
+                grid-template-columns: 3fr 1fr 1fr;
+            }
+        }
+        @media (min-width: 992px) {
+            .transaction-date {
+                grid-template-columns: 4fr 1fr 1fr;
+            }
+        }
+        @media (min-width: 1200px) {
+            .transaction-date {
+                grid-template-columns: 5fr 1fr 1fr;
+            }
+        }
+
+
+        .transaction-contents{
+            border-radius: 15px;
+            margin: 10px;
+            padding: 10px;
+            background-color: white;
+            display: grid;
+            -webkit-transition: $transition-time;
+            transition: $transition-time;
+            grid-template-columns: 1fr 2fr 2fr;
+            grid-template-rows: 30px 20px;
+            .transaction-contents__category{
+                &-spend{
+                    align-self: center;
+                    justify-self: center;
+                    grid-column-start: 1;
+                    grid-column-end: 2;
+                    grid-row-start: 1;
+                    grid-row-end: 3;
+                }
+                &-income{
+                    align-self: center;
+                    justify-self: center;
+                    grid-column-start: 1;
+                    grid-column-end: 2;
+                    grid-row-start: 1;
+                    grid-row-end: 3;
+                }
+            }
+            .transaction-contents__contents{
+                font-size: $transaction-contents-font-size ;
+                align-self: center;
+                justify-self: start;
+                grid-column-start: 2;
+                grid-column-end: 3;
+                grid-row-start: 1;
+                grid-row-end: 2;
+            }
+            .transaction-contents__payment{
+                font-size: $transaction-payment-font-size;
+                color : $transaction-payment-font-color;
+                align-self: center;
+                justify-self: start;
+                grid-column-start: 2;
+                grid-column-end: 3;
+                grid-row-start: 2;
+                grid-row-end: 3;
+            }
+            .transaction-contents__amount{
+                &-spend{
+                    color:$spendTextColor;
+                    align-self: center;
+                    justify-self: end;
+                    grid-column-start: 3;
+                    grid-column-end: 4;
+                    grid-row-start: 1;
+                    grid-row-end: 3;
+                }
+                &-income{
+                    color:$incomeTextColor;
+                    align-self: center;
+                    justify-self: end;
+                    grid-column-start: 3;
+                    grid-column-end: 4;
+                    grid-row-start: 1;
+                    grid-row-end: 3;
+                }
+            }
+        }
+
+        @media (min-width: 200px) and (max-width: 767px) {
+            .transaction-contents {
+                grid-template-columns: 1.5fr 3fr 2fr;
+            }
+        }
+        @media (min-width: 767px) and (max-width: 992px) {
+            .transaction-contents {
+                grid-template-columns: 1.5fr 3fr 2fr;
+            }
+        }
+        @media (min-width: 992px) and (max-width: 1200px) {
+            .transaction-contents {
+                grid-template-columns: 1.3fr 4fr 1.5fr;
+            }
+        }
+        
+        @media (min-width: 1200px){
+            .transaction-contents {
+                grid-template-columns: 1.1fr 4fr 1.5fr;
+            }
+        }
+
+        .transaction-contents:hover{
+            //background-color: $mainColor1;
+            box-shadow: 0px 0px 10px 3px $mainColor1;
+            cursor: pointer;
+        }
+
+        .transaction-contents-none{
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr 1fr;
+
+            img{
+                justify-self: center;
+            }
+            div{
+                justify-self: center;
+                margin: 20px;
+            }
+        }
+    }
+    .transaction-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .transaction-input{
+        justify-self: start;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+}

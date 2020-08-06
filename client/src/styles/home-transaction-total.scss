@@ -1,0 +1,83 @@
+$mainColor0 : #6a6edf;
+$mainColor1 : #9a9cea;
+$mainColor2 : #a2b9ee;
+$mainColor3 : #a2dcee;
+$mainColor4 : #adeee2;
+
+$incomeTextColor : #9a9cea;
+$spendTextColor : rgb(212, 108, 108);
+
+.transaction-total{
+    margin: 30px 0;
+    text-align: center;
+
+
+    .transaction-total-income{
+        max-width: 200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 2fr 8fr;
+        text-align: right;
+        color:$incomeTextColor;
+        input{
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        input[type=checkbox]:checked{
+            background-color: $incomeTextColor;
+        }
+
+        input[type=checkbox]:after {
+            content: "  ";
+            background-color: $incomeTextColor;
+            display: inline-block;
+            width: 13px;
+            visibility: visible;
+        }
+            
+        input[type=checkbox]:checked:after {
+            background-color: $incomeTextColor;
+            border-radius: 3px;
+            text-align: center;
+            content: "\2714";
+            height: 13px;
+            color: white;
+        }
+        color:$incomeTextColor;
+    }
+    .transaction-total-spend{
+        max-width: 200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 2fr 2fr 8fr;
+        text-align: right;
+
+        input{
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        input[type=checkbox]:checked{
+            background-color: $spendTextColor;
+        }
+
+        input[type=checkbox]:after {
+            content: "  ";
+            background-color: $spendTextColor;
+            display: inline-block;
+            width: 13px;
+            visibility: visible;
+        }
+            
+        input[type=checkbox]:checked:after {
+            background-color: $spendTextColor;
+            border-radius: 3px;
+            text-align: center;
+            content: "\2714";
+            height: 13px;
+            color: white;
+        }
+        color:$spendTextColor;
+    }
+}
