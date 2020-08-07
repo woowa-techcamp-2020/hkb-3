@@ -1,4 +1,5 @@
 import $ from '../../../lib/miniJQuery';
+import numberComma from '../../../lib/numberComma';
 
 class DayWarp {
   constructor() {
@@ -93,8 +94,16 @@ class DayWarp {
         points += `${widthAboutAmount} ${heightAboutAmount}, `;
       }
     }, this);
+    
+    const meanPercent = this.meanAmount / this.maxSpend;
+    const heightAboutMeanAmount = totalHeight - (totalHeight * meanPercent) + this.heightPadding;
+    const meanTextPadding = 10;
     content = `
-      <polyline points="${points}"/> 
+      <polyline points="${points}" class="day-line"/>
+      <line x1="${this.defaultX}" y1="${heightAboutMeanAmount}"  x2="100%" y2="${heightAboutMeanAmount}" class="mean-line" />
+      <text x="99%" y="${heightAboutMeanAmount - meanTextPadding}" text-anchor="end" class="mean-text">
+        이번달 평균
+      </text>
       ${content}
     `;
     return content;
@@ -117,11 +126,19 @@ class DayWarp {
 
   getMaxAmount() {
     let maxAmount = 0;
-    console.log(this.getListRemovedDateDuplicate());
+    const sum = 0;
     this.getListRemovedDateDuplicate().forEach((payment) => {
       maxAmount = maxAmount > payment.amount ? maxAmount : payment.amount;
     });
     return maxAmount;
+  }
+
+  setMeanAmount() {
+    let amountSum = 0;
+    this.state.data.forEach((payment) => {
+      amountSum += payment.amount;
+    });
+    this.meanAmount = parseInt(amountSum / this.state.data.length);
   }
 
 
@@ -149,9 +166,13 @@ class DayWarp {
 
   setLineDashLength = () => {
     // path.style.strokeDasharray
-    const polyline = $('polyline').getNode();
+    const polyline = $('.day-line').getNode();
     polyline.style.strokeDasharray = polyline.getTotalLength();
     polyline.style.strokeDashoffset = polyline.getTotalLength();
+
+    const meanLine = $('.mean-line').getNode();
+    meanLine.style.strokeDasharray = meanLine.getTotalLength();
+    meanLine.style.strokeDashoffset = meanLine.getTotalLength();
   }
 
 
@@ -160,7 +181,11 @@ class DayWarp {
     this.state = state;
     console.log(state);
     this.setMaxSpend();
+    this.setMeanAmount();
     this.state.wrap.innerHTML = `
+        <div class="mean-text-wrap">
+          이번달 일 평균: <span class="mean-amount">${numberComma(this.meanAmount)}원</span>
+        </div>
         <div class="day-wrap">
           ${this.buildLineGraph()}
         </div>
