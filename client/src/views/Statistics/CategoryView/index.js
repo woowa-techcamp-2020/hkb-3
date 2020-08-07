@@ -5,7 +5,8 @@ import comma from '../../../lib/numberComma';
 class CategoryView extends View {
   constructor(...args) {
     super(args);
-    this.colors = ['#003f5c', '#2f4b7c', '#665191', '#a05195', '#d45087', '#0000ff', '#f95d6a', '#ff7c43', '#ffa600', '#F9F871'];
+    this.colors = ['#6cfffe', '#6effac', '#8cff6a', '#deff6b', '#febf68', '#ff8785', '#fe85d0', '#e78afe', '#a08cff', '#8abdfe'];
+    this.colors.reverse();
   }
 
   buildBar = () => {
@@ -22,7 +23,14 @@ class CategoryView extends View {
           </div>
           <div>
             <svg width="100%" height="30">
-              <rect width="${payment.percent}%" height="100%" fill=${this.colors[i % numberOfColors]} />
+              <rect width="${payment.percent}%" height="100%" fill=${this.colors[i % numberOfColors]}>
+                <animate id="animation${i}"
+                attributeName="width"
+                attributeType="XML"
+                from="0%" to="${payment.percent}%"
+                begin="0s" dur="1.5s"
+                fill="freeze" />
+              </rect>
             </svg>
           </div>
           <div class="amount">
