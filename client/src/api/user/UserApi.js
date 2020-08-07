@@ -7,8 +7,8 @@ async function createUser(user) {
       password: user.password, 
       email: user.email, 
       name: user.name,
-      created_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
-      updated_at: new Date(moment().format('YYYY-MM-DD HH:mm:ss')).toISOString(),
+      created_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+      updated_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
     }),
     headers: { 'Content-Type': 'application/json' },
   }).then(async (response) => {

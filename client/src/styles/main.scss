@@ -9,6 +9,7 @@ $header-height : 60px;
 body{
     margin: 0;
     height : 100vh;
+    background-color: $app-background-color;
 }
 
 .app{
@@ -100,6 +101,7 @@ body{
             background-color: white;
             font-size: medium;
             height: 30px;
+            transition: 0.2s;
         }
         .header-btn:hover{
             background-color: $mainColor1;

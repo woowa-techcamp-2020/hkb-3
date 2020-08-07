@@ -1,8 +1,10 @@
 import CategoryView from './CategoryView';
 import DayView from './DayView';
 import $ from '../../lib/miniJQuery';
-import { isSpend } from '../../common';
+import { isSpend, elements } from '../../common';
 import numberComma from '../../lib/numberComma';
+
+const IMAGE_TRANSACTION_EMPTY = 'https://i.imgur.com/t0Lantl.png';
 
 class StatisticsView {
   constructor(state) {
@@ -12,14 +14,22 @@ class StatisticsView {
     this.dayView = new DayView();
 
     this.wrap.innerHTML = this.buildSelection(); 
+    this.setSelectInput();
     this.addSelectHandler();
   }
+
+  setSelectInput() {
+    const id = this.state.selectedId;
+    const input = $(`#${id}`).getNode();
+    input.checked = true;
+  }
+
 
   buildSelection = () => {
     const content = `
       <div class="select-wrap">
         <label for="category">  
-          <input type="radio" name="select" value="category" id="category" checked>
+          <input type="radio" name="select" value="category" id="category">
           카테고리 지출
           <span></span>
         </label>
@@ -46,6 +56,7 @@ class StatisticsView {
     $('.select-wrap').click((event) => {
       const { target } = event;
       if(target.nodeName === 'INPUT') {
+        elements.stastisticsModel.setSelectedId(target.id);
         this.render();
       }
     });
@@ -68,19 +79,28 @@ class StatisticsView {
   }
 
   render() {
-    const newState = {
-      data: this.getSpendList(), 
-      wrap: $('.statistics-wrap').getNode(),
-      date: this.state.date,
-      totalSpend: this.totalSpend,
-    };
-    this.setTotalSpend();
-    const categorySelect = $('#category').getNode();
-
-    if(categorySelect.checked) {
-      this.categoryView.render(newState);
+    if(!this.state.data) {
+      this.wrap.innerHTML = ` 
+        <div class="transaction-contents-none statistice-contents">
+          <img src="${IMAGE_TRANSACTION_EMPTY}" width="200">
+          <div>거래 내역이 없습니다</div>
+        </div>
+      `;
     }else{
-      this.dayView.render(newState);
+      const newState = {
+        data: this.getSpendList(), 
+        wrap: $('.statistics-wrap').getNode(),
+        date: this.state.date,
+        totalSpend: this.totalSpend,
+      };
+      this.setTotalSpend();
+      const categorySelect = $('#category').getNode();
+  
+      if(categorySelect.checked) {
+        this.categoryView.render(newState);
+      }else{
+        this.dayView.render(newState);
+      }
     }
   }
 }

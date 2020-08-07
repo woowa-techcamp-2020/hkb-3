@@ -217,7 +217,7 @@ class InputFieldView extends View {
     const wrap = document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT);
     const contents = `
       <div class="transaction-input-amount__text">금액</div>
-      <input type="text" class="transaction-input-amount__input js-transaction-input-amount__input" placeholder="금액을 입력해주세요" maxlength="12"></input>`;
+      <input type="text" class="transaction-input-amount__input js-transaction-input-amount__input" placeholder="금액을 입력해주세요" maxlength="10"></input>`;
     // render
     wrap.innerHTML = contents;
     this.addAmountInputEvent();
@@ -271,8 +271,8 @@ class InputFieldView extends View {
         ` : `
           <button class="transaction-input-button__confirm js-transaction-input-button__confirm">거래 내역 추가</button>
           <button class="transaction-input-button__clear js-transaction-input-button__clear">내용 지우기</button>
+          <button class="transaction-input-button__test js-transaction-input-button__test">내역 자동 생성</button>
         `}
-        <button class="transaction-input-button__test js-transaction-input-button__test">내역 자동 생성</button>
       `;
     // render
     wrap.innerHTML = contents;
@@ -282,7 +282,6 @@ class InputFieldView extends View {
 
   // 버튼에 이벤트 리스너 추가하기
   addEventToButtons(isModify) {
-    this.addTestButtonEvent();
     if(isModify) {
       this.addDeleteButtonEvent();
       this.addModifyButtonEvent();
@@ -290,6 +289,7 @@ class InputFieldView extends View {
     }else{
       this.addConfirmButtonEvent();
       this.addClearButtonEvent();
+      this.addTestButtonEvent();
     }
   }
 
@@ -319,14 +319,18 @@ class InputFieldView extends View {
   addClearButtonEvent= () => {
     const clearButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_CLEAR);
     clearButton.addEventListener('click', () => {
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = '';
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = 1;
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = 1;
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = '';
-      document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = '';
+      this.clearAllInputFeild();
     });
+  }
+
+  clearAllInputFeild = () => {
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = '';
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = 1;
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = 1;
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = '';
+    document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = '';
   }
 
   // 거래내역 삭제 버튼 이벤트
@@ -380,7 +384,17 @@ class InputFieldView extends View {
     });
   }
 
+  addTestButtonEvent = () => {
+    const testButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_TEST);
+    testButton.addEventListener('click', async () => {
+      const userId = elements.initModel.state.userInfo.id;
+      const result = await API.Transaction().createTestTransaction(userId);
+      await elements.initModel.fetchInitData();
+      console.log(result);
+    });
+  }
   // 거래 내역 자동 생성 버튼 테스트용
+  /*
   addTestButtonEvent = () => {
     const states = ['income', 'spend'];
     
@@ -409,6 +423,8 @@ class InputFieldView extends View {
       document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = cateList.data[cateIndex].id;
     });
   }
+  */
 }   
+
       
 export default InputFieldView;

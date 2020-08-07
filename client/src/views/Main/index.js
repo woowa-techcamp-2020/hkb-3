@@ -82,13 +82,38 @@ class MainView extends View {
 
     if(window.location.pathname === '/') {
       transRouter.classList.add(CLASS_CURRENT_ROUTER);
+      this.curRouter = transRouter;
     }
     if(window.location.pathname === '/calendar') {
       calendarRouter.classList.add(CLASS_CURRENT_ROUTER);
+      this.curRouter = calendarRouter;
     }
     if(window.location.pathname === '/statistics') {
       statisticsRouter.classList.add(CLASS_CURRENT_ROUTER);
+      this.curRouter = statisticsRouter;
     }
+
+
+    $('.js-header-router').click((event) => {
+      const { target } = event;
+      if(target.nodeName === 'A') {
+        if(this.curRouter) {
+          this.curRouter.classList.remove(CLASS_CURRENT_ROUTER);
+        }
+        if(target === transRouter) {
+          transRouter.classList.add(CLASS_CURRENT_ROUTER);
+          this.curRouter = transRouter;
+        }
+        if(target === calendarRouter) {
+          calendarRouter.classList.add(CLASS_CURRENT_ROUTER);
+          this.curRouter = calendarRouter;
+        }
+        if(target === statisticsRouter) {
+          statisticsRouter.classList.add(CLASS_CURRENT_ROUTER);
+          this.curRouter = statisticsRouter;
+        }
+      }
+    });
   }
 
   dateChangeHandler = (event) => {

@@ -1,3 +1,23 @@
+$header-height : 60px;
+$button-margin : 25px;
+
+$mainColor0 : #6a6edf;
+$mainColor1 : #9a9cea;
+$mainColor2 : #a2b9ee;
+$mainColor3 : #a2dcee;
+$mainColor4 : #adeee2;
+
+$__input_align_self: center;
+$__input_justify_self: center;
+$__input_width : 90%;
+$__input_padding : 8px;
+
+$transition-time : 0.2s;
+
+$background-gradaition : linear-gradient(90deg, rgba(154,156,234,1) 0%, rgba(162,185,238,1) 50%, rgba(162,220,238,1) 100%);
+
+$img-watchar-logo : url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5OSIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDk5IDQwIj4KICAgIDxnIGZpbGw9IiNGRjA1NTgiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTI4LjU1NSAwTDI2LjcyMSAyNi42NTEgMjYuMjYyIDI2LjY3NiAyMi4zOCA4Ljc3NCAxNi4yMDcgOC43NzQgMTMuMjk5IDI3LjUzMyAxMi42ODIgMjcuNTY4IDkuODc5IDguNzc0IDAgOC43NzQgNS45NDIgMzkuNDE3IDE3LjA1NiAzOC4yNDkgMTkuMjYgMjAuOTQ1IDE5Ljg3NyAyMC45MTMgMjIuODQzIDM3LjY0IDMxLjk1IDM2LjY4MyAzOC4wNDcgMHpNNDIuOTY1IDI1LjU4NmwuOTUxLTEwLjU0OS44NS0uMDEzLjk5MyAxMC4zOC0yLjc5NC4xODJ6TTM5LjM1OSA4Ljc3NGwtNC41NTMgMjcuNjA4IDcuMjU0LS43NjIuNDQ2LTQuOTQ4IDMuNzI2LS4zMjUuNDU4IDQuNzg3IDYuNDgzLS42ODEtMy45MzYtMjUuNjc5SDM5LjM2ek04My44ODggMTcuNzRMODIuMjY4IDE3LjgwOCA4Mi4yNjggOC43NzQgNzcuNzI1IDguNzc0IDc3LjcyNSAzMS44NjUgODIuMjY4IDMxLjM5NSA4Mi4yNjggMjIuMTI1IDgzLjg4OCAyMi4wMjYgODMuODg4IDMxLjIyNCA4Ny45NzggMzAuNzk0IDg3Ljk3OCA4Ljc3NCA4My44ODggOC43NzR6TTkwLjYxMyA4Ljc3NEw4OS4wNiAzMC42ODFsMy45MzYtLjQxNC4xMjUtNC40NDggMS40MDItLjEyLjI0OCA0LjM4MyAzLjQ3Mi0uMzY1LTEuNzc0LTIwLjk0M2gtNS44NTV6bTIuODUgNC45OTJoLjM4NWwuNDc4IDguNDUzLTEuMTA2LjA3LjI0My04LjUyM3pNNTEuNzg0IDE1LjI4Nkw1NS41NjUgMTUuMTg3IDU1LjU2NSAzNC4yMDEgNjEuMTIyIDMzLjYxNyA2MS4xMjIgMTUuMDQxIDY0LjI4NiAxNC45NTggNjQuMjg2IDguNzc0IDUxLjc4NCA4Ljc3NHpNNzEuNzI3IDI5LjEyOWwtMS41NDQuMTI4di0xNS45bDEuNTQ0LS4wMjN2NC4zMzJsNC42MDktLjE3NnYtNC4yNDJjMC0yLjgyNi0xLjkwOC00LjgwNi01LjM4LTQuODA2LTMuNzA1IDAtNS44NTYgMS45OC01Ljg1NiA0Ljk5OHYxNS4xOTJjMCAzLjE0OCAxLjc2NSA0LjY3IDUuNzc4IDQuMjIgMy42MjUtLjQwNiA1LjUzNS0yLjQyOCA1LjUzNS01LjQ0N3YtNC45MjZsLTQuNjg2LjI3OXY2LjM3eiIvPgogICAgPC9nPgo8L3N2Zz4K) 0 16px no-repeat;
+
 .background-wrap::before{
   content: "";
   position: fixed;
@@ -20,38 +40,50 @@
   width: 100%;
   height: 100%;
   opacity: 0.8;
-  background: rgb(18, 18, 24);
+  background: black;
 }
 
 .background-wrap{
-  height: 100vh;
+  height: calc(100vh - #{$header-height});
 }
 
 nav{
+  display: grid;
+  grid: #{$header-height} / 1fr 1fr;
+
   .nav-icon{
-    position: relative;
-    z-index: 10001;
-    float: left;
-    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5OSIgaGVpZ2h0PSI0MCIgdmlld0JveD0iMCAwIDk5IDQwIj4KICAgIDxnIGZpbGw9IiNGRjA1NTgiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTI4LjU1NSAwTDI2LjcyMSAyNi42NTEgMjYuMjYyIDI2LjY3NiAyMi4zOCA4Ljc3NCAxNi4yMDcgOC43NzQgMTMuMjk5IDI3LjUzMyAxMi42ODIgMjcuNTY4IDkuODc5IDguNzc0IDAgOC43NzQgNS45NDIgMzkuNDE3IDE3LjA1NiAzOC4yNDkgMTkuMjYgMjAuOTQ1IDE5Ljg3NyAyMC45MTMgMjIuODQzIDM3LjY0IDMxLjk1IDM2LjY4MyAzOC4wNDcgMHpNNDIuOTY1IDI1LjU4NmwuOTUxLTEwLjU0OS44NS0uMDEzLjk5MyAxMC4zOC0yLjc5NC4xODJ6TTM5LjM1OSA4Ljc3NGwtNC41NTMgMjcuNjA4IDcuMjU0LS43NjIuNDQ2LTQuOTQ4IDMuNzI2LS4zMjUuNDU4IDQuNzg3IDYuNDgzLS42ODEtMy45MzYtMjUuNjc5SDM5LjM2ek04My44ODggMTcuNzRMODIuMjY4IDE3LjgwOCA4Mi4yNjggOC43NzQgNzcuNzI1IDguNzc0IDc3LjcyNSAzMS44NjUgODIuMjY4IDMxLjM5NSA4Mi4yNjggMjIuMTI1IDgzLjg4OCAyMi4wMjYgODMuODg4IDMxLjIyNCA4Ny45NzggMzAuNzk0IDg3Ljk3OCA4Ljc3NCA4My44ODggOC43NzR6TTkwLjYxMyA4Ljc3NEw4OS4wNiAzMC42ODFsMy45MzYtLjQxNC4xMjUtNC40NDggMS40MDItLjEyLjI0OCA0LjM4MyAzLjQ3Mi0uMzY1LTEuNzc0LTIwLjk0M2gtNS44NTV6bTIuODUgNC45OTJoLjM4NWwuNDc4IDguNDUzLTEuMTA2LjA3LjI0My04LjUyM3pNNTEuNzg0IDE1LjI4Nkw1NS41NjUgMTUuMTg3IDU1LjU2NSAzNC4yMDEgNjEuMTIyIDMzLjYxNyA2MS4xMjIgMTUuMDQxIDY0LjI4NiAxNC45NTggNjQuMjg2IDguNzc0IDUxLjc4NCA4Ljc3NHpNNzEuNzI3IDI5LjEyOWwtMS41NDQuMTI4di0xNS45bDEuNTQ0LS4wMjN2NC4zMzJsNC42MDktLjE3NnYtNC4yNDJjMC0yLjgyNi0xLjkwOC00LjgwNi01LjM4LTQuODA2LTMuNzA1IDAtNS44NTYgMS45OC01Ljg1NiA0Ljk5OHYxNS4xOTJjMCAzLjE0OCAxLjc2NSA0LjY3IDUuNzc4IDQuMjIgMy42MjUtLjQwNiA1LjUzNS0yLjQyOCA1LjUzNS01LjQ0N3YtNC45MjZsLTQuNjg2LjI3OXY2LjM3eiIvPgogICAgPC9nPgo8L3N2Zz4K) 0 16px no-repeat;
-    background-size: 99px 40px;
-    width: 99px;
-    height: 72px;
+    align-self: center;
+    justify-self: start;
+    margin-left: 20px;
+    font-family: sans-serif;
+    font-size: 30px;
+    color: $mainColor1 ;
+    font-weight: bold;
+    z-index: 10;
     cursor: pointer;
   }
 
-  .nav-link{
-    position: relative;
-    z-index: 10001;
-    background: #fff;
-    color: #121218;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    padding: 5px 18px 6px;
-    border-radius: 40px;
-    margin: 23px 0 0;
-    line-height: 21px;
-    float: right;
+  .nav-button{
+    align-self: center;
+    justify-self: end;
+    z-index: 10;
+    color : $mainColor0;
+    border: solid 1px $mainColor1;
+    background-color: white;
+    border-radius: 30px;
+    padding: 10px;
+    font-weight: bold;
+    margin: $button-margin;
+    height: 32px;
+    width: 72px;
+    span{
+      justify-self: start;
+    }
+  }
+  .nav-button:hover{
+    background: $mainColor1;
+    color: white;
+    border: 0px;
     cursor: pointer;
   }
 }
@@ -64,89 +96,81 @@ nav{
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   width: 300px;
-
+  height: 300px;
+  display: grid;
+  grid: 1fr 3fr 1fr 1fr / 1fr ;
   .login-title{
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
-    margin: 0 0 14px;
+    justify-self: center;
+    align-self: start;
   }
 
-  form{
+  .login-form{
+    justify-self: center;
+    align-self: center;
+    width: 100%;
+    
     .id-wrap{
-      position: relative;
+      display: grid;
       width: 100%;
-      input{
-        box-sizing : border-box;
-        overflow: visible;
-        font-size: 16px;
-        line-height: normal;
-        border-color: rgba(154,151,161,0.2);
-        border: 1px solid #d4d4d4;
-        border-top-width: 1px;
-        border-bottom-width: 0;
-        color: #333333;
-        font-weight: 400;
-        width: 100%;
-        padding: 10px 10px 10px 14px;
-        border-radius: 4px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-        word-spacing: normal;
-        text-transform: none;
-        text-indent: 0px;
-        text-shadow: none;
-        display: inline-block;
-        text-align: start;
-        appearance: textfield;
-        background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-        -webkit-rtl-ordering: logical;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      .login-id{
+          justify-self: center;
+          align-self: center;
+          border: 1px solid $mainColor1;
+          color: black;
+          border-radius: 10px;
+          background-color: white;
+          width: $__input_width;
+          -webkit-transition: $transition-time;
+          transition: $transition-time;
+          outline: none;
+          height: 32px;
+          padding-left: 10px;
+          padding-right: 10px;
+      }
+      .login-id:focus{
         cursor: text;
+          box-shadow: 0px 0px 8px 2px $mainColor1;
       }
     }
 
     .pw-wrap{
-      position: relative;
+      display: grid;
       width: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
       input{
-        box-sizing : border-box;
-        overflow: visible;
-        font-size: 16px;
-        line-height: normal;
-        border-color: rgba(154,151,161,0.2);
-        border-top-width: 1px;
-        color: #333333;
-        font-weight: 400;
-        border: 1px solid #d4d4d4;
-        border-bottom-width: 1px;
-        width: 100%;
-        padding: 10px 10px 10px 14px;
-        border-radius: 4px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-        word-spacing: normal;
-        text-transform: none;
-        text-indent: 0px;
-        text-shadow: none;
-        display: inline-block;
-        text-align: start;
-        appearance: textfield;
-        background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
-        -webkit-rtl-ordering: logical;
-        cursor: text;
+         justify-self: center;
+          align-self: center;
+          border: 1px solid $mainColor1;
+          color: black;
+          border-radius: 10px;
+          // margin:$button-margin;
+          background-color: white;
+          width: $__input_width;
+          // padding: $__input_padding;
+          -webkit-transition: $transition-time;
+          transition: $transition-time;
+          outline: none;
+          height: 32px;
+          padding-left: 10px;
+          padding-right: 10px;
+      }
+      input:focus{
+        box-shadow: 0px 0px 8px 2px $mainColor1;
       }
     }
   }
 
   .login-button-wrap{
     width: 100%;
-    padding: 0 0 21px;
-    border-bottom: 1px solid rgba(154,151,161,0.2);
-    margin: 16px 0 0;
     box-sizing: border-box;
-
     button{
-      color: #FFFFFF;
+      
       font-weight: 700;
       letter-spacing: -0.1px;
       text-align: center;
@@ -155,25 +179,35 @@ nav{
       font-size: 16px;
       line-height: 47px;
       height: 48px;
-      cursor: pointer;
       border-width: 0px;
       border-style: none;
-      border-color: transparent;
       border-image: initial;
       outline: none 0px;
       padding: 0px;
       margin: 0;
-      background-color: #EB0056;
+      transition: 0.2s;
+      border: 1px solid $mainColor0;
+      background-color: white;
+      color: $mainColor0;
+      opacity: 0.8;
+    }
+    button:hover{
+      border: 0px;
+      opacity: 1;
+      background-color: $mainColor0;
+      color: #FFFFFF;
+      cursor: pointer;
     }
   }
 
   p{
+    align-self: end;
+    justify-self: start;
     color: #fff;
     font-size: 12px;
     font-weight: 400;
     letter-spacing: -0.5px;
     opacity: 0.6;
-    margin: 15px 0 13px;
     padding: 0px;
     display: block;
     margin-block-start: 1em;
@@ -183,6 +217,8 @@ nav{
   }
 
   ul{
+    align-self: center;
+    justify-self: start;
     display: flex;
     justify-content: space-between;
     text-align: center;
@@ -202,12 +238,13 @@ nav{
         background: url(https://i.imgur.com/m60RREc.png) no-repeat;
         background-size: cover;
         vertical-align: top;
-        width: 38px;
-        height: 38px;
+        width: 45px;
+        height: 45px;
         border-width: 0px;
         border-style: none;
         border-color: transparent;
         border-image: initial;
+        border-radius: 45px;
         outline: none 0px;
         padding: 0px;
         font-size: 100%;
@@ -221,6 +258,12 @@ nav{
         display: inline-block;
         text-align: center;
         align-items: flex-start;
+        -webkit-transition: $transition-time;
+        transition: $transition-time;
+      }
+      button:hover{
+        box-shadow: 0px 0px 10px 3px $mainColor1;
+        cursor: pointer;
       }
     }
 

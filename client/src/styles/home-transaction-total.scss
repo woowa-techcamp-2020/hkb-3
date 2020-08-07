@@ -7,10 +7,12 @@ $mainColor4 : #adeee2;
 $incomeTextColor : #9a9cea;
 $spendTextColor : rgb(212, 108, 108);
 
+$incomeTextColor : #a8aaf0;
+$spendTextColor : rgb(207, 124, 124);
 .transaction-total{
-    margin: 30px 0;
+    margin: 20px 0;
     text-align: center;
-
+    width: 100%;
 
     .transaction-total-income{
         max-width: 200px;

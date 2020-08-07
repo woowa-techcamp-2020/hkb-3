@@ -4,7 +4,7 @@ class PieView {
     this.colors = state.colors;
     this.circleRound = 565.49;
     this.radius = 90;
-    this.mid = 300;
+    this.mid = 350;
     this.percentSumList = this.makePercentSumList();
   }
 
@@ -62,13 +62,28 @@ class PieView {
     const percentSumList = [];
     const reversedList = this.categoryList.slice();
     reversedList.reverse();
-    reversedList.reduce((prev, value) => {
-      const newValue = value.percent + prev; 
-      percentSumList.unshift({ 
-        percentSum: newValue, 
-        name: value.category_name, 
-        percent: value.percent, 
-      });
+    reversedList.reduce((prev, payment) => {
+      const newValue = payment.percent + prev; 
+      // 퍼센트가 너무 작을때 예외처리
+      if(payment.percent <= 2) {
+        if(percentSumList.length === 0) {
+          percentSumList.unshift({ 
+            percentSum: newValue, 
+            name: '기타', 
+            percent: payment.percent, 
+          });
+        }else{
+          percentSumList[0].percent += payment.percent;
+          percentSumList[0].percentSum += payment.percent;
+        }
+      }else{
+        percentSumList.unshift({ 
+          percentSum: newValue, 
+          name: payment.category_name, 
+          percent: payment.percent, 
+        });
+      }
+      
       return newValue;
     }, 0);
     

@@ -3,6 +3,8 @@ import TotalView from './components/totalView';
 import InputFieldView from './components/inputFieldView';
 
 const SELECTOR_CONTENT_WRAP = '.content-wrap';
+const SELECTOR_SELECTED_TRANSACTION = '.js-selected-transaction';
+const CLASS_SELECTED_TRANSACTION = 'js-selected-transaction';
 
 class HomeView {
   constructor(model) {

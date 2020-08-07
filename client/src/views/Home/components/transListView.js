@@ -7,6 +7,8 @@ import API from '../../../api/index';
 import $ from '../../../lib/miniJQuery';
 
 const SELECTOR_TRANSACTION_CONTENTS = '.js-transaction-contents';
+const CLASS_TRANSACTION_CONTENTS = 'js-transaction-contents';
+
 const SELECTOR_TRANSACTION_INPUT_STATE = '.js-transaction-input-state';
 const SELECTOR_TRANSACTION_INPUT_DATE_INPUT = '.js-transaction-input-date__input';
 
@@ -22,9 +24,20 @@ const SELECTOR_TRANSACTION_TOTAL_INCOME_CHECKBOX = '.js-transaction-total-income
 const SELECTOR_TRANSACTION_TOTAL_SPEND_CHECKBOX = '.js-transaction-total-spend__checkbox';
 
 const IMAGE_TRANSACTION_EMPTY = 'https://i.imgur.com/t0Lantl.png';
+  
 // const IMAGE_TRANSACTION_EMPTY = '';
 const SELECTOR_SELECTED_TRANSACTION = '.js-selected-transaction';
 const CLASS_SELECTED_TRANSACTION = 'js-selected-transaction';
+
+const CATEGORY_ICONS = ['', 'fas fa-won-sign', 'fas fa-subway', 
+  'fas fa-utensils', 'fas fa-subway', 'fas fa-shopping-bag', 
+  'fas fa-hospital', 'fas fa-music', 'fas fa-ellipsis-h', 
+  'fas fa-hand-holding-usd', 'fas fa-search-dollar'];
+
+const incomeIconColor = '#9a9cea';
+const spendIconColor = 'rgb(212, 108, 108)';
+const incomeTextColor = '#a8aaf0';
+const spendTextColor = 'rgb(207, 124, 124)';
 
 class TransListView extends View {
   constructor(...args) {
@@ -85,10 +98,17 @@ class TransListView extends View {
           ${this.isChecked(transaction, incomeCheck, spendCheck) ? `
             ${this.listDateRender(transaction, incomeCheck, spendCheck)}
             <div class="transaction-contents js-transaction-contents ${transaction.id}">
-              <span class="transaction-contents__category-${this.isIncome(transaction) ? 'income' : 'spend'}">${transaction.category_name}</span>
+              <span class="transaction-contents__category-${transaction.state}">
+                <span class="category_icon" style="color:${this.isIncome(transaction) ? `${incomeIconColor}` : `${spendIconColor}`}">
+                  <i class= "${CATEGORY_ICONS[transaction.category_id]}" ></i>
+                </span>
+                <span class="category_name">
+                  ${transaction.category_name}
+                </span>
+              </span>
               <span class="transaction-contents__contents">${transaction.contents}</span>
               <span class="transaction-contents__payment">${transaction.payment_method}</span>
-              <span class="transaction-contents__amount-${this.isIncome(transaction) ? 'income' : 'spend'}">
+              <span class="transaction-contents__amount-${transaction.state}">
                 ${this.isIncome(transaction) ? `+${comma(transaction.amount)}` : `-${comma(transaction.amount)}`} 원
               </span>
             </div>
@@ -138,21 +158,32 @@ class TransListView extends View {
     });
   }
 
+  
+
   // 거래내역 클릭할 때 이벤트 발생 -> 수정용
   addEventToTransaction = () => {
-    const list = document.querySelectorAll(SELECTOR_TRANSACTION_CONTENTS);
-    list.forEach((div) => {
-      div.addEventListener('click', async () => {
-        const transId = div.className.split(' ')[2];
-        
+    document.body.addEventListener('click', async(e) => {
+      // 지금 찍은애가 거래 내역이면
+      if(e.target.classList[1] === CLASS_TRANSACTION_CONTENTS) {
+        // 얘 정보 불러와
+        const transId = e.target.classList[2];
         const transaction = await API.Transaction().getTransactionById(transId);
-        
+
+        // 기존에 찍어놓은 거래 내역이 있나?
         const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
+
+        // 기존에 찍은 거래 내역이 있으면(수정중이니까 이미 불러와있음) 일단 지워
         if(selectedTransaction !== null) {
           selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
         }
+        // 선택된 거래 내역이 없으면(수정중이 아니면) 수정용으로 카테고리랑 버튼 수정
+        if(selectedTransaction === null) {
+          this.inputFieldView.renderButton(true);
+          this.inputFieldView.addEventToButtons(true);
+        }
+        await this.inputFieldView.renderCategory(transaction.data[0].state);
 
-        console.log(transaction.data[0].id, transaction.data[0].updated_at, transaction.data[0].amount);
+        // 인풋창들 거래 내역 찍은애 정보로 채운다.
         if(transaction.data[0].state === 'income') {
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
@@ -161,12 +192,69 @@ class TransListView extends View {
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = false;
           document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = true;
         }
+        
+        const transDate = new Date(transaction.data[0].date);
+        let currMonth = transDate.getMonth() + 1;
+        if(currMonth < 10) {
+          currMonth = `0${currMonth}`;
+        }
+        let currDate = transDate.getDate();
+        if(currDate < 10) {
+          currDate = `0${currDate}`;
+        }
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = `${transDate.getFullYear()}-${currMonth}-${currDate}`;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = transaction.data[0].category_id;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = transaction.data[0].payment_id;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = transaction.data[0].amount;
+        document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = transaction.data[0].contents;
+        e.target.classList.add(CLASS_SELECTED_TRANSACTION);
+      } else{
+        this.inputFieldView.renderButton(false);
+        this.inputFieldView.addEventToButtons(false);
+        await this.inputFieldView.renderCategory('income');
+        // 기존에 찍어놓은 거래 내역이 있나?
+        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
+
+        // 기존에 찍은 거래 내역이 있으면(수정중이니까 이미 불러와있음) 일단 지워
+        if(selectedTransaction !== null) {
+          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
+        }
+
+        console.log('다른거 찍었으니까 버튼 다시 그령 ');
+      }
+    }); 
+    /*
+    const list = document.querySelectorAll(SELECTOR_TRANSACTION_CONTENTS);
+    list.forEach((div) => {
+      div.addEventListener('click', async () => {
+        const transId = div.className.split(' ')[2];
+        
+        const transaction = await API.Transaction().getTransactionById(transId);
+
+        if(transaction.data[0].state === 'income') {
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
+        }
+        if(transaction.data[0].state === 'spend') {
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = false;
+          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = true;
+        }
+        
         const inputFieldParmas = {
           state: transaction.data[0].state, isModify: true,
         };
-        await this.inputFieldView.render(inputFieldParmas);
 
-        // console.log(moment(new Date()).format('YYYY-MM-DD hh:mm:ss'));
+
+        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
+
+        if(selectedTransaction === null) {
+          this.inputFieldView.renderButton(true);
+          this.inputFieldView.addEventToButtons(true);
+          // await this.inputFieldView.render(inputFieldParmas);
+        }else{
+          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
+          await this.inputFieldView.renderCategory(transaction.data[0].state);
+        }
         const transDate = new Date(transaction.data[0].date);
         let currMonth = transDate.getMonth() + 1;
         if(currMonth < 10) {
@@ -184,6 +272,7 @@ class TransListView extends View {
         div.classList.add(CLASS_SELECTED_TRANSACTION);
       });
     });
+    */
   }
 
   isChecked = (transaction, incomeCheck, spendCheck) => {

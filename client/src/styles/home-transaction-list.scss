@@ -58,7 +58,6 @@ $transition-time : 0.2s;
         .transaction-date{
             display: grid;
             margin: 10px;
-            grid-template-columns: 2fr 1fr 1fr;
             grid-template-rows: $grid-first-line-height auto;
 
             .transaction-date__date{
@@ -79,19 +78,26 @@ $transition-time : 0.2s;
                 justify-self: end;
             }
         }
-        @media (min-width: 768px) {
+
+        @media (min-width: 200px) and (max-width: 767px) {
             .transaction-date {
-                grid-template-columns: 3fr 1fr 1fr;
+                grid-template-columns: 3fr 2fr 2fr;
             }
         }
-        @media (min-width: 992px) {
+        @media (min-width: 767px) and (max-width: 992px) {
             .transaction-date {
-                grid-template-columns: 4fr 1fr 1fr;
+                grid-template-columns: 4fr 2fr 2.5fr;
             }
         }
-        @media (min-width: 1200px) {
+        @media (min-width: 992px) and (max-width: 1200px) {
             .transaction-date {
-                grid-template-columns: 5fr 1fr 1fr;
+                grid-template-columns: 5fr 2fr 2fr;
+            }
+        }
+        
+        @media (min-width: 1200px){
+            .transaction-date {
+                grid-template-columns: 5fr 1.5fr 1.5fr;
             }
         }
 
@@ -111,20 +117,46 @@ $transition-time : 0.2s;
             grid-template-rows: 30px 20px;
             .transaction-contents__category{
                 &-spend{
+                    display: grid;
+                    grid: 1.5fr 0.5fr / 1fr;
+                    height: 100%;
                     align-self: center;
                     justify-self: center;
                     grid-column-start: 1;
                     grid-column-end: 2;
                     grid-row-start: 1;
                     grid-row-end: 3;
+                    .category_icon{
+                        align-self: center;
+                        justify-self: center;
+                    }
+                    .category_name{
+                        align-self: center;
+                        justify-self: center;
+                        font-size: $transaction-payment-font-size;
+                        color: $transaction-payment-font-color;
+                    }
                 }
                 &-income{
+                    display: grid;
+                    grid: 1.5fr 0.5fr / 1fr;
+                    height: 100%;
                     align-self: center;
                     justify-self: center;
                     grid-column-start: 1;
                     grid-column-end: 2;
                     grid-row-start: 1;
                     grid-row-end: 3;
+                    .category_icon{
+                        align-self: center;
+                        justify-self: center;
+                    }
+                    .category_name{
+                        align-self: center;
+                        justify-self: center;
+                        font-size: $transaction-payment-font-size;
+                        color: $transaction-payment-font-color;
+                    }
                 }
             }
             .transaction-contents__contents{
