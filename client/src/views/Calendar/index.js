@@ -37,7 +37,9 @@ class CalendarView {
   
   render() {
     new TableView().render(this.state.date);
-    new IncomeAndSpendView().render(this.data);
+    if(this.data) {
+      new IncomeAndSpendView().render(this.data);
+    }
   }
 }
   

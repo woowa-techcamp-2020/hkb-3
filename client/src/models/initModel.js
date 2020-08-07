@@ -13,14 +13,12 @@ class InitModel extends Observable {
     const curDate = this.state.date;
     this.state.date.setMonth(curDate.getMonth() + 1);
     this.fetchInitData();
-    super.notify(this);
   }
 
   decreaseMonth() {
     const curDate = this.state.date;
     this.state.date.setMonth(curDate.getMonth() - 1);
     this.fetchInitData();
-    super.notify(this);
   }
 
   
