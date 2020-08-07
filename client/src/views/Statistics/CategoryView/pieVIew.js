@@ -4,7 +4,7 @@ class PieView {
     this.colors = state.colors;
     this.circleRound = 565.49;
     this.radius = 90;
-    this.mid = 300;
+    this.mid = 350;
     this.percentSumList = this.makePercentSumList();
   }
 
