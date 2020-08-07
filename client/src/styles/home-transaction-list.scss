@@ -117,20 +117,46 @@ $transition-time : 0.2s;
             grid-template-rows: 30px 20px;
             .transaction-contents__category{
                 &-spend{
+                    display: grid;
+                    grid: 1.5fr 0.5fr / 1fr;
+                    height: 100%;
                     align-self: center;
                     justify-self: center;
                     grid-column-start: 1;
                     grid-column-end: 2;
                     grid-row-start: 1;
                     grid-row-end: 3;
+                    .category_icon{
+                        align-self: center;
+                        justify-self: center;
+                    }
+                    .category_name{
+                        align-self: center;
+                        justify-self: center;
+                        font-size: $transaction-payment-font-size;
+                        color: $transaction-payment-font-color;
+                    }
                 }
                 &-income{
+                    display: grid;
+                    grid: 1.5fr 0.5fr / 1fr;
+                    height: 100%;
                     align-self: center;
                     justify-self: center;
                     grid-column-start: 1;
                     grid-column-end: 2;
                     grid-row-start: 1;
                     grid-row-end: 3;
+                    .category_icon{
+                        align-self: center;
+                        justify-self: center;
+                    }
+                    .category_name{
+                        align-self: center;
+                        justify-self: center;
+                        font-size: $transaction-payment-font-size;
+                        color: $transaction-payment-font-color;
+                    }
                 }
             }
             .transaction-contents__contents{
