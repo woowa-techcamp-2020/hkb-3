@@ -3,6 +3,11 @@ $circle-round: 565.49;
 $circle-delay: 1s;
 $spendTextColor : rgb(212, 108, 108);
 
+.mean-text-wrap{
+    text-align: right;
+    color: $color-2;
+}
+
 .statistice-contents{
     margin-top: 20%;
     text-align: center;
@@ -91,6 +96,19 @@ $spendTextColor : rgb(212, 108, 108);
                 .amount{
                     text-align: right;
                 }
+
+                // rect{
+                //     animation: rect-apear 1s linear forwards; 
+                // }
+
+                // @keyframes rect-apear {
+                //     0% { 
+                //         width: 0%; 
+                //     }
+                //     100% { 
+                //         width: 100%; 
+                //     }
+                // }
             }
         }
         
@@ -165,18 +183,13 @@ $spendTextColor : rgb(212, 108, 108);
             stroke-width:1;
         }
 
-        $line-delay: 1.5s;
+        $line-delay: 2.0s;
 
         polyline{
             fill:none;
             stroke:$color-2;
             stroke-width:3;
             animation: draw $line-delay linear forwards; 
-            @keyframes draw {
-                to {
-                  stroke-dashoffset: 0;
-                }
-            }
         }   
         
           
@@ -186,15 +199,43 @@ $spendTextColor : rgb(212, 108, 108);
             stroke-width:3;
             animation: $line-delay fadeIn;
             animation-fill-mode: forwards;
+            opacity: 0;
+
             
-            visibility: hidden;
-            @keyframes fadeIn {
-                99% {
-                    visibility: hidden;
-                }
-                100% {
-                    visibility: visible;
-                }
+        }
+
+        .mean-text{
+            fill: $color-1;  
+            animation: $line-delay fadeIn;
+            animation-fill-mode: forwards;
+            opacity: 0;
+
+        }
+
+        .mean-line{
+            stroke: $color-3;
+            stroke-width: 2px;
+            animation: draw $line-delay linear forwards, draw-mean $line-delay steps(1, end) forwards;  
+        }
+
+        @keyframes draw {
+            to {
+              stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes draw-mean {
+            to {
+              stroke-dasharray: 10;
+            }
+        }
+
+        @keyframes fadeIn {
+            85% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
             }
         }
     }
