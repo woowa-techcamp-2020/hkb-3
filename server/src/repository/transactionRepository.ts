@@ -24,7 +24,7 @@ async function updateTransaction(transaction:TransactionDTO) {
 }
 
 async function createTransaction(transaction:TransactionDTO) {
-  const result = await pool.query('insert into mydb.transaction set ', transaction);
+  const result = await pool.query('insert into mydb.transaction set ?', transaction);
   return result;
 }
 

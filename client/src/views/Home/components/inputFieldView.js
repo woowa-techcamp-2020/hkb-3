@@ -310,6 +310,7 @@ class InputFieldView extends View {
         created_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
         updated_at: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
+      console.log(trans);
       await API.Transaction().createTransaction(trans);
       await elements.initModel.fetchInitData();
     });
@@ -342,7 +343,9 @@ class InputFieldView extends View {
       await elements.initModel.fetchInitData();
 
       // 삭제 한 후 수정 상태 돌리기
-      this.render({ state: 'income', isModify: false });
+      await this.renderCategory('income');
+      this.clearAllInputFeild();
+      this.renderButton(false);
     });
   }
 
@@ -368,19 +371,23 @@ class InputFieldView extends View {
       await elements.initModel.fetchInitData();
 
       // 수정 한 후 수정 상태 돌리기
-      this.render({ state: 'income', isModify: false });
+      await this.renderCategory('income');
+      this.clearAllInputFeild();
+      this.renderButton(false);
     });
   }
 
   // 거래 내역 수정 취소 버튼 이벤트
   addCancelButtonEvent = () => {
     const cancelButton = document.querySelector(SELECTOR_TRANSACTION_INPUT_BUTTON_CANCEL);
-    cancelButton.addEventListener('click', () => {
+    cancelButton.addEventListener('click', async () => {
       const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
       if(selectedTransaction !== null) {
         selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
       }
-      this.render({ state: 'income', isModify: false });
+      await this.renderCategory('income');
+      this.clearAllInputFeild();
+      this.renderButton(false);
     });
   }
 
