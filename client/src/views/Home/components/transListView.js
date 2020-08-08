@@ -162,117 +162,54 @@ class TransListView extends View {
 
   // 거래내역 클릭할 때 이벤트 발생 -> 수정용
   addEventToTransaction = () => {
-    document.body.addEventListener('click', async(e) => {
-      // 지금 찍은애가 거래 내역이면
-      if(e.target.classList[1] === CLASS_TRANSACTION_CONTENTS) {
-        // 얘 정보 불러와
-        const transId = e.target.classList[2];
-        const transaction = await API.Transaction().getTransactionById(transId);
-
-        // 기존에 찍어놓은 거래 내역이 있나?
-        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
-
-        // 기존에 찍은 거래 내역이 있으면(수정중이니까 이미 불러와있음) 일단 지워
-        if(selectedTransaction !== null) {
-          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
-        }
-        // 선택된 거래 내역이 없으면(수정중이 아니면) 수정용으로 카테고리랑 버튼 수정
-        if(selectedTransaction === null) {
-          this.inputFieldView.renderButton(true);
-          this.inputFieldView.addEventToButtons(true);
-        }
-        await this.inputFieldView.renderCategory(transaction.data[0].state);
-
-        // 인풋창들 거래 내역 찍은애 정보로 채운다.
-        if(transaction.data[0].state === 'income') {
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
-        }
-        if(transaction.data[0].state === 'spend') {
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = false;
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = true;
-        }
-        
-        const transDate = new Date(transaction.data[0].date);
-        let currMonth = transDate.getMonth() + 1;
-        if(currMonth < 10) {
-          currMonth = `0${currMonth}`;
-        }
-        let currDate = transDate.getDate();
-        if(currDate < 10) {
-          currDate = `0${currDate}`;
-        }
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = `${transDate.getFullYear()}-${currMonth}-${currDate}`;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = transaction.data[0].category_id;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = transaction.data[0].payment_id;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = transaction.data[0].amount;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = transaction.data[0].contents;
-        e.target.classList.add(CLASS_SELECTED_TRANSACTION);
-      } else{
-        this.inputFieldView.renderButton(false);
-        this.inputFieldView.addEventToButtons(false);
-        await this.inputFieldView.renderCategory('income');
-        // 기존에 찍어놓은 거래 내역이 있나?
-        const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
-
-        // 기존에 찍은 거래 내역이 있으면(수정중이니까 이미 불러와있음) 일단 지워
-        if(selectedTransaction !== null) {
-          selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
-        }
-
-        console.log('다른거 찍었으니까 버튼 다시 그령 ');
-      }
-    }); 
-    /*
     const list = document.querySelectorAll(SELECTOR_TRANSACTION_CONTENTS);
     list.forEach((div) => {
       div.addEventListener('click', async () => {
-        const transId = div.className.split(' ')[2];
-        
+        const transId = div.classList[2];
         const transaction = await API.Transaction().getTransactionById(transId);
-
-        if(transaction.data[0].state === 'income') {
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = true;
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = false;
-        }
-        if(transaction.data[0].state === 'spend') {
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME).checked = false;
-          document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND).checked = true;
-        }
-        
-        const inputFieldParmas = {
-          state: transaction.data[0].state, isModify: true,
-        };
-
-
+        const currState = transaction.data[0].state;
+        const inputDate = document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT);
+        const inputAmount = document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT);
+        const inputContents = document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT);
+        const radioIncome = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_INCOME);
+        const radioSpend = document.querySelector(SELECTOR_TRANSACTION_INPUT_STATE_RADIO_SPEND);
+        const selectCategody = document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT);
+        const selectPayment = document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT);
         const selectedTransaction = document.querySelector(SELECTOR_SELECTED_TRANSACTION);
 
+        if(currState === 'income') {
+          radioIncome.checked = true;
+          radioSpend.checked = false;
+        }
+        if(currState === 'spend') {
+          radioIncome.checked = false;
+          radioSpend.checked = true;
+        }
+       
+        
+
+        // 기존에 선택한 거래내역이 없으면 -> 입력 상태
         if(selectedTransaction === null) {
           this.inputFieldView.renderButton(true);
           this.inputFieldView.addEventToButtons(true);
-          // await this.inputFieldView.render(inputFieldParmas);
-        }else{
+          this.inputFieldView.clearAllInputFeild();
+        }else{ // 기존에 선택한 거래내역이 있으면 -> 수정상태
           selectedTransaction.classList.remove(CLASS_SELECTED_TRANSACTION);
-          await this.inputFieldView.renderCategory(transaction.data[0].state);
         }
-        const transDate = new Date(transaction.data[0].date);
-        let currMonth = transDate.getMonth() + 1;
-        if(currMonth < 10) {
-          currMonth = `0${currMonth}`;
-        }
-        let currDate = transDate.getDate();
-        if(currDate < 10) {
-          currDate = `0${currDate}`;
-        }
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_DATE_INPUT).value = `${transDate.getFullYear()}-${currMonth}-${currDate}`;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_CATEGORY_SELECT).value = transaction.data[0].category_id;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_PAYMENT_SELECT).value = transaction.data[0].payment_id;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_AMOUNT_INPUT).value = transaction.data[0].amount;
-        document.querySelector(SELECTOR_TRANSACTION_INPUT_CONTENTS_INPUT).value = transaction.data[0].contents;
+        await this.inputFieldView.renderCategory(currState);
+        const transDate = moment(new Date(transaction.data[0].date)).format('YYYY-MM-DD');
+        
+        inputDate.value = transDate;
+        selectCategody.value = transaction.data[0].category_id;
+        selectPayment.value = transaction.data[0].payment_id;
+        inputAmount.value = transaction.data[0].amount;
+        inputContents.value = transaction.data[0].contents;
+
+        this.inputFieldView.renderState(currState);
+        await this.inputFieldView.renderCategory(currState);
         div.classList.add(CLASS_SELECTED_TRANSACTION);
       });
     });
-    */
   }
 
   isChecked = (transaction, incomeCheck, spendCheck) => {

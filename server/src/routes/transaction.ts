@@ -32,6 +32,7 @@ router.get('/transaction/user/date/:query', async (req, res, next) => {
 // 거래내역 추가
 router.post('/transaction', async (req, res, next) => {
   const transactionDTO = new TransactionDTO(req.body);
+  console.log(transactionDTO);
   const result = await transactionRepo.createTransaction(transactionDTO);
   res.json(result);
 });
